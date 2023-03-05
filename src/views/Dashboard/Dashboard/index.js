@@ -3,6 +3,8 @@ import {
   Box,
   Flex,
   SimpleGrid,
+  Grid,
+  GridItem,
   useColorModeValue,
   Button,
   ButtonGroup,
@@ -65,14 +67,7 @@ export default function Dashboard() {
     <Flex flexDirection="column" pt={{ base: "120px", md: "75px" }}>
       <authError value={error} />
 
-      {/* Breadcrump */}
-      <Box>
-        <Button bgColor="transparent">Daily</Button>/
-        <Button bgColor="transparent">Weekly</Button>/
-        <Button bgColor="transparent">Monthly</Button>
-      </Box>
-
-      <SimpleGrid columns={{ sm: 1, md: 2, xl: 4 }} spacing="24px">
+      <SimpleGrid columns={3} spacing="24px">
         <MiniStatistics
           title={"Total Transaksi"}
           amount={"$53,000"}
@@ -93,22 +88,23 @@ export default function Dashboard() {
         />
       </SimpleGrid>
 
-      <SimpleGrid mt="30px">
-        <Flex direction="row"  >
+      <Grid templateColumns='repeat(3, 4fr)' sx={{ mt: "30px" }} gap={10}>
+        <GridItem colSpan={2}  w='100%' h='100%'>
           <GraphTransaction
-            // mr="10px"
             title={"Transaction Graph"}
             list={[1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998]}
             data={[30, 40, 45, 50, 49, 60, 70, 91]}
           />
+        </GridItem>
+        <GridItem colSpan={1} w='100%' h='100%'>
           <InvestorDecline
-            // ml="10px"
             title={"Investor Decline"}
             captions={["Name/Email"]}
             data={tablesTableData}
           />
-        </Flex>
-      </SimpleGrid>
+        </GridItem>
+
+      </Grid>
 
       <Box sx={{ mt: "30px" }}>
         <Transaction

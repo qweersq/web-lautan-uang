@@ -22,7 +22,7 @@ const GraphTransaction = ({ title, list, data }) => {
   ];
 
   return (
-    <Card width="700px">
+    <Card width="100%">
       <CardHeader>
         <Heading size="md">{title}</Heading>
       </CardHeader>

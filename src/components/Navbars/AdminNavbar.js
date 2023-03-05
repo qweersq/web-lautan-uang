@@ -149,6 +149,11 @@ export default function AdminNavbar(props) {
           >
             {brandText}
           </Link>
+          <ButtonGroup size='md' isAttached variant='outline' sx={{ ml:10 }}>
+            <Button>Daily</Button>
+            <Button>Weekly</Button>
+            <Button>Monthly</Button>
+          </ButtonGroup>
         </Box>
         <Box ms="auto" w={{ sm: "100%", md: "unset" }}>
           <AdminNavbarLinks
