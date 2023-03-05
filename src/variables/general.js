@@ -67,12 +67,33 @@ export const dashboardTableData = [
   },
   {
     logo: InvisionLogo,
-    name: "Redesign New Online Shop",
+    name: "Redesign New Success Shop",
     members: [avatar9, avatar3, avatar2],
     budget: "$7,600",
     progression: 40,
   },
 ];
+
+export const fishermanTeamTableData = [
+  {
+    logo: avatar1,
+    team_name: "Team Nelayan Malang",
+    chief_name: "Zilong",
+    phone: "0875444112684",
+    address: "Jalan Kalpataru",
+    location: "Malang Selatan",
+  },
+  
+  {
+    logo: avatar1,
+    team_name: "Team Nelayan Malang",
+    chief_name: "Miya",
+    phone: "0875444112684",
+    address: "Jalan Kalpataru",
+    location: "Malang Selatan",
+  },
+  
+]
 
 export const timelineData = [
   {
@@ -201,7 +222,7 @@ export const tablesTableData = [
     email: "alexa@simmmple.com",
     subdomain: "Manager",
     domain: "Organization",
-    status: "Online",
+    status: "Success",
     date: "14/06/21",
   },
   {
@@ -210,7 +231,7 @@ export const tablesTableData = [
     email: "laurent@simmmple.com",
     subdomain: "Programmer",
     domain: "Developer",
-    status: "Offline",
+    status: "Failed",
     date: "12/05/21",
   },
   {
@@ -219,7 +240,7 @@ export const tablesTableData = [
     email: "laurent@simmmple.com",
     subdomain: "Executive",
     domain: "Projects",
-    status: "Online",
+    status: "Success",
     date: "07/06/21",
   },
   {
@@ -228,7 +249,7 @@ export const tablesTableData = [
     email: "freduardo@simmmple.com",
     subdomain: "Manager",
     domain: "Organization",
-    status: "Online",
+    status: "Success",
     date: "14/11/21",
   },
   {
@@ -237,7 +258,7 @@ export const tablesTableData = [
     email: "daniel@simmmple.com",
     subdomain: "Programmer",
     domain: "Developer",
-    status: "Offline",
+    status: "Failed",
     date: "21/01/21",
   },
   {
@@ -246,7 +267,7 @@ export const tablesTableData = [
     email: "mark@simmmple.com",
     subdomain: "Designer",
     domain: "UI/UX Design",
-    status: "Offline",
+    status: "Failed",
     date: "04/09/20",
   },
 ];
