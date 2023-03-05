@@ -31,12 +31,13 @@ const GraphTransaction = ({ title, list, data }) => {
         {/* Butkan Chart disini */}
         <Chart
             type="line"
-            width="600"
+            width="100%"
             // height="100%"
             options={options}
             series={series}
         />
       </CardBody>
+      
     </Card>
   );
 };

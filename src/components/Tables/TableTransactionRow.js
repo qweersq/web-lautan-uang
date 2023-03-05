@@ -4,10 +4,33 @@ import {
   Button,
   Flex,
   Td,
-  Text,
   Tr,
   Box,
   useColorModeValue,
+  useDisclosure,
+  AddIcon,
+  FormControl,
+  FormLabel,
+  Input,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+  Spacer,
+  Table,
+  Tbody,
+  Text,
+  Th,
+  Thead,
+  AlertDialog,
+  AlertDialogOverlay,
+  AlertDialogContent,
+  AlertDialogHeader,
+  AlertDialogBody,
+  AlertDialogFooter,
 } from "@chakra-ui/react";
 import React from "react";
 
@@ -16,6 +39,34 @@ function TableTransactionRow(props) {
   const textColor = useColorModeValue("gray.700", "white");
   const bgStatus = useColorModeValue("gray.400", "#1a202c");
   const colorStatus = useColorModeValue("white", "gray.400");
+
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const { isOpen2, onOpen2, onClose2 } = useDisclosure();
+
+  const cancelRef = React.useRef()
+  const initialRef = React.useRef(null);
+  const finalRef = React.useRef(null);
+
+  const [transactionData, editTransactionData] = React.useState({
+    fisherman_team: "",
+    investor: "",
+    quantity: "",
+    status: "",
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    editTransactionData((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(transactionData); // contoh, untuk sementara hanya menampilkan data pada console
+    onClose();
+  };
 
   return (
     <Tr>
@@ -65,15 +116,121 @@ function TableTransactionRow(props) {
         </Badge>
       </Td>
       <Td>
-        <Button p="0px" size="lg" color="green.600" variant="ghost">
+        <Button
+          p="0px"
+          size="lg"
+          color="green.600"
+          variant="ghost"
+          onClick={onOpen}
+        >
           Edit
         </Button>
       </Td>
+
+      <Modal
+        initialFocusRef={initialRef}
+        finalFocusRef={finalRef}
+        isOpen={isOpen}
+        onClose={onClose}
+        size="lg"
+      >
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Edit Transaction</ModalHeader>
+          <ModalCloseButton />
+          <form onSubmit={handleSubmit}>
+            <ModalBody pb={6}>
+              <FormControl>
+                <FormLabel>Fisherman Team</FormLabel>
+                <Input
+                  name="name"
+                  ref={initialRef}
+                  value={transactionData.fisherman_team}
+                  onChange={handleChange}
+                  placeholder="Edit fisherman team name"
+                />
+              </FormControl>
+
+              <FormControl>
+                <FormLabel>Investore Name</FormLabel>
+                <Input
+                  name="name"
+                  value={transactionData.investor}
+                  onChange={handleChange}
+                  placeholder="Edit investor name"
+                />
+              </FormControl>
+
+              <FormControl mt={4}>
+                <FormLabel>Quantity</FormLabel>
+                <Input
+                  name="amount"
+                  value={transactionData.quantity}
+                  onChange={handleChange}
+                  placeholder="Edit quantity (amount)"
+                />
+              </FormControl>
+
+              <FormControl mt={4}>
+                <FormLabel>Status</FormLabel>
+                <Input
+                  name="date"
+                  value={transactionData.date}
+                  onChange={handleChange}
+                  placeholder="Edit Status"
+                />
+              </FormControl>
+            </ModalBody>
+
+            <ModalFooter>
+              <Button variant="ghost" mr={3} onClick={onClose}>
+                Cancel
+              </Button>
+              <Button colorScheme="blue" type="submit">
+                Edit
+              </Button>
+            </ModalFooter>
+          </form>
+        </ModalContent>
+      </Modal>
+
       <Td>
-          <Button  p="0px" size="lg" color="red.600" variant="ghost">
-            Remove
-          </Button>
+        <Button
+          p="0px"
+          size="lg"
+          color="red.600"
+          variant="ghost"
+          onClick={onOpen2}
+        >
+          Delete
+        </Button>
       </Td>
+      <AlertDialog
+        isOpen={isOpen2}
+        leastDestructiveRef={cancelRef}
+        onClose={onClose2}
+      >
+        <AlertDialogOverlay>
+          <AlertDialogContent>
+            <AlertDialogHeader fontSize="lg" fontWeight="bold">
+              Delete Customer
+            </AlertDialogHeader>
+
+            <AlertDialogBody>
+              Are you sure? You can't undo this action afterwards.
+            </AlertDialogBody>
+
+            <AlertDialogFooter>
+              <Button ref={cancelRef} onClick={onClose2}>
+                Cancel
+              </Button>
+              <Button colorScheme="red" onClick={onClose2} ml={3}>
+                Delete
+              </Button>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialogOverlay>
+      </AlertDialog>
     </Tr>
   );
 }
