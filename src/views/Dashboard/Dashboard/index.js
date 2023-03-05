@@ -24,7 +24,6 @@ import React, { useEffect, createContext } from "react";
 import MiniStatistics from "./components/MiniStatistics";
 import { NavLink, useHistory } from "react-router-dom";
 import axios from "axios";
-import { VictoryChart } from "victory";
 import Card from "components/Card/Card";
 import Transaction from "./components/Transaction";
 import GraphTransaction from "./components/GraphTransaction";
