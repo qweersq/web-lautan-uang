@@ -15,6 +15,8 @@ import {
   RocketIcon,
   SupportIcon,
 } from "components/Icons/Icons";
+import TransactionPage from "views/Dashboard/Transaction";
+import FinanceReport from "views/Dashboard/FinanceReport";
 
 var dashRoutes = [
   {
@@ -30,10 +32,10 @@ var dashRoutes = [
     state: "pageCollapse",
     views: [
       {
-        path: "/nelayan",
+        path: "/transaction",
         name: "Transaction",
         icon: <StatsIcon color="inherit" />,
-        component: Nelayan,
+        component: TransactionPage,
         layout: "/admin",
       },
     ],
@@ -44,27 +46,27 @@ var dashRoutes = [
     state: "pageCollapse",
     views: [
       {
-        path: "/nelayan",
+        path: "/tim-nelayan",
         name: "Tim Nelayan",
         icon: <StatsIcon color="inherit" />,
         component: Nelayan,
         layout: "/admin",
       },
-      {
-        path: "/nelayan-tim",
-        name: "Laporan Financial",
-        icon: <CreditIcon color="inherit" />,
-        component: NelayanTim,
-        layout: "/admin",
-      },
+     
     ],
+  },
+  {
+    path: "/nelayan-tim/report",
+    name: "Laporan Financial",
+    icon: <CreditIcon color="inherit" />,
+    component: FinanceReport,
+    layout: "/admin",
   },
   
   
   {
     name: "Investor",
     category: "account",
-    state: "pageCollapse",
     views: [
       {
         path: "/profile",
@@ -83,6 +85,7 @@ var dashRoutes = [
     secondaryNavbar: true,
     component: Profile,
     layout: "/admin",
+    hidden: true,
   },
   {
     path: "/signin",
@@ -90,6 +93,8 @@ var dashRoutes = [
     icon: <DocumentIcon color="inherit" />,
     component: SignIn,
     layout: "/auth",
+    hidden: true,
+
   },
   {
     path: "/signup",
@@ -98,6 +103,8 @@ var dashRoutes = [
     secondaryNavbar: true,
     component: SignUp,
     layout: "/auth",
+    hidden: true,
+
   },
  
 ];
