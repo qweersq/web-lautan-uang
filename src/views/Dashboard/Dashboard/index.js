@@ -30,6 +30,7 @@ import Card from "components/Card/Card";
 import Transaction from "./components/Transaction";
 import GraphTransaction from "./components/GraphTransaction";
 import InvestorDecline from "./components/InvestorDecline";
+import TopInvestor from "./components/TopInvestor";
 
 export const authError = createContext();
 
@@ -88,39 +89,48 @@ export default function Dashboard() {
         />
       </SimpleGrid>
 
-      <Grid templateColumns='repeat(3, 4fr)' sx={{ mt: "30px" }} gap={10}>
-        <GridItem colSpan={2}  w='100%' h='100%'>
+      <Grid templateColumns="repeat(3, 4fr)" sx={{ mt: "30px" }} gap={10}>
+        <GridItem colSpan={2} w="100%" h="100%">
           <GraphTransaction
             title={"Transaction Graph"}
             list={[1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998]}
             data={[30, 40, 45, 50, 49, 60, 70, 91]}
           />
         </GridItem>
-        <GridItem colSpan={1} w='100%' h='100%'>
+        <GridItem colSpan={1} w="100%" h="100%">
           <InvestorDecline
             title={"Investor Decline"}
             captions={["Name/Email"]}
             data={tablesTableData}
           />
         </GridItem>
-
       </Grid>
 
-      <Box sx={{ mt: "30px" }}>
-        <Transaction
-          title={"Transaction Table"}
-          textColor={"blue"}
-          captions={[
-            "Fisherman Team",
-            "Investor Name",
-            "Quantity",
-            "Status",
-            "Actions",
-            "Actions",
-          ]}
-          data={tablesTableData}
-        />
-      </Box>
+      <Grid templateColumns="repeat(3, 4fr)" sx={{ mt: "30px" }} gap={10}>
+        <GridItem colSpan={2} w="100%" h="100%">
+          <Transaction
+            title={"Transaction Table"}
+            textColor={"blue"}
+            captions={[
+              "Fisherman Team",
+              "Investor Name",
+              "Quantity",
+              "Status",
+              "Actions",
+              "Actions",
+            ]}
+            data={tablesTableData}
+          />
+          
+        </GridItem>
+        <GridItem colSpan={1} w="100%" h="100%">
+        <TopInvestor
+            title={"Top Investor"}
+            captions={["Name/Email"]}
+            data={tablesTableData}
+          />
+        </GridItem>
+      </Grid>
     </Flex>
   );
 }
