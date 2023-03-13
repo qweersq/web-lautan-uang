@@ -34,18 +34,19 @@ import {
 } from "@chakra-ui/react";
 import React from "react";
 
-function TableTransactionRow(props) {
-  const { logo, name, email, subdomain, domain, status, date } = props;
+function TableFishermanTeam(props) {
+  const { logo, name, email, subdomain, domain, status, date,
+  balance, location, quantity, total_assets
+  
+  } = props;
   const textColor = useColorModeValue("gray.700", "white");
   const bgStatus = useColorModeValue("gray.400", "#1a202c");
   const colorStatus = useColorModeValue("white", "gray.400");
 
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const {
-    isOpen: IsOpenDelete,
-    onOpen: onOpenDelete,
-    onClose: onCloseDelete,
-  } = useDisclosure();
+  const { isOpen : IsOpenDelete, 
+  onOpen : onOpenDelete, 
+  onClose : onCloseDelete } = useDisclosure();
 
   const cancelRef = React.useRef();
   const initialRef = React.useRef(null);
@@ -103,6 +104,7 @@ function TableTransactionRow(props) {
           </Text>
         </Flex>
       </Td>
+
       <Td>
         <Text fontSize="md" color={textColor} fontWeight="bold" pb=".5rem">
           {date}
@@ -120,25 +122,51 @@ function TableTransactionRow(props) {
         </Badge>
       </Td>
       <Td>
-        <Button
-          p="0px"
-          size="lg"
-          color="green.600"
-          variant="ghost"
-          onClick={onOpen}
-        >
-          Edit
-        </Button>
-      <br/>
-        <Button
-          p="0px"
-          size="lg"
-          color="red.600"
-          variant="ghost"
-          onClick={onOpenDelete}
-        >
-          Delete
-        </Button>
+        <Text fontSize="md" color={textColor} fontWeight="bold" pb=".5rem">
+          {/* {balance} */}
+          Balance
+        </Text>
+      </Td>
+      <Td>
+        <Text fontSize="md" color={textColor} fontWeight="bold" pb=".5rem">
+          {/* {location} */}
+          Locations
+        </Text>
+      </Td>
+      <Td>
+        <Text fontSize="md" color={textColor} fontWeight="bold" pb=".5rem">
+          {/* quantity */}
+          Quantity
+        </Text>
+      </Td>
+      <Td>
+        <Text fontSize="md" color={textColor} fontWeight="bold" pb=".5rem">
+          {/* {total_assets} */}
+          Total Assets
+        </Text>
+      </Td>
+
+      <Td>
+        <Flex direction="column" align="center">
+          <Button
+            p="0px"
+            size="md"
+            color="green.600"
+            variant="ghost"
+            onClick={onOpen}
+          >
+            Edit
+          </Button>
+          <Button
+            p="0px"
+            size="md"
+            color="red.600"
+            variant="ghost"
+            onClick={onOpenDelete}
+          >
+            Delete
+          </Button>
+        </Flex>
       </Td>
 
       <Modal
@@ -208,7 +236,9 @@ function TableTransactionRow(props) {
         </ModalContent>
       </Modal>
 
-    
+      {/* <Td>
+       
+      </Td> */}
       <AlertDialog
         isOpen={IsOpenDelete}
         leastDestructiveRef={cancelRef}
@@ -239,4 +269,4 @@ function TableTransactionRow(props) {
   );
 }
 
-export default TableTransactionRow;
+export default TableFishermanTeam;

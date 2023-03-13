@@ -34,8 +34,19 @@ import {
 } from "@chakra-ui/react";
 import React from "react";
 
-function TableTransactionRow(props) {
-  const { logo, name, email, subdomain, domain, status, date } = props;
+function TableFisherman(props) {
+  const {
+    logo,
+    name,
+    email,
+    subdomain,
+    domain,
+    status,
+    date,
+    gender,
+    address,
+    role,
+  } = props;
   const textColor = useColorModeValue("gray.700", "white");
   const bgStatus = useColorModeValue("gray.400", "#1a202c");
   const colorStatus = useColorModeValue("white", "gray.400");
@@ -103,6 +114,7 @@ function TableTransactionRow(props) {
           </Text>
         </Flex>
       </Td>
+
       <Td>
         <Text fontSize="md" color={textColor} fontWeight="bold" pb=".5rem">
           {date}
@@ -120,25 +132,48 @@ function TableTransactionRow(props) {
         </Badge>
       </Td>
       <Td>
+        <Text fontSize="md" color={textColor} fontWeight="bold" pb=".5rem">
+          gender
+        </Text>
+      </Td>
+      <Td>
+        <Text fontSize="md" color={textColor} fontWeight="bold" pb=".5rem">
+          Address
+        </Text>
+      </Td>
+      <Td>
+        <Text fontSize="md" color={textColor} fontWeight="bold" pb=".5rem">
+          Role
+        </Text>
+      </Td>
+      <Td>
+        <Text fontSize="md" color={textColor} fontWeight="bold" pb=".5rem">
+          {status}
+        </Text>
+      </Td>
+
+      <Td>
+        {/* <Flex direction="column" align="center"> */}
         <Button
           p="0px"
-          size="lg"
+          size="md"
           color="green.600"
           variant="ghost"
           onClick={onOpen}
         >
           Edit
         </Button>
-      <br/>
+        <br />
         <Button
           p="0px"
-          size="lg"
+          size="md"
           color="red.600"
           variant="ghost"
           onClick={onOpenDelete}
         >
           Delete
         </Button>
+        {/* </Flex> */}
       </Td>
 
       <Modal
@@ -208,7 +243,9 @@ function TableTransactionRow(props) {
         </ModalContent>
       </Modal>
 
-    
+      {/* <Td>
+         
+        </Td> */}
       <AlertDialog
         isOpen={IsOpenDelete}
         leastDestructiveRef={cancelRef}
@@ -239,4 +276,4 @@ function TableTransactionRow(props) {
   );
 }
 
-export default TableTransactionRow;
+export default TableFisherman;

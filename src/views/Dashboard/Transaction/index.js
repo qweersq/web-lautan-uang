@@ -30,6 +30,7 @@ import Card from "components/Card/Card";
 import Transaction from "./components/Transaction";
 import GraphTransaction from "./components/GraphTransaction";
 import InvestorDecline from "./components/InvestorDecline";
+import TopInvestor from "../Dashboard/components/TopInvestor";
 
 export const authError = createContext();
 
@@ -75,13 +76,13 @@ export default function TransactionPage() {
           icon={<WalletIcon h={"24px"} w={"24px"} color={iconBoxInside} />}
         />
         <MiniStatistics
-          title={"Jumlah Investor"}
+          title={"Transaksi Sukses"}
           amount={"2,300"}
           percentage={5}
           icon={<GlobeIcon h={"24px"} w={"24px"} color={iconBoxInside} />}
         />
         <MiniStatistics
-          title={"Jumlah Nelayan"}
+          title={"Transaksi Cancel"}
           amount={"+3,020"}
           percentage={-14}
           icon={<DocumentIcon h={"24px"} w={"24px"} color={iconBoxInside} />}
@@ -97,10 +98,15 @@ export default function TransactionPage() {
           />
         </GridItem>
         <GridItem colSpan={1} w='100%' h='100%'>
-          <InvestorDecline
+          {/* <InvestorDecline
             title={"Investor Decline"}
             captions={["Name/Email"]}
             data={tablesTableData}
+          /> */}
+          <TopInvestor
+           title={"Top Investor"}
+           captions={["Name/Email"]}
+           data={tablesTableData}
           />
         </GridItem>
 
@@ -115,7 +121,6 @@ export default function TransactionPage() {
             "Investor Name",
             "Quantity",
             "Status",
-            "Actions",
             "Actions",
           ]}
           data={tablesTableData}

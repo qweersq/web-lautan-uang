@@ -90,7 +90,7 @@ export default function Dashboard() {
       </SimpleGrid>
 
       <Grid templateColumns="repeat(3, 4fr)" sx={{ mt: "30px" }} gap={10}>
-        <GridItem colSpan={2} w="100%" h="100%">
+        <GridItem >
           <GraphTransaction
             title={"Transaction Graph"}
             list={[1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998]}
@@ -116,7 +116,6 @@ export default function Dashboard() {
               "Investor Name",
               "Quantity",
               "Status",
-              "Actions",
               "Actions",
             ]}
             data={tablesTableData}
