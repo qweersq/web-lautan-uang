@@ -34,19 +34,19 @@ import {
 } from "@chakra-ui/react";
 import React from "react";
 
-function TableFishermanTeam(props) {
-  const { logo, name, email, subdomain, domain, status, date,
-  balance, location, quantity, total_assets
-  
-  } = props;
+function TableFishermanTeam(data) {
+  const { Name, Phone, Address, Balance, Quantity, TotalAssets, YearFormed, Location
+  } = data.data;
+
+  const { kota_kab_name, province_name } = Location;
   const textColor = useColorModeValue("gray.700", "white");
   const bgStatus = useColorModeValue("gray.400", "#1a202c");
   const colorStatus = useColorModeValue("white", "gray.400");
 
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { isOpen : IsOpenDelete, 
-  onOpen : onOpenDelete, 
-  onClose : onCloseDelete } = useDisclosure();
+  const { isOpen: IsOpenDelete,
+    onOpen: onOpenDelete,
+    onClose: onCloseDelete } = useDisclosure();
 
   const cancelRef = React.useRef();
   const initialRef = React.useRef(null);
@@ -58,6 +58,15 @@ function TableFishermanTeam(props) {
     quantity: "",
     status: "",
   });
+
+  const NumberIDR = (num) => {
+    const formattedNumber = new Intl.NumberFormat("id-ID", {
+      style: "currency",
+      currency: "IDR",
+    }).format(num);
+
+    return <div>{formattedNumber}</div>;
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -77,72 +86,54 @@ function TableFishermanTeam(props) {
     <Tr>
       <Td minWidth={{ sm: "250px" }} pl="0px">
         <Flex align="center" py=".8rem" minWidth="100%" flexWrap="nowrap">
-          <Avatar src={logo} w="50px" borderRadius="12px" me="18px" />
-          <Flex direction="column">
-            <Text
-              fontSize="md"
-              color={textColor}
-              fontWeight="bold"
-              minWidth="100%"
-            >
-              {name}
-            </Text>
-            <Text fontSize="sm" color="gray.400" fontWeight="normal">
-              {email}
-            </Text>
-          </Flex>
+          <Avatar src={"#"} w="50px" borderRadius="12px" me="18px" />
+          <Text
+            fontSize="md"
+            color={textColor}
+            fontWeight="bold"
+            minWidth="100%"
+          >
+            {Name}
+          </Text>
         </Flex>
       </Td>
 
       <Td>
         <Flex direction="column">
           <Text fontSize="md" color={textColor} fontWeight="bold">
-            {domain}
-          </Text>
-          <Text fontSize="sm" color="gray.400" fontWeight="normal">
-            {subdomain}
+            {Phone}
           </Text>
         </Flex>
       </Td>
 
       <Td>
         <Text fontSize="md" color={textColor} fontWeight="bold" pb=".5rem">
-          {date}
-        </Text>
-      </Td>
-      <Td>
-        <Badge
-          bg={status === "Success" ? "green.400" : bgStatus}
-          color={status === "Success" ? "white" : colorStatus}
-          fontSize="16px"
-          p="3px 10px"
-          borderRadius="8px"
-        >
-          {status}
-        </Badge>
-      </Td>
-      <Td>
-        <Text fontSize="md" color={textColor} fontWeight="bold" pb=".5rem">
-          {/* {balance} */}
-          Balance
+          {YearFormed}
         </Text>
       </Td>
       <Td>
         <Text fontSize="md" color={textColor} fontWeight="bold" pb=".5rem">
-          {/* {location} */}
-          Locations
+          {Address}
         </Text>
       </Td>
       <Td>
         <Text fontSize="md" color={textColor} fontWeight="bold" pb=".5rem">
-          {/* quantity */}
-          Quantity
+          {NumberIDR(Balance)}
         </Text>
       </Td>
       <Td>
         <Text fontSize="md" color={textColor} fontWeight="bold" pb=".5rem">
-          {/* {total_assets} */}
-          Total Assets
+          {kota_kab_name}, {province_name}
+        </Text>
+      </Td>
+      <Td>
+        <Text fontSize="md" color={textColor} fontWeight="bold" pb=".5rem">
+          {Quantity}
+        </Text>
+      </Td>
+      <Td>
+        <Text fontSize="md" color={textColor} fontWeight="bold" pb=".5rem">
+          {NumberIDR(TotalAssets)}
         </Text>
       </Td>
 

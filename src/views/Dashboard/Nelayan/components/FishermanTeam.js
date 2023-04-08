@@ -158,16 +158,10 @@ const FishermanTeam = ({ title, captions, data }) => {
           </Thead>
           <Tbody>
             {data.map((row) => {
+              console.log(row)
               return (
                 <TableFishermanTeam
-                  key={`${row.email}-${row.name}`}
-                  name={row.name}
-                  logo={row.logo}
-                  email={row.email}
-                  subdomain={row.subdomain}
-                  domain={row.domain}
-                  status={row.status}
-                  date={row.date}
+                  data={row}
                 />
               );
             })}

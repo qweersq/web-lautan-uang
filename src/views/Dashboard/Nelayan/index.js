@@ -21,9 +21,8 @@ import TopFisherman from "./components/TopFisherman";
 import MiniStatistics from "./components/MiniStatistics";
 import FishermanTeam from "./components/FishermanTeam";
 import Fisherman from "./components/Fisherman";
-// import FishermanTeam from "./components/FishermanTeam";
-// import { tablesTableData, dashboardTableData } from "variables/general";
-// import MiniStatistics from "../Dashboard/components/MiniStatistics";
+
+import NelayanTeamAPI from "api/NelayanTeamAPI";
 
 function Tables() {
   const iconBoxInside = useColorModeValue("white", "white");
@@ -52,22 +51,7 @@ function Tables() {
 
       <Grid sx={{ mt: "30px" }} gap={10}>
         <GridItem>
-          <FishermanTeam
-            title={"Fisherman Team Table"}
-            textColor={"blue"}
-            captions={[
-              "Name",
-              "Phone",
-              "Year Formed",
-              "Address",
-              "Balance",
-              "Location",
-              "Quantity",
-              "Total Assets",
-              "Actions",
-            ]}
-            data={tablesTableData}
-          />
+          <NelayanTeamAPI />
         </GridItem>
         <GridItem>
           <Fisherman
