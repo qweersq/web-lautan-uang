@@ -122,7 +122,7 @@ export default function Dashboard() {
           />
           
         </GridItem>
-        <GridItem colSpan={1} w="100%" h="100%">
+        <GridItem colSpan={0.1} w="100%" h="100%">
         <TopInvestor
             title={"Top Investor"}
             captions={["Name/Email"]}

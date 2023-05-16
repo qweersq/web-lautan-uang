@@ -19,7 +19,7 @@ import PaymentMethod from "./components/PaymentMethod";
 import PaymentStatistics from "./components/PaymentStatistics";
 import Transactions from "./components/Transactions";
 
-function Billing() {
+function TimNelayan() {
   return (
     <Flex direction='column' pt={{ base: "120px", md: "75px" }}>
       <Grid templateColumns={{ sm: "1fr", lg: "2fr 1.2fr" }} templateRows='1fr'>
@@ -93,4 +93,4 @@ function Billing() {
   );
 }
 
-export default Billing;
+export default TimNelayan;

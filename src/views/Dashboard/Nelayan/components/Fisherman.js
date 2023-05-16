@@ -1,5 +1,14 @@
 // Chakra imports
-import { SearchIcon } from "@chakra-ui/icons";
+import {
+  AtSignIcon,
+  PhoneIcon,
+  SearchIcon,
+  UnlockIcon,
+  ViewIcon,
+  ViewOffIcon,
+  EditIcon,
+  InfoOutlineIcon
+} from "@chakra-ui/icons";
 import {
   AddIcon,
   Button,
@@ -9,6 +18,8 @@ import {
   Input,
   InputGroup,
   InputLeftElement,
+  Menu,
+  MenuButton,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -25,6 +36,13 @@ import {
   Tr,
   useColorModeValue,
   useDisclosure,
+  MenuList,
+  MenuItem,
+  InputLeftAddon,
+  InputRightElement,
+  Textarea,
+  Box,
+  Image,
 } from "@chakra-ui/react";
 // Custom components
 import Card from "components/Card/Card.js";
@@ -35,6 +53,7 @@ import TableFishermanTeam from "components/Tables/TableFishermanTeam";
 import TablesTableRow from "components/Tables/TablesTableRow";
 import TableTransactionRow from "components/Tables/TableTransactionRow";
 import React from "react";
+import { ChevronDownIcon } from "@chakra-ui/icons";
 
 const Fisherman = ({ title, captions, data }) => {
   const textColor = useColorModeValue("gray.700", "white");
@@ -63,6 +82,33 @@ const Fisherman = ({ title, captions, data }) => {
     onClose();
   };
 
+  const [selectedGender, setSelectedGender] = React.useState("");
+  const handleGenderSelect = (gender) => {
+    setSelectedGender(gender);
+  };
+
+  const [selectedLoc, setSelectedLoc] = React.useState("");
+  const handleLocSelect = (location) => {
+    setSelectedLoc(location);
+  };
+
+  const [selectedRole, setSelectedRole] = React.useState("");
+  const handleRoleSelect = (role) => {
+    setSelectedRole(role);
+  };
+
+  const [selectedStatus, setSelectedStatus] = React.useState("");
+  const handleStatusSelect = (role) => {
+    setSelectedStatus(role);
+  };
+
+  const [showPassword, setShowPassword] = React.useState(false);
+  const handleTogglePassword = () => {
+    setShowPassword((prevShowPassword) => !prevShowPassword);
+  };
+
+  
+
   return (
     <Card overflowX={{ sm: "scroll", xl: "hidden" }}>
       <CardHeader p="6px 0px 22px 0px">
@@ -84,42 +130,212 @@ const Fisherman = ({ title, captions, data }) => {
         >
           <ModalOverlay />
           <ModalContent>
-            <ModalHeader>Add Transaction</ModalHeader>
+            <ModalHeader>Add New Fisherman</ModalHeader>
             <ModalCloseButton />
             <form onSubmit={handleSubmit}>
-              <ModalBody pb={6}>
-                <FormControl>
-                  <FormLabel>Fisherman Team</FormLabel>
-                  <Input
-                    name="name"
-                    ref={initialRef}
-                    value={transactionData.name}
-                    onChange={handleChange}
-                    placeholder="Enter transaction fisherman team name"
-                  />
+              <ModalBody pb={10}>
+                <Flex gap={5}>
+                  <FormControl>
+                    <FormLabel>Fisherman Team</FormLabel>
+                    <Input
+                      name="team-name"
+                      placeholder="Input Fisherman Team"
+                    />
+                  </FormControl>
+                  <FormControl>
+                    <FormLabel>Fisherman Name</FormLabel>
+                    <Input name="name" placeholder="Input Fisherman Name" />
+                  </FormControl>
+                </Flex>
+
+                <FormControl mt={4}>
+                  <FormLabel>Phone</FormLabel>
+                  <InputGroup>
+                    <InputLeftElement
+                      pointerEvents="none"
+                      children={<PhoneIcon color="gray.300" />}
+                    />
+                    <Input
+                      type="tel"
+                      name="phone"
+                      value={transactionData.amount}
+                      onChange={handleChange}
+                      placeholder="Enter phone number"
+                    />
+                  </InputGroup>
                 </FormControl>
 
                 <FormControl mt={4}>
-                  <FormLabel>Amount</FormLabel>
-                  <Input
-                    name="amount"
-                    value={transactionData.amount}
-                    onChange={handleChange}
-                    placeholder="Enter transaction amount"
-                  />
+                  <FormLabel>Account</FormLabel>
+                  <InputGroup>
+                    <InputLeftAddon
+                      children={<AtSignIcon color="gray.300" />}
+                    />
+                    <Input
+                      name="email"
+                      type="email"
+                      placeholder="Enter Email"
+                    />
+                  </InputGroup>
+                  <InputGroup mt={2}>
+                    <InputLeftAddon
+                      children={<UnlockIcon color="gray.300" />}
+                    />
+                    <Input
+                      name="password"
+                      type={showPassword ? "text" : "password"}
+                      placeholder="Enter password"
+                    />
+                    <InputRightElement width="4rem">
+                      <Button h="2rem" size="md" onClick={handleTogglePassword}>
+                        {showPassword ? (
+                          <ViewIcon color="gray.700" />
+                        ) : (
+                          <ViewOffIcon color="gray.700" />
+                        )}
+                      </Button>
+                    </InputRightElement>
+                  </InputGroup>
                 </FormControl>
 
                 <FormControl mt={4}>
-                  <FormLabel>Date</FormLabel>
+                  <FormLabel>Gender</FormLabel>
+                  <Menu size="sm">
+                    <MenuButton
+                      isActive={selectedGender !== ""}
+                      as={Button}
+                      rightIcon={<ChevronDownIcon />}
+                    >
+                      {selectedGender || "Select gender"}
+                    </MenuButton>
+                    <MenuList>
+                      <MenuItem onClick={() => handleGenderSelect("Male")}>
+                        Male
+                      </MenuItem>
+                      <MenuItem onClick={() => handleGenderSelect("Female")}>
+                        Female
+                      </MenuItem>
+                    </MenuList>
+                  </Menu>
+                </FormControl>
+
+                <FormControl mt={4}>
+                  <FormLabel>Birt-Date</FormLabel>
                   <Input
                     name="date"
+                    type="datetime-local"
                     value={transactionData.date}
                     onChange={handleChange}
-                    placeholder="Enter transaction date"
+                    placeholder="Enter Date"
                   />
                 </FormControl>
+                <FormControl mt={4}>
+                  <FormLabel>Address</FormLabel>
+                  <Menu size="sm">
+                    <MenuButton
+                      isActive={selectedLoc !== ""}
+                      as={Button}
+                      rightIcon={<ChevronDownIcon />}
+                    >
+                      {selectedLoc || "Select Location"}
+                    </MenuButton>
+                    <MenuList>
+                      {/* Map Location */}
+                      <MenuItem onClick={() => handleLocSelect("Loc 1")}>
+                        Loc 1
+                      </MenuItem>
+                      <MenuItem onClick={() => handleLocSelect("Loc 2")}>
+                        Loc 2
+                      </MenuItem>
+                    </MenuList>
+                  </Menu>
+                  <Textarea
+                    mt={2}
+                    name="address"
+                    placeholder="Input Detail Address"
+                  />
+                </FormControl>
+                  <FormControl mt={4}>
+                    <FormLabel>Role</FormLabel>
+                    <Menu size="sm">
+                      <MenuButton
+                        isActive={selectedRole !== ""}
+                        as={Button}
+                        rightIcon={<ChevronDownIcon />}
+                      >
+                        {selectedRole || "Select Role"}
+                      </MenuButton>
+                      <MenuList>
+                        {/* Map Location */}
+                        <MenuItem onClick={() => handleRoleSelect("Leader")}>
+                          Leader
+                        </MenuItem>
+                        <MenuItem onClick={() => handleRoleSelect("Member")}>
+                          Member
+                        </MenuItem>
+                      </MenuList>
+                    </Menu>
+                  </FormControl>
+                  <FormControl mt={4}>
+                    <FormLabel>Status</FormLabel>
+                    <Menu size="sm">
+                      <MenuButton
+                        isActive={selectedStatus !== ""}
+                        as={Button}
+                        rightIcon={<ChevronDownIcon />}
+                      >
+                        {selectedStatus || "Select Status"}
+                      </MenuButton>
+                      <MenuList>
+                        {/* Map Location */}
+                        <MenuItem onClick={() => handleStatusSelect("Aktif")}>
+                          Aktif
+                        </MenuItem>
+                        <MenuItem onClick={() => handleStatusSelect("Non Active")}>
+                          Non Active
+                        </MenuItem>
+                      </MenuList>
+                    </Menu>
+                  </FormControl>
+                <FormControl>
+                  <FormLabel>Experience</FormLabel>
+                  <InputGroup>
+                    <InputLeftAddon children={<EditIcon color="gray.300" />} />
+                    <Input name="experience" type="number" />
+                  </InputGroup>
+                </FormControl>
+                <Flex gap={4}>
+                  <FormControl mt="4">
+                    <FormLabel>Photo</FormLabel>
+                    <Input type="file" name="photo" isFullWidth size="md" />
+                  </FormControl>
+                  <FormControl mt="4">
+                    <FormLabel>Identify Photo</FormLabel>
+                    <Input
+                      type="file"
+                      name="identify-photo"
+                      isFullWidth
+                      size="md"
+                    />
+                  </FormControl>
+                </Flex>
+                <FormControl mt={4}>
+                  <FormLabel>NIK</FormLabel>
+                  <InputGroup>
+                    <InputLeftElement
+                      pointerEvents="none"
+                      children={<InfoOutlineIcon color="gray.300" />}
+                    />
+                    <Input
+                      type="number"
+                      name="nik"
+                      value={transactionData.amount}
+                      onChange={handleChange}
+                      placeholder="Enter NIK"
+                    />
+                  </InputGroup>
+                </FormControl>
               </ModalBody>
-
               <ModalFooter>
                 <Button variant="ghost" mr={3} onClick={onClose}>
                   Cancel
@@ -131,18 +347,15 @@ const Fisherman = ({ title, captions, data }) => {
             </form>
           </ModalContent>
         </Modal>
-
-        {/* Card Table */}
       </CardHeader>
 
-      <InputGroup   width="50%">
+      <InputGroup width="50%">
         <InputLeftElement
           pointerEvents="none"
           children={<SearchIcon color="blue.300" />}
         />
         <Input placeholder="Find fisherman team" />
       </InputGroup>
-
 
       <CardBody>
         <Table variant="simple" color={textColor}>

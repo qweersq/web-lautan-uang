@@ -25,7 +25,7 @@ const TopInvestor = ({ title, data, list, captions }) => {
   };
 
   return (
-    <Card width="600px" >
+    <Card width="100%" >
       <CardHeader>
         <Heading size="md">{title}</Heading>
       </CardHeader>

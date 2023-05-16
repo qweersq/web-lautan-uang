@@ -17,6 +17,7 @@ import {
 } from "components/Icons/Icons";
 import TransactionPage from "views/Dashboard/Transaction";
 import FinanceReport from "views/Dashboard/FinanceReport";
+import TimNelayan from "views/Dashboard/TimNelayan";
 
 var dashRoutes = [
   {
@@ -46,15 +47,23 @@ var dashRoutes = [
     state: "pageCollapse",
     views: [
       {
+        path: "/nelayan",
+        name: "Nelayan",
+        icon: <StatsIcon color="inherit" />,
+        component: Nelayan,
+        layout: "/admin",
+      },
+      {
         path: "/tim-nelayan",
         name: "Tim Nelayan",
         icon: <StatsIcon color="inherit" />,
-        component: Nelayan,
+        component: TimNelayan,
         layout: "/admin",
       },
      
     ],
   },
+  
   {
     path: "/nelayan-tim/report",
     name: "Laporan Financial",

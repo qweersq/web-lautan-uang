@@ -24,7 +24,7 @@ import Fisherman from "./components/Fisherman";
 
 import NelayanTeamAPI from "api/NelayanTeamAPI";
 
-function Tables() {
+function Nelayan() {
   const iconBoxInside = useColorModeValue("white", "white");
   return (
     <Flex direction="column" pt={{ base: "120px", md: "75px" }}>
@@ -92,4 +92,4 @@ function Tables() {
   );
 }
 
-export default Tables;
+export default Nelayan;
