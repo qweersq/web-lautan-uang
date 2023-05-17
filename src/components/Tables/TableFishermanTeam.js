@@ -34,6 +34,11 @@ import {
 } from "@chakra-ui/react";
 import React from "react";
 
+import { createContext } from "react";
+import ModalEditFishermanTeamContext from "views/Dashboard/Nelayan/components/ModalEditFishermanTeam";
+
+export const modalEditFishermanTeamContext = createContext(null);
+
 function TableFishermanTeam(data) {
   const { Name, Phone, Address, Balance, Quantity, TotalAssets, YearFormed, Location
   } = data.data;
@@ -83,6 +88,7 @@ function TableFishermanTeam(data) {
   };
 
   return (
+    <modalEditFishermanTeamContext.Provider value={{ onOpen, isOpen, onClose }}>
     <Tr>
       <Td minWidth={{ sm: "250px" }} pl="0px">
         <Flex align="center" py=".8rem" minWidth="100%" flexWrap="nowrap">
@@ -160,72 +166,7 @@ function TableFishermanTeam(data) {
         </Flex>
       </Td>
 
-      <Modal
-        initialFocusRef={initialRef}
-        finalFocusRef={finalRef}
-        isOpen={isOpen}
-        onClose={onClose}
-        size="lg"
-      >
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>Edit Transaction</ModalHeader>
-          <ModalCloseButton />
-          <form onSubmit={handleSubmit}>
-            <ModalBody pb={6}>
-              <FormControl>
-                <FormLabel>Fisherman Team</FormLabel>
-                <Input
-                  name="name"
-                  ref={initialRef}
-                  value={transactionData.fisherman_team}
-                  onChange={handleChange}
-                  placeholder="Edit fisherman team name"
-                />
-              </FormControl>
-
-              <FormControl>
-                <FormLabel>Investore Name</FormLabel>
-                <Input
-                  name="name"
-                  value={transactionData.investor}
-                  onChange={handleChange}
-                  placeholder="Edit investor name"
-                />
-              </FormControl>
-
-              <FormControl mt={4}>
-                <FormLabel>Quantity</FormLabel>
-                <Input
-                  name="amount"
-                  value={transactionData.quantity}
-                  onChange={handleChange}
-                  placeholder="Edit quantity (amount)"
-                />
-              </FormControl>
-
-              <FormControl mt={4}>
-                <FormLabel>Status</FormLabel>
-                <Input
-                  name="date"
-                  value={transactionData.date}
-                  onChange={handleChange}
-                  placeholder="Edit Status"
-                />
-              </FormControl>
-            </ModalBody>
-
-            <ModalFooter>
-              <Button variant="ghost" mr={3} onClick={onClose}>
-                Cancel
-              </Button>
-              <Button colorScheme="blue" type="submit">
-                Edit
-              </Button>
-            </ModalFooter>
-          </form>
-        </ModalContent>
-      </Modal>
+      <ModalEditFishermanTeamContext />
 
       {/* <Td>
        
@@ -257,6 +198,7 @@ function TableFishermanTeam(data) {
         </AlertDialogOverlay>
       </AlertDialog>
     </Tr>
+    </modalEditFishermanTeamContext.Provider>
   );
 }
 
