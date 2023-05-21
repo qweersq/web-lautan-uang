@@ -166,7 +166,7 @@ function TableFisherman(props) {
         >
           {tim_id}
         </Badge>
-        <Text fontSize="sm"  bg="gray.300" p="3px 10px"  borderRadius="8px" fontWeight="bold" fontSize="12px">
+        <Text fontSize="sm"  bg="gray.300" p="3px 10px"  borderRadius="8px" fontWeight="bold">
           {location_id}
         </Text>
         {/* </Flex> */}
@@ -184,7 +184,7 @@ function TableFisherman(props) {
         >
           {address}
         </Badge>
-        <Text fontSize="sm" bg="gray.300" p="3px 10px"  borderRadius="8px" fontWeight="bold" fontSize="12px">
+        <Text fontSize="sm" bg="gray.300" p="3px 10px"  borderRadius="8px" fontWeight="bold" >
           {phone}
         </Text>
         {/* </Flex> */}
