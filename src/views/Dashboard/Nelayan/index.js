@@ -9,7 +9,7 @@ import {
 import React from "react";
 import Authors from "./components/Authors";
 import Projects from "./components/Projects";
-import { tablesTableData, dashboardTableData } from "variables/general";
+import { tablesTableData, dashboardTableData, LocationData } from "variables/general";
 // import MiniStatistics from "../../../components/MiniStatistic/MiniStatistics";
 import {
   CartIcon,
@@ -21,6 +21,7 @@ import TopFisherman from "./components/TopFisherman";
 import MiniStatistics from "./components/MiniStatistics";
 import FishermanTeam from "./components/FishermanTeam";
 import Fisherman from "./components/Fisherman";
+import Location from "./components/Location";
 
 import NelayanTeamAPI from "api/NelayanTeamAPI";
 
@@ -49,6 +50,27 @@ function Nelayan() {
         />
       </SimpleGrid>
 
+      <Flex mt='5'>
+        <TopFisherman
+          title={"Top 5 Most Invest Fisherman"}
+          captions={["Name/Email"]}
+          data={tablesTableData}
+        />
+        <Location 
+        title="Location Fisherman"
+        captions={[
+          "Country",
+          "Provinsi",
+          "Kota/Kab",
+          "Kecamatan",
+          "Kelurahan",
+          "Postal-Code",
+          "Actions",
+        ]}
+        data={LocationData}
+         />
+      </Flex>
+
       <Grid sx={{ mt: "30px" }} gap={10}>
         <GridItem>
           <NelayanTeamAPI />
@@ -68,16 +90,6 @@ function Nelayan() {
               "Status",
               "Actions",
             ]}
-            data={tablesTableData}
-          />
-        </GridItem>
-      </Grid>
-
-      <Grid sx={{ mt: "30px" }}>
-        <GridItem>
-          <TopFisherman
-            title={"Top 5 Most Invest Fisherman"}
-            captions={["Name/Email"]}
             data={tablesTableData}
           />
         </GridItem>

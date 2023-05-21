@@ -92,7 +92,36 @@ export const fishermanTeamTableData = [
     address: "Jalan Kalpataru",
     location: "Malang Selatan",
   },
-  
+]
+
+export const LocationData = [
+  {
+    id: 1,
+    country_name : "Indonesia",
+    province_name : "Jawa Timur",
+    kota_kab_name : "Malang", 
+    kecamatan_name : "Sitiarjo", 
+    kelurahan_des_name : "NULL", 
+    postal_code : 1234, 
+  },
+  {
+    id: 2,
+    country_name : "Indonesia",
+    province_name : "Jawa Timur",
+    kota_kab_name : "Malang", 
+    kecamatan_name : "Sitiarjo", 
+    kelurahan_des_name : "NULL", 
+    postal_code : 1234, 
+  },
+  {
+    id: 3,
+    country_name : "Indonesia",
+    province_name : "Jawa Timur",
+    kota_kab_name : "Malang", 
+    kecamatan_name : "Sitiarjo", 
+    kelurahan_des_name : "NULL", 
+    postal_code : 1234  , 
+  },
 ]
 
 export const timelineData = [
