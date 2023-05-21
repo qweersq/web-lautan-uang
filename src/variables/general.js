@@ -94,6 +94,45 @@ export const fishermanTeamTableData = [
   },
 ]
 
+export const fishermanTableData = [
+  {
+    tim_id: "Tim Kerapu Biru",
+    name: "Zilong",
+    phone: "0875444112684",
+    email: "zilong@gmail.com",
+    password: "zilong123",
+    gender: "Male",
+    birth_date: "1990-01-01",
+    address: "Jalan Kalpataru",
+    role: "Member",
+    location_id: "Malang Selatan",
+    status: "Active",
+    experience: 3,
+    nik: 12345919,
+    photo: avatar2,
+    identity_photo: avatar2,
+  },
+  {
+    tim_id: "Tim Kerapu Biru",
+    name: "Zilong",
+    phone: "0875444112684",
+    email: "zilong@gmail.com",
+    password: "zilong123",
+    gender: "Male",
+    birth_date: "1990-01-01",
+    address: "Jalan Kalpataru",
+    role: "Leader",
+    location_id: "Malang Selatan",
+    status: "Active",
+    experience: 3,
+    nik: 12345919,
+    photo: avatar2,
+    identity_photo: avatar2,
+  },
+  
+  
+]
+
 export const LocationData = [
   {
     id: 1,

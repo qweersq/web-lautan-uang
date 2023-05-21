@@ -354,7 +354,7 @@ const Fisherman = ({ title, captions, data }) => {
           pointerEvents="none"
           children={<SearchIcon color="blue.300" />}
         />
-        <Input placeholder="Find fisherman team" />
+        <Input placeholder="Find fisherman" />
       </InputGroup>
 
       <CardBody>
@@ -375,7 +375,13 @@ const Fisherman = ({ title, captions, data }) => {
               return (
                 <TableFisherman
                   key={`${row.email}-${row.name}`}
-                  name={row.name}
+                  name = {row.name}
+                  location_id = {row.location_id}
+                  address = {row.address}
+                  gender = {row.gender}
+                  phone = {row.phone}
+                  role = {row.role}
+                  tim_id={row.tim_id}
                   logo={row.logo}
                   email={row.email}
                   subdomain={row.subdomain}

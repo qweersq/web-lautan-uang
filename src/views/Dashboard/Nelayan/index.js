@@ -9,7 +9,7 @@ import {
 import React from "react";
 import Authors from "./components/Authors";
 import Projects from "./components/Projects";
-import { tablesTableData, dashboardTableData, LocationData } from "variables/general";
+import { tablesTableData, dashboardTableData, LocationData, fishermanTableData } from "variables/general";
 // import MiniStatistics from "../../../components/MiniStatistic/MiniStatistics";
 import {
   CartIcon,
@@ -80,17 +80,15 @@ function Nelayan() {
             title={"Fisherman Table"}
             textColor={"blue"}
             captions={[
-              "Team Name",
               "Name",
-              "Phone",
-              "Email",
+              "Fisherman Team",
+              "Address & Phone",
               "Gender",
-              "Address",
               "Role",
               "Status",
               "Actions",
             ]}
-            data={tablesTableData}
+            data={fishermanTableData}
           />
         </GridItem>
       </Grid>

@@ -7,7 +7,7 @@ import {
   ViewOffIcon,
   EditIcon,
   InfoOutlineIcon,
-  ChevronDownIcon
+  ChevronDownIcon,
 } from "@chakra-ui/icons";
 import {
   Avatar,
@@ -56,16 +56,21 @@ import React from "react";
 
 function TableFisherman(props) {
   const {
-    logo,
+    tim_id,
     name,
+    phone,
     email,
-    subdomain,
-    domain,
-    status,
-    date,
+    password,
     gender,
+    birth_date,
     address,
     role,
+    location_id,
+    status,
+    experience,
+    nik,
+    photo,
+    identity_photo,
   } = props;
   const textColor = useColorModeValue("gray.700", "white");
   const bgStatus = useColorModeValue("gray.400", "#1a202c");
@@ -132,7 +137,7 @@ function TableFisherman(props) {
     <Tr>
       <Td minWidth={{ sm: "250px" }} pl="0px">
         <Flex align="center" py=".8rem" minWidth="100%" flexWrap="nowrap">
-          <Avatar src={logo} w="50px" borderRadius="12px" me="18px" />
+          <Avatar src={photo} w="50px" borderRadius="12px" me="18px" />
           <Flex direction="column">
             <Text
               fontSize="md"
@@ -150,25 +155,55 @@ function TableFisherman(props) {
       </Td>
 
       <Td>
-        <Flex direction="column">
-          <Text fontSize="md" color={textColor} fontWeight="bold">
-            {domain}
-          </Text>
-          <Text fontSize="sm" color="gray.400" fontWeight="normal">
-            {subdomain}
-          </Text>
-        </Flex>
+        {/* <Flex direction="column"> */}
+        <Badge
+          bg={"blue.400"}
+          color={"white"}
+          fontSize="15px"
+          p="3px 10px"
+          borderRadius="8px"
+          m={1}
+        >
+          {tim_id}
+        </Badge>
+        <Text fontSize="sm"  bg="gray.300" p="3px 10px"  borderRadius="8px" fontWeight="bold" fontSize="12px">
+          {location_id}
+        </Text>
+        {/* </Flex> */}
+      </Td>
+
+      <Td>
+        {/* <Flex direction="column"> */}
+        <Badge
+          bg={"blue.400"}
+          color={"white"}
+          fontSize="15px"
+          p="3px 10px"
+          borderRadius="8px"
+          m={1}
+        >
+          {address}
+        </Badge>
+        <Text fontSize="sm" bg="gray.300" p="3px 10px"  borderRadius="8px" fontWeight="bold" fontSize="12px">
+          {phone}
+        </Text>
+        {/* </Flex> */}
+      </Td>
+      <Td>
+        <Text fontSize="md" color={textColor} fontWeight="bold" pb=".5rem">
+          {gender}
+        </Text>
       </Td>
 
       <Td>
         <Text fontSize="md" color={textColor} fontWeight="bold" pb=".5rem">
-          {date}
+          {role}
         </Text>
       </Td>
       <Td>
         <Badge
-          bg={status === "Success" ? "green.400" : bgStatus}
-          color={status === "Success" ? "white" : colorStatus}
+          bg={status === "Active" ? "green.400" : bgStatus}
+          color={status === "Active" ? "white" : colorStatus}
           fontSize="16px"
           p="3px 10px"
           borderRadius="8px"
@@ -176,43 +211,27 @@ function TableFisherman(props) {
           {status}
         </Badge>
       </Td>
-      <Td>
-        <Text fontSize="md" color={textColor} fontWeight="bold" pb=".5rem">
-          gender
-        </Text>
-      </Td>
-      <Td>
-        <Text fontSize="md" color={textColor} fontWeight="bold" pb=".5rem">
-          Address
-        </Text>
-      </Td>
-      <Td>
-        <Text fontSize="md" color={textColor} fontWeight="bold" pb=".5rem">
-          Role
-        </Text>
-      </Td>
-      <Td>
-        <Text fontSize="md" color={textColor} fontWeight="bold" pb=".5rem">
-          {status}
-        </Text>
-      </Td>
 
       <Td>
         {/* <Flex direction="column" align="center"> */}
         <Button
           p="0px"
+          w="20"
           size="md"
-          color="green.600"
+          bg="yellow.300"
           variant="ghost"
           onClick={onOpen}
+          m={1}
         >
           Edit
         </Button>
         <br />
         <Button
           p="0px"
+          w="20"
+          m={1}
           size="md"
-          color="red.600"
+          bg="red.300"
           variant="ghost"
           onClick={onOpenDelete}
         >
@@ -290,141 +309,141 @@ function TableFisherman(props) {
               <FormControl mt={4}>
                 <FormLabel>Gender</FormLabel>
                 <Menu size="sm">
-                    <MenuButton
-                      isActive={selectedGender !== ""}
-                      as={Button}
-                      rightIcon={<ChevronDownIcon />}
-                    >
-                      {selectedGender || "Select gender"}
-                    </MenuButton>
-                    <MenuList>
-                      <MenuItem onClick={() => handleGenderSelect("Male")}>
-                        Male
-                      </MenuItem>
-                      <MenuItem onClick={() => handleGenderSelect("Female")}>
-                        Female
-                      </MenuItem>
-                    </MenuList>
-                  </Menu>
+                  <MenuButton
+                    isActive={selectedGender !== ""}
+                    as={Button}
+                    rightIcon={<ChevronDownIcon />}
+                  >
+                    {selectedGender || "Select gender"}
+                  </MenuButton>
+                  <MenuList>
+                    <MenuItem onClick={() => handleGenderSelect("Male")}>
+                      Male
+                    </MenuItem>
+                    <MenuItem onClick={() => handleGenderSelect("Female")}>
+                      Female
+                    </MenuItem>
+                  </MenuList>
+                </Menu>
               </FormControl>
 
               <FormControl mt={4}>
-                  <FormLabel>Birt-Date</FormLabel>
-                  <Input
-                    name="date"
-                    type="datetime-local"
-                    value={transactionData.date}
-                    onChange={handleChange}
-                    placeholder="Enter Date"
-                  />
-                </FormControl>
-                <FormControl mt={4}>
-                  <FormLabel>Address</FormLabel>
-                  <Menu size="sm">
-                    <MenuButton
-                      isActive={selectedLoc !== ""}
-                      as={Button}
-                      rightIcon={<ChevronDownIcon />}
-                    >
-                      {selectedLoc || "Select Location"}
-                    </MenuButton>
-                    <MenuList>
-                      {/* Map Location */}
-                      <MenuItem onClick={() => handleLocSelect("Loc 1")}>
-                        Loc 1
-                      </MenuItem>
-                      <MenuItem onClick={() => handleLocSelect("Loc 2")}>
-                        Loc 2
-                      </MenuItem>
-                    </MenuList>
-                  </Menu>
-                  <Textarea
-                    mt={2}
-                    name="address"
-                    placeholder="Input Detail Address"
-                  />
-                </FormControl>
+                <FormLabel>Birt-Date</FormLabel>
+                <Input
+                  name="date"
+                  type="datetime-local"
+                  value={transactionData.date}
+                  onChange={handleChange}
+                  placeholder="Enter Date"
+                />
+              </FormControl>
+              <FormControl mt={4}>
+                <FormLabel>Address</FormLabel>
+                <Menu size="sm">
+                  <MenuButton
+                    isActive={selectedLoc !== ""}
+                    as={Button}
+                    rightIcon={<ChevronDownIcon />}
+                  >
+                    {selectedLoc || "Select Location"}
+                  </MenuButton>
+                  <MenuList>
+                    {/* Map Location */}
+                    <MenuItem onClick={() => handleLocSelect("Loc 1")}>
+                      Loc 1
+                    </MenuItem>
+                    <MenuItem onClick={() => handleLocSelect("Loc 2")}>
+                      Loc 2
+                    </MenuItem>
+                  </MenuList>
+                </Menu>
+                <Textarea
+                  mt={2}
+                  name="address"
+                  placeholder="Input Detail Address"
+                />
+              </FormControl>
 
-                <FormControl mt={4}>
-                    <FormLabel>Role</FormLabel>
-                    <Menu size="sm">
-                      <MenuButton
-                        isActive={selectedRole !== ""}
-                        as={Button}
-                        rightIcon={<ChevronDownIcon />}
-                      >
-                        {selectedRole || "Select Role"}
-                      </MenuButton>
-                      <MenuList>
-                        {/* Map Location */}
-                        <MenuItem onClick={() => handleRoleSelect("Leader")}>
-                          Leader
-                        </MenuItem>
-                        <MenuItem onClick={() => handleRoleSelect("Member")}>
-                          Member
-                        </MenuItem>
-                      </MenuList>
-                    </Menu>
-                  </FormControl>
-                  <FormControl mt={4}>
-                    <FormLabel>Status</FormLabel>
-                    <Menu size="sm">
-                      <MenuButton
-                        isActive={selectedStatus !== ""}
-                        as={Button}
-                        rightIcon={<ChevronDownIcon />}
-                      >
-                        {selectedStatus || "Select Status"}
-                      </MenuButton>
-                      <MenuList>
-                        {/* Map Location */}
-                        <MenuItem onClick={() => handleStatusSelect("Aktif")}>
-                          Aktif
-                        </MenuItem>
-                        <MenuItem onClick={() => handleStatusSelect("Non Active")}>
-                          Non Active
-                        </MenuItem>
-                      </MenuList>
-                    </Menu>
-                  </FormControl>
-                  <FormControl>
-                  <FormLabel>Experience</FormLabel>
-                  <InputGroup>
-                    <InputLeftAddon children={<EditIcon color="gray.300" />} />
-                    <Input name="experience" type="number" />
-                  </InputGroup>
+              <FormControl mt={4}>
+                <FormLabel>Role</FormLabel>
+                <Menu size="sm">
+                  <MenuButton
+                    isActive={selectedRole !== ""}
+                    as={Button}
+                    rightIcon={<ChevronDownIcon />}
+                  >
+                    {selectedRole || "Select Role"}
+                  </MenuButton>
+                  <MenuList>
+                    {/* Map Location */}
+                    <MenuItem onClick={() => handleRoleSelect("Leader")}>
+                      Leader
+                    </MenuItem>
+                    <MenuItem onClick={() => handleRoleSelect("Member")}>
+                      Member
+                    </MenuItem>
+                  </MenuList>
+                </Menu>
+              </FormControl>
+              <FormControl mt={4}>
+                <FormLabel>Status</FormLabel>
+                <Menu size="sm">
+                  <MenuButton
+                    isActive={selectedStatus !== ""}
+                    as={Button}
+                    rightIcon={<ChevronDownIcon />}
+                  >
+                    {selectedStatus || "Select Status"}
+                  </MenuButton>
+                  <MenuList>
+                    {/* Map Location */}
+                    <MenuItem onClick={() => handleStatusSelect("Aktif")}>
+                      Aktif
+                    </MenuItem>
+                    <MenuItem onClick={() => handleStatusSelect("Non Active")}>
+                      Non Active
+                    </MenuItem>
+                  </MenuList>
+                </Menu>
+              </FormControl>
+              <FormControl>
+                <FormLabel>Experience</FormLabel>
+                <InputGroup>
+                  <InputLeftAddon children={<EditIcon color="gray.300" />} />
+                  <Input name="experience" type="number" />
+                </InputGroup>
+              </FormControl>
+              <Flex gap={4}>
+                <FormControl mt="4">
+                  <FormLabel>Photo</FormLabel>
+                  <Input type="file" name="photo" isFullWidth size="md" />
                 </FormControl>
-                <Flex gap={4}>
-                  <FormControl mt="4">
-                    <FormLabel>Photo</FormLabel>
-                    <Input type="file" name="photo" isFullWidth size="md" />
-                  </FormControl>
-                  <FormControl mt="4">
-                    <FormLabel>Identify Photo</FormLabel>
-                    <Input
-                      type="file"
-                      name="identify-photo"
-                      isFullWidth
-                      size="md"
-                    />
-                  </FormControl>
-                </Flex>
-                <FormControl mt={4}>
-                  <FormLabel>NIK</FormLabel>
-                  <InputGroup>
-                    <InputLeftElement
-                      pointerEvents="none"
-                      children={<InfoOutlineIcon color="gray.300" />}
-                    />
-                    <Input
-                      type="number"
-                      name="nik"
-                      value={transactionData.amount}
-                      onChange={handleChange}
-                      placeholder="Enter NIK"
-                    />
-                  </InputGroup>
+                <FormControl mt="4">
+                  <FormLabel>Identify Photo</FormLabel>
+                  <Input
+                    type="file"
+                    name="identify-photo"
+                    isFullWidth
+                    size="md"
+                  />
                 </FormControl>
+              </Flex>
+              <FormControl mt={4}>
+                <FormLabel>NIK</FormLabel>
+                <InputGroup>
+                  <InputLeftElement
+                    pointerEvents="none"
+                    children={<InfoOutlineIcon color="gray.300" />}
+                  />
+                  <Input
+                    type="number"
+                    name="nik"
+                    value={transactionData.amount}
+                    onChange={handleChange}
+                    placeholder="Enter NIK"
+                  />
+                </InputGroup>
+              </FormControl>
             </ModalBody>
 
             <ModalFooter>
