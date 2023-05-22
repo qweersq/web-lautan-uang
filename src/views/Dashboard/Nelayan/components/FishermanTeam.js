@@ -1,5 +1,5 @@
 // Chakra imports
-import { SearchIcon } from "@chakra-ui/icons";
+import { SearchIcon,PhoneIcon, ChevronDownIcon } from "@chakra-ui/icons";
 import {
   AddIcon,
   Button,
@@ -25,6 +25,11 @@ import {
   Tr,
   useColorModeValue,
   useDisclosure,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  Textarea
 } from "@chakra-ui/react";
 // Custom components
 import Card from "components/Card/Card.js";
@@ -62,8 +67,12 @@ const FishermanTeam = ({ title, captions, data }) => {
     onClose();
   };
 
+  const [selectedLoc, setSelectedLoc] = React.useState("");
+  const handleLocSelect = (location) => {
+    setSelectedLoc(location);
+  };
   return (
-    <Card overflowX={{ sm: "scroll", xl: "hidden" }}>
+    <Card overflowX={{ sm: "scroll", xl: "hidden" }} mt={2}>
       <CardHeader p="6px 0px 22px 0px">
         <Text fontSize="xl" color={textColor} fontWeight="bold">
           {title}
@@ -83,38 +92,102 @@ const FishermanTeam = ({ title, captions, data }) => {
         >
           <ModalOverlay />
           <ModalContent>
-            <ModalHeader>Add Transaction</ModalHeader>
+            <ModalHeader>Add New Fisherman Team</ModalHeader>
             <ModalCloseButton />
             <form onSubmit={handleSubmit}>
               <ModalBody pb={6}>
                 <FormControl>
-                  <FormLabel>Fisherman Team</FormLabel>
+                  <FormLabel>Fisherman Team Name</FormLabel>
                   <Input
                     name="name"
                     ref={initialRef}
                     value={transactionData.name}
                     onChange={handleChange}
-                    placeholder="Enter transaction fisherman team name"
+                    placeholder="Enter New Fisherman Team Name"
                   />
                 </FormControl>
 
                 <FormControl mt={4}>
-                  <FormLabel>Amount</FormLabel>
+                  <FormLabel>Phone</FormLabel>
+                  <InputGroup>
+                    <InputLeftElement
+                      pointerEvents="none"
+                      children={<PhoneIcon color="gray.300" />}
+                    />
+                    <Input
+                      type="tel"
+                      name="phone"
+                      placeholder="Enter phone number"
+                    />
+                  </InputGroup>
+                </FormControl>
+
+                <FormControl mt={4}>
+                  <FormLabel>Year Formed</FormLabel>
                   <Input
-                    name="amount"
-                    value={transactionData.amount}
-                    onChange={handleChange}
-                    placeholder="Enter transaction amount"
+                    name="yearformed"
+                    type="number"
+                    placeholder="Enter Year Formed"
                   />
                 </FormControl>
 
                 <FormControl mt={4}>
-                  <FormLabel>Date</FormLabel>
+                  <FormLabel>Address</FormLabel>
+                  <Menu size="sm">
+                    <MenuButton
+                      isActive={selectedLoc !== ""}
+                      as={Button}
+                      rightIcon={<ChevronDownIcon />}
+                    >
+                      {selectedLoc || "Select Location"}
+                    </MenuButton>
+                    <MenuList>
+                      {/* Map Location */}
+                      <MenuItem onClick={() => handleLocSelect("Loc 1")}>
+                        Loc 1
+                      </MenuItem>
+                      <MenuItem onClick={() => handleLocSelect("Loc 2")}>
+                        Loc 2
+                      </MenuItem>
+                    </MenuList>
+                  </Menu>
+                  <Textarea
+                    mt={2}
+                    name="address"
+                    placeholder="Input Detail Address"
+                  />
+                </FormControl>
+
+                <FormControl mt={4}>
+                  <FormLabel>Balance</FormLabel>
                   <Input
-                    name="date"
-                    value={transactionData.date}
-                    onChange={handleChange}
-                    placeholder="Enter transaction date"
+                    name="balance"
+                    type="number"
+                    placeholder="Enter Balance"
+                  />
+                </FormControl>
+                <FormControl mt={4}>
+                  <FormLabel>Divident Yield</FormLabel>
+                  <Input
+                    name="dividentyield"
+                    type="number"
+                    placeholder="Enter Divident Yield"
+                  />
+                </FormControl>
+                <FormControl mt={4}>
+                  <FormLabel>Debt To Equity Ratio</FormLabel>
+                  <Input
+                    name="debequityratio"
+                    type="number"
+                    placeholder="Enter Debt To Equity Ratio"
+                  />
+                </FormControl>
+                <FormControl mt={4}>
+                  <FormLabel>Market Cap</FormLabel>
+                  <Input
+                    name="marketcap"
+                    type="number"
+                    placeholder="Enter Market Cap"
                   />
                 </FormControl>
               </ModalBody>
@@ -159,11 +232,14 @@ const FishermanTeam = ({ title, captions, data }) => {
           <Tbody>
             {data.map((row) => {
               console.log(row)
-              return (
-                <TableFishermanTeam
-                  data={row}
-                />
-              );
+              console.log(row.name)
+
+              // return (
+              //   <TableFishermanTeam
+              //     // data={row}
+              //     name = {row.name}
+              //   />
+              // );
             })}
           </Tbody>
         </Table>

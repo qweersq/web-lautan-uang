@@ -76,22 +76,20 @@ export const dashboardTableData = [
 
 export const fishermanTeamTableData = [
   {
-    logo: avatar1,
-    team_name: "Team Nelayan Malang",
-    chief_name: "Zilong",
-    phone: "0875444112684",
-    address: "Jalan Kalpataru",
-    location: "Malang Selatan",
+    name: "Tim Kerapu Biru",
+    phone: "0878787878787",
+    year_formed: "2010",
+    address: "Jl Pelabuhan No 10",
+    balance: "0878787878787",
+    locatin_id: "1",
+    quantity: "100",
+    total_assets: "1",
+    divident_yield: "1",
+    debt_to_equity_ration: "1",
+    market_cap: "100000",
   },
   
-  {
-    logo: avatar1,
-    team_name: "Team Nelayan Malang",
-    chief_name: "Miya",
-    phone: "0875444112684",
-    address: "Jalan Kalpataru",
-    location: "Malang Selatan",
-  },
+ 
 ]
 
 export const fishermanTableData = [

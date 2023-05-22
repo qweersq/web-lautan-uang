@@ -9,7 +9,13 @@ import {
 import React from "react";
 import Authors from "./components/Authors";
 import Projects from "./components/Projects";
-import { tablesTableData, dashboardTableData, LocationData, fishermanTableData } from "variables/general";
+import {
+  tablesTableData,
+  dashboardTableData,
+  LocationData,
+  fishermanTableData,
+  fishermanTeamTableData
+} from "variables/general";
 // import MiniStatistics from "../../../components/MiniStatistic/MiniStatistics";
 import {
   CartIcon,
@@ -50,25 +56,25 @@ function Nelayan() {
         />
       </SimpleGrid>
 
-      <Flex mt='5'>
+      <Flex mt="5">
         <TopFisherman
           title={"Top 5 Most Invest Fisherman"}
           captions={["Name/Email"]}
           data={tablesTableData}
         />
-        <Location 
-        title="Location Fisherman"
-        captions={[
-          "Country",
-          "Provinsi",
-          "Kota/Kab",
-          "Kecamatan",
-          "Kelurahan",
-          "Postal-Code",
-          "Actions",
-        ]}
-        data={LocationData}
-         />
+        <Location
+          title="Location Fisherman"
+          captions={[
+            "Country",
+            "Provinsi",
+            "Kota/Kab",
+            "Kecamatan",
+            "Kelurahan",
+            "Postal-Code",
+            "Actions",
+          ]}
+          data={LocationData}
+        />
       </Flex>
 
       <Grid sx={{ mt: "30px" }} gap={10}>
@@ -92,6 +98,23 @@ function Nelayan() {
           />
         </GridItem>
       </Grid>
+      <FishermanTeam
+        title={"Fisherman Team Table"}
+        captions={[
+          "Name",
+          "Phone",
+          "Year-Formed",
+          "Address/Location",
+          "Balance",
+          "Quantity",
+          "Total Assets",
+          "Divident Yield", 
+          "Debt To Equit Ratio", 
+          "Market Cap",
+          "Actions" 
+        ]}
+        data={fishermanTeamTableData}
+      />
 
       {/* <Projects
         title={"Projects Table"}
