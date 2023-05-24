@@ -88,9 +88,68 @@ export const fishermanTeamTableData = [
     debt_to_equity_ration: "1",
     market_cap: "100000",
   },
-  
- 
-]
+  {
+    name: "Tim Kerapu Merah",
+    phone: "0878787878787",
+    year_formed: "2010",
+    address: "Jl Pelabuhan No 10",
+    balance: "0878787878787",
+    locatin_id: "1",
+    quantity: "100",
+    total_assets: "1",
+    divident_yield: "1",
+    debt_to_equity_ration: "1",
+    market_cap: "100000",
+  },
+];
+
+export const fishermanTeamCatchData = fishermanTeamTableData.map((team) => {
+  return {
+    ...team,
+    name: team.name,
+    weight: `${team.name.length}`,
+  };
+});
+
+export const fishermanTeamCatchDetail = [
+  {
+    id: 0,
+    name: "Ikan Tongkol",
+    animal_type: "Ikan bersisik",
+    fishing_catch_id: 1,
+    price: 14.000,
+  },
+  {
+    id: 1,
+    name: "Ikan Sayap Merah",
+    animal_type: "Ikan bersisik",
+    fishing_catch_id: 2,
+    price: 10.0000,
+  },
+  {
+    id: 2,
+    name: "Ikan Ekor Kuning",
+    animal_type: "Ikan bersisik",
+    fishing_catch_id: 3,
+    price: 12.0000,
+  },
+];
+
+// })[
+//   {
+//     name: "Tim Kerapu Biru",
+//     phone: "0878787878787",
+//     year_formed: "2010",
+//     address: "Jl Pelabuhan No 10",
+//     balance: "0878787878787",
+//     locatin_id: "1",
+//     quantity: "100",
+//     total_assets: "1",
+//     divident_yield: "1",
+//     debt_to_equity_ration: "1",
+//     market_cap: "100000",
+//   },
+// ]
 
 export const fishermanTableData = [
   {
@@ -127,39 +186,37 @@ export const fishermanTableData = [
     photo: avatar2,
     identity_photo: avatar2,
   },
-  
-  
-]
+];
 
 export const LocationData = [
   {
     id: 1,
-    country_name : "Indonesia",
-    province_name : "Jawa Timur",
-    kota_kab_name : "Malang", 
-    kecamatan_name : "Sitiarjo", 
-    kelurahan_des_name : "NULL", 
-    postal_code : 1234, 
+    country_name: "Indonesia",
+    province_name: "Jawa Timur",
+    kota_kab_name: "Malang",
+    kecamatan_name: "Sitiarjo",
+    kelurahan_des_name: "NULL",
+    postal_code: 1234,
   },
   {
     id: 2,
-    country_name : "Indonesia",
-    province_name : "Jawa Timur",
-    kota_kab_name : "Malang", 
-    kecamatan_name : "Sitiarjo", 
-    kelurahan_des_name : "NULL", 
-    postal_code : 1234, 
+    country_name: "Indonesia",
+    province_name: "Jawa Timur",
+    kota_kab_name: "Malang",
+    kecamatan_name: "Sitiarjo",
+    kelurahan_des_name: "NULL",
+    postal_code: 1234,
   },
   {
     id: 3,
-    country_name : "Indonesia",
-    province_name : "Jawa Timur",
-    kota_kab_name : "Malang", 
-    kecamatan_name : "Sitiarjo", 
-    kelurahan_des_name : "NULL", 
-    postal_code : 1234  , 
+    country_name: "Indonesia",
+    province_name: "Jawa Timur",
+    kota_kab_name: "Malang",
+    kecamatan_name: "Sitiarjo",
+    kelurahan_des_name: "NULL",
+    postal_code: 1234,
   },
-]
+];
 
 export const timelineData = [
   {

@@ -115,12 +115,6 @@ function Nelayan() {
         ]}
         data={fishermanTeamTableData}
       />
-
-      {/* <Projects
-        title={"Projects Table"}
-        captions={["Companies", "Budget", "Status", "Completion", ""]}
-        data={dashboardTableData}
-      /> */}
     </Flex>
   );
 }

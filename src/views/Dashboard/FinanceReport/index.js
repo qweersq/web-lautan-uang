@@ -20,7 +20,7 @@ import {
   GlobeIcon,
   WalletIcon,
 } from "components/Icons/Icons.js";
-import { tablesTableData, dashboardTableData } from "variables/general";
+import { tablesTableData, dashboardTableData, fishermanTeamCatchDetail, fishermanTeamCatchData } from "variables/general";
 import Authors from "./components/Authors";
 import React, { useEffect, createContext } from "react";
 import MiniStatistics from "./components/MiniStatistics";
@@ -30,6 +30,8 @@ import Card from "components/Card/Card";
 import Transaction from "./components/Transaction";
 import GraphTransaction from "./components/GraphTransaction";
 import InvestorDecline from "./components/InvestorDecline";
+import FishermanCatch from "./components/FishermanCatch";
+import {  } from "variables/general";
 
 export const authError = createContext();
 
@@ -69,57 +71,39 @@ export default function FinanceReport() {
 
       <SimpleGrid columns={3} spacing="24px">
         <MiniStatistics
-          title={"Total Transaksi"}
+          title={"Total Laporan"}
           amount={"$53,000"}
           percentage={55}
           icon={<WalletIcon h={"24px"} w={"24px"} color={iconBoxInside} />}
         />
         <MiniStatistics
-          title={"Jumlah Investor"}
+          title={"Total Telah Membuat Report"}
           amount={"2,300"}
           percentage={5}
           icon={<GlobeIcon h={"24px"} w={"24px"} color={iconBoxInside} />}
         />
         <MiniStatistics
-          title={"Jumlah Nelayan"}
+          title={"Total Yang Belum Report"}
           amount={"+3,020"}
           percentage={-14}
           icon={<DocumentIcon h={"24px"} w={"24px"} color={iconBoxInside} />}
         />
       </SimpleGrid>
 
-      <Grid templateColumns='repeat(3, 4fr)' sx={{ mt: "30px" }} gap={10}>
-        <GridItem colSpan={2}  w='100%' h='100%'>
-          <GraphTransaction
-            title={"Transaction Graph"}
-            list={[1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998]}
-            data={[30, 40, 45, 50, 49, 60, 70, 91]}
-          />
-        </GridItem>
-        <GridItem colSpan={1} w='100%' h='100%'>
-          <InvestorDecline
-            title={"Investor Decline"}
-            captions={["Name/Email"]}
-            data={tablesTableData}
-          />
-        </GridItem>
-
-      </Grid>
-
-      <Box sx={{ mt: "30px" }}>
-        <Transaction
-          title={"Transaction Table"}
+      <Box sx={{ mt: "30px", gap: '2rem' }}>
+      <Flex>
+        <FishermanCatch
+          title={"Fisherman Catch Table"}
           textColor={"blue"}
           captions={[
-            "Fisherman Team",
-            "Investor Name",
-            "Quantity",
-            "Status",
-            "Actions",
+            "Fisherman Team Name",
+            "Weight",
             "Actions",
           ]}
-          data={tablesTableData}
+          data={fishermanTeamCatchData}
+          fishcatchDetail={fishermanTeamCatchDetail}
         />
+      </Flex>
       </Box>
     </Flex>
   );

@@ -233,13 +233,6 @@ const FishermanTeam = ({ title, captions, data }) => {
             {data.map((row) => {
               console.log(row)
               console.log(row.name)
-
-              // return (
-              //   <TableFishermanTeam
-              //     // data={row}
-              //     name = {row.name}
-              //   />
-              // );
             })}
           </Tbody>
         </Table>

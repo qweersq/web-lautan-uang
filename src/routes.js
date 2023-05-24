@@ -53,20 +53,20 @@ var dashRoutes = [
         component: Nelayan,
         layout: "/admin",
       },
-      {
-        path: "/tim-nelayan",
-        name: "Tim Nelayan",
-        icon: <StatsIcon color="inherit" />,
-        component: TimNelayan,
-        layout: "/admin",
-      },
+      // {
+      //   path: "/tim-nelayan",
+      //   name: "Tim Nelayan",
+      //   icon: <StatsIcon color="inherit" />,
+      //   component: TimNelayan,
+      //   layout: "/admin",
+      // },
      
     ],
   },
   
   {
     path: "/nelayan-tim/report",
-    name: "Laporan Financial",
+    name: "Laporan",
     icon: <CreditIcon color="inherit" />,
     component: FinanceReport,
     layout: "/admin",
