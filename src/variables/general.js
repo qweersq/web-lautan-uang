@@ -111,6 +111,24 @@ export const fishermanTeamCatchData = fishermanTeamTableData.map((team) => {
   };
 });
 
+export const animalTypeData = [
+  {
+    id: 0,
+    animal_type: "Ikan Bersisik",
+    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua"
+  },
+  {
+    id: 1,
+    animal_type: "Ikan Duyung",
+    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua"
+  },
+  {
+    id: 2,
+    animal_type: "Ikan Ikanan",
+    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod  "
+  },
+]
+
 export const fishermanTeamCatchDetail = [
   {
     id: 0,

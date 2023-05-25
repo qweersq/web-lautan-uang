@@ -149,7 +149,7 @@ const FishermanCatch = ({ title, captions, data }) => {
                 })}
               </Tr>
             </Thead>
-            <Tbody mt={2}>
+            <Tbody mt={4}>
               {data.map((row) => {
                 // console.log(data)
                 return (

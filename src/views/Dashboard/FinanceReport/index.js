@@ -20,7 +20,12 @@ import {
   GlobeIcon,
   WalletIcon,
 } from "components/Icons/Icons.js";
-import { tablesTableData, dashboardTableData, fishermanTeamCatchDetail, fishermanTeamCatchData } from "variables/general";
+import {
+  tablesTableData,
+  dashboardTableData,
+  fishermanTeamCatchDetail,
+  fishermanTeamCatchData,
+} from "variables/general";
 import Authors from "./components/Authors";
 import React, { useEffect, createContext } from "react";
 import MiniStatistics from "./components/MiniStatistics";
@@ -31,7 +36,11 @@ import Transaction from "./components/Transaction";
 import GraphTransaction from "./components/GraphTransaction";
 import InvestorDecline from "./components/InvestorDecline";
 import FishermanCatch from "./components/FishermanCatch";
-import {  } from "variables/general";
+import FishermanCatchOrder from "./components/FishermanCatchOrder";
+
+import {} from "variables/general";
+import AnimalType from "./components/AnimalType";
+import { animalTypeData } from "variables/general";
 
 export const authError = createContext();
 
@@ -90,21 +99,42 @@ export default function FinanceReport() {
         />
       </SimpleGrid>
 
-      <Box sx={{ mt: "30px", gap: '2rem' }}>
-      <Flex>
-        <FishermanCatch
-          title={"Fisherman Catch Table"}
-          textColor={"blue"}
-          captions={[
-            "Fisherman Team Name",
-            "Weight",
-            "Actions",
-          ]}
-          data={fishermanTeamCatchData}
-          fishcatchDetail={fishermanTeamCatchDetail}
+      <Box sx={{ mt: "30px" }}>
+        <Flex gap={2}>
+          <FishermanCatch
+            title={"Fisherman Catch Table"}
+            textColor={"blue"}
+            captions={["Fisherman Team Name", "Weight", "Actions"]}
+            data={fishermanTeamCatchData}
+            fishcatchDetail={fishermanTeamCatchDetail}
+          />
+          <AnimalType
+            title={"Animal Type"}
+            textColor={"blue"}
+            captions={["Name", "Description", "Actions"]}
+            data={animalTypeData}
+            // fishcatchDetail={fishermanTeamCatchDetail}
+          />
+        </Flex>
+      </Box>
+
+      <Flex gap={4} my={5}>
+        <FishermanCatchOrder
+          title="Most Animal Type Catch"
+          captions={["Name", "Total"]}
+          data={fishermanTeamCatchDetail}
+        />
+        <FishermanCatchOrder
+          title="Fisherman Team Most Catch"
+          captions={["Name", "Total"]}
+          data={fishermanTeamCatchDetail}
+        />
+        <FishermanCatchOrder
+          title="Fisherman Team Most Catch"
+          captions={["Name", "Total"]}
+          data={fishermanTeamCatchDetail}
         />
       </Flex>
-      </Box>
     </Flex>
   );
 }
