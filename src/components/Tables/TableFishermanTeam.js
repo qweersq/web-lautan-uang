@@ -1,4 +1,15 @@
 import {
+  AtSignIcon,
+  PhoneIcon,
+  SearchIcon,
+  UnlockIcon,
+  ViewIcon,
+  ViewOffIcon,
+  EditIcon,
+  InfoOutlineIcon,
+  ChevronDownIcon,
+} from "@chakra-ui/icons";
+import {
   Avatar,
   Badge,
   Button,
@@ -8,6 +19,7 @@ import {
   Box,
   useColorModeValue,
   useDisclosure,
+  AddIcon,
   FormControl,
   FormLabel,
   Input,
@@ -30,60 +42,55 @@ import {
   AlertDialogHeader,
   AlertDialogBody,
   AlertDialogFooter,
+  InputGroup,
+  Menu,
+  MenuButton,
+  InputLeftElement,
+  InputLeftAddon,
+  InputRightElement,
+  Textarea,
+  MenuList,
+  MenuItem,
 } from "@chakra-ui/react";
 import React from "react";
-import { createContext, useState, useRef } from "react";
-import ModalEditFishermanTeamContext from "views/Dashboard/Nelayan/components/ModalEditFishermanTeam";
 
-export const modalEditFishermanTeamContext = createContext(null);
-
-function TableFishermanTeam(data) {
+export default function TableFishermanTeam(props) {
   const {
-    Name,
-    Phone,
-    Address,
-    Balance,
-    Quantity,
-    TotalAssets,
-    YearFormed,
-    Location,
-  } = data.data;
+    name,
+    phone,
+    yearFormed,
+    address,
+    location,
+    balance,
+    quantity,
+    totalAssets,
+    dividentYield,
+    debt_to_equity_ration,
+    marketCap,
+  } = props;
 
-  const { kota_kab_name, province_name } = Location;
   const textColor = useColorModeValue("gray.700", "white");
-  const bgStatus = useColorModeValue("gray.400", "#1a202c");
-  const colorStatus = useColorModeValue("white", "gray.400");
 
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const initialRef = React.useRef(null);
+  const finalRef = React.useRef(null);
+  const cancelRef = React.useRef();
+
   const {
     isOpen: IsOpenDelete,
     onOpen: onOpenDelete,
     onClose: onCloseDelete,
   } = useDisclosure();
 
-  const cancelRef = React.useRef();
-  const initialRef = React.useRef(null);
-  const finalRef = React.useRef(null);
-
-  const [transactionData, editTransactionData] = React.useState({
-    fisherman_team: "",
-    investor: "",
-    quantity: "",
-    status: "",
+  const [transactionData, setTransactionData] = React.useState({
+    name: "",
+    amount: "",
+    date: "",
   });
-
-  const NumberIDR = (num) => {
-    const formattedNumber = new Intl.NumberFormat("id-ID", {
-      style: "currency",
-      currency: "IDR",
-    }).format(num);
-
-    return <div>{formattedNumber}</div>;
-  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    editTransactionData((prevState) => ({
+    setTransactionData((prevState) => ({
       ...prevState,
       [name]: value,
     }));
@@ -95,119 +102,199 @@ function TableFishermanTeam(data) {
     onClose();
   };
 
+  const [selectedLoc, setSelectedLoc] = React.useState("");
+  const handleLocSelect = (location) => {
+    setSelectedLoc(location);
+  };
+
   return (
-    <modalEditFishermanTeamContext.Provider value={{ onOpen, isOpen, onClose }}>
-      <Tr>
-        <Td minWidth={{ sm: "250px" }} pl="0px">
-          <Flex align="center" py=".8rem" minWidth="100%" flexWrap="nowrap">
-            <Avatar src={"#"} w="50px" borderRadius="12px" me="18px" />
-            <Text
-              fontSize="md"
-              color={textColor}
-              fontWeight="bold"
-              minWidth="100%"
-            >
-              {Name}
-            </Text>
-          </Flex>
-        </Td>
-
-        <Td>
-          <Flex direction="column">
-            <Text fontSize="md" color={textColor} fontWeight="bold">
-              {Phone}
-            </Text>
-          </Flex>
-        </Td>
-
-        <Td>
-          <Text fontSize="md" color={textColor} fontWeight="bold" pb=".5rem">
-            {YearFormed}
-          </Text>
-        </Td>
-        <Td>
-          <Text fontSize="md" color={textColor} fontWeight="bold" pb=".5rem">
-            {Address}
-          </Text>
-        </Td>
-        <Td>
-          <Text fontSize="md" color={textColor} fontWeight="bold" pb=".5rem">
-            {NumberIDR(Balance)}
-          </Text>
-        </Td>
-        <Td>
-          <Text fontSize="md" color={textColor} fontWeight="bold" pb=".5rem">
-            {kota_kab_name}, {province_name}
-          </Text>
-        </Td>
-        <Td>
-          <Text fontSize="md" color={textColor} fontWeight="bold" pb=".5rem">
-            {Quantity}
-          </Text>
-        </Td>
-        <Td>
-          <Text fontSize="md" color={textColor} fontWeight="bold" pb=".5rem">
-            {NumberIDR(TotalAssets)}
-          </Text>
-        </Td>
-
-        <Td>
-          <Flex direction="column" align="center">
-            <Button
-              p="0px"
-              size="md"
-              color="green.600"
-              variant="ghost"
-              onClick={onOpen}
-            >
-              Edit
-            </Button>
-            <Button
-              p="0px"
-              size="md"
-              color="red.600"
-              variant="ghost"
-              onClick={onOpenDelete}
-            >
-              Delete
-            </Button>
-          </Flex>
-        </Td>
-
-        <ModalEditFishermanTeamContext />
-
-        {/* <Td>
-       
-      </Td> */}
-        <AlertDialog
-          isOpen={IsOpenDelete}
-          leastDestructiveRef={cancelRef}
-          onClose={onCloseDelete}
+    <Tr>
+      <Td>{name}</Td>
+      <Td>{phone}</Td>
+      <Td>{yearFormed}</Td>
+      <Td>
+        <Text>{address}</Text>
+        <Text>{location}</Text>
+      </Td>
+      <Td>{balance}</Td>
+      <Td>{quantity}</Td>
+      <Td>{totalAssets}</Td>
+      <Td>{dividentYield}</Td>
+      <Td>{debt_to_equity_ration}</Td>
+      <Td>{marketCap}</Td>
+      <Td>
+        <Button
+          p="0px"
+          w="20"
+          size="md"
+          bg="yellow.300"
+          variant="ghost"
+          onClick={onOpen}
+          m={1}
         >
-          <AlertDialogOverlay>
-            <AlertDialogContent>
-              <AlertDialogHeader fontSize="lg" fontWeight="bold">
-                Delete Customer
-              </AlertDialogHeader>
+          Edit
+        </Button>
+        <br />
+        <Button
+          p="0px"
+          w="20"
+          m={1}
+          size="md"
+          bg="red.300"
+          variant="ghost"
+          onClick={onOpenDelete}
+        >
+          Delete
+        </Button>
+      </Td>
 
-              <AlertDialogBody>
-                Are you sure? You can't undo this action afterwards.
-              </AlertDialogBody>
+      <Modal
+        initialFocusRef={initialRef}
+        finalFocusRef={finalRef}
+        isOpen={isOpen}
+        onClose={onClose}
+        size="lg"
+      >
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Edit Fisherman Team</ModalHeader>
+          <ModalCloseButton />
+          <form onSubmit={handleSubmit}>
+            <ModalBody pb={6}>
+              <FormControl>
+                <FormLabel>Fisherman Team Name</FormLabel>
+                <Input
+                  name="name"
+                  ref={initialRef}
+                  value={transactionData.name}
+                  onChange={handleChange}
+                  placeholder="Enter New Fisherman Team Name"
+                />
+              </FormControl>
 
-              <AlertDialogFooter>
-                <Button ref={cancelRef} onClick={onCloseDelete}>
-                  Cancel
-                </Button>
-                <Button colorScheme="red" onClick={onCloseDelete} ml={3}>
-                  Delete
-                </Button>
-              </AlertDialogFooter>
-            </AlertDialogContent>
-          </AlertDialogOverlay>
-        </AlertDialog>
-      </Tr>
-    </modalEditFishermanTeamContext.Provider>
+              <FormControl mt={4}>
+                <FormLabel>Phone</FormLabel>
+                <InputGroup>
+                  <InputLeftElement
+                    pointerEvents="none"
+                    children={<PhoneIcon color="gray.300" />}
+                  />
+                  <Input
+                    type="tel"
+                    name="phone"
+                    placeholder="Enter phone number"
+                  />
+                </InputGroup>
+              </FormControl>
+
+              <FormControl mt={4}>
+                <FormLabel>Year Formed</FormLabel>
+                <Input
+                  name="yearformed"
+                  type="number"
+                  placeholder="Enter Year Formed"
+                />
+              </FormControl>
+
+              <FormControl mt={4}>
+                <FormLabel>Address</FormLabel>
+                <Menu size="sm">
+                  <MenuButton
+                    isActive={selectedLoc !== ""}
+                    as={Button}
+                    rightIcon={<ChevronDownIcon />}
+                  >
+                    {selectedLoc || "Select Location"}
+                  </MenuButton>
+                  <MenuList>
+                    {/* Map Location */}
+                    <MenuItem onClick={() => handleLocSelect("Loc 1")}>
+                      Loc 1
+                    </MenuItem>
+                    <MenuItem onClick={() => handleLocSelect("Loc 2")}>
+                      Loc 2
+                    </MenuItem>
+                  </MenuList>
+                </Menu>
+                <Textarea
+                  mt={2}
+                  name="address"
+                  placeholder="Input Detail Address"
+                />
+              </FormControl>
+
+              <FormControl mt={4}>
+                <FormLabel>Balance</FormLabel>
+                <Input
+                  name="balance"
+                  type="number"
+                  placeholder="Enter Balance"
+                />
+              </FormControl>
+              <FormControl mt={4}>
+                <FormLabel>Divident Yield</FormLabel>
+                <Input
+                  name="dividentyield"
+                  type="number"
+                  placeholder="Enter Divident Yield"
+                />
+              </FormControl>
+              <FormControl mt={4}>
+                <FormLabel>Debt To Equity Ratio</FormLabel>
+                <Input
+                  name="debequityratio"
+                  type="number"
+                  placeholder="Enter Debt To Equity Ratio"
+                />
+              </FormControl>
+              <FormControl mt={4}>
+                <FormLabel>Market Cap</FormLabel>
+                <Input
+                  name="marketcap"
+                  type="number"
+                  placeholder="Enter Market Cap"
+                />
+              </FormControl>
+            </ModalBody>
+
+            <ModalFooter>
+              <Button variant="ghost" mr={3} onClick={onClose}>
+                Cancel
+              </Button>
+              <Button colorScheme="blue" type="submit">
+                Save
+              </Button>
+            </ModalFooter>
+          </form>
+        </ModalContent>
+      </Modal>
+
+      <AlertDialog
+        isOpen={IsOpenDelete}
+        leastDestructiveRef={cancelRef}
+        onClose={onCloseDelete}
+      >
+        <AlertDialogOverlay>
+          <AlertDialogContent>
+            <AlertDialogHeader fontSize="lg" fontWeight="bold">
+              Delete Fisherman Team
+            </AlertDialogHeader>
+
+            <AlertDialogBody>
+            Are you sure you want to delete Fisherman Team?
+            </AlertDialogBody>
+
+            <AlertDialogFooter>
+              <Button ref={cancelRef} onClick={onCloseDelete}>
+                Cancel
+              </Button>
+              <Button colorScheme="red" onClick={onCloseDelete} ml={3}>
+                Delete
+              </Button>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialogOverlay>
+      </AlertDialog>
+    </Tr>
   );
 }
-
-export default TableFishermanTeam;

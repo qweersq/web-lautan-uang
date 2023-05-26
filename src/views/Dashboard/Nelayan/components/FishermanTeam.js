@@ -1,5 +1,5 @@
 // Chakra imports
-import { SearchIcon,PhoneIcon, ChevronDownIcon } from "@chakra-ui/icons";
+import { SearchIcon, PhoneIcon, ChevronDownIcon } from "@chakra-ui/icons";
 import {
   AddIcon,
   Button,
@@ -23,13 +23,14 @@ import {
   Th,
   Thead,
   Tr,
+  Td,
   useColorModeValue,
   useDisclosure,
   Menu,
   MenuButton,
   MenuList,
   MenuItem,
-  Textarea
+  Textarea,
 } from "@chakra-ui/react";
 // Custom components
 import Card from "components/Card/Card.js";
@@ -207,14 +208,13 @@ const FishermanTeam = ({ title, captions, data }) => {
         {/* Card Table */}
       </CardHeader>
 
-      <InputGroup   width="50%">
+      <InputGroup width="50%">
         <InputLeftElement
           pointerEvents="none"
           children={<SearchIcon color="blue.300" />}
         />
         <Input placeholder="Find fisherman team" />
       </InputGroup>
-
 
       <CardBody>
         <Table variant="simple" color={textColor}>
@@ -230,9 +230,32 @@ const FishermanTeam = ({ title, captions, data }) => {
             </Tr>
           </Thead>
           <Tbody>
+            {/* <Tr>
+              <Td>Test</Td>
+              <Td>Test</Td>
+              <Td>Test</Td>
+              <Td>Test</Td>
+              <Td>Test</Td>
+            </Tr> */}
+
             {data.map((row) => {
-              console.log(row)
-              console.log(row.name)
+              // console.log(row)
+              // console.log(row.name)
+              return (
+                <TableFishermanTeam
+                  name={row.name}
+                  phone={row.phone}
+                  yearFormed={row.year_formed}
+                  address={row.address}
+                  location={row.location_id}
+                  balance={row.balance}
+                  quantity={row.quantity}
+                  totalAssets={row.total_assets}
+                  dividentYield={row.divident_yield}
+                  debt_to_equity_ration={row.debt_to_equity_ration}
+                  marketCap={row.market_cap}
+                />
+              );
             })}
           </Tbody>
         </Table>
