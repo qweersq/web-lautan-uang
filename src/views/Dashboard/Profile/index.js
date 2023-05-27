@@ -6,7 +6,7 @@ import React from "react";
 import { FaCube, FaPenFancy } from "react-icons/fa";
 import { IoDocumentsSharp } from "react-icons/io5";
 import Conversations from "./components/Conversations";
-import Header from "./components/Header";
+// import Header from "./components/Header";
 import PlatformSettings from "./components/PlatformSettings";
 import ProfileInformation from "./components/ProfileInformation";
 import Projects from "./components/Projects";
@@ -21,7 +21,7 @@ function Profile() {
 
   return (
     <Flex direction='column'>
-      <Header
+      {/* <Header
         backgroundHeader={ProfileBgImage}
         backgroundProfile={bgProfile}
         avatarImage={avatar4}
@@ -41,7 +41,7 @@ function Profile() {
             icon: <FaPenFancy w='100%' h='100%' />,
           },
         ]}
-      />
+      /> */}
       <Grid templateColumns={{ sm: "1fr", xl: "repeat(3, 1fr)" }} gap='22px'>
         <PlatformSettings
           title={"Platform Settings"}

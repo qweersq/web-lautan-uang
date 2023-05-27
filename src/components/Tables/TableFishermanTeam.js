@@ -8,6 +8,7 @@ import {
   EditIcon,
   InfoOutlineIcon,
   ChevronDownIcon,
+  ExternalLinkIcon,
 } from "@chakra-ui/icons";
 import {
   Avatar,
@@ -56,6 +57,7 @@ import React from "react";
 
 export default function TableFishermanTeam(props) {
   const {
+    id,
     name,
     phone,
     yearFormed,
@@ -81,6 +83,15 @@ export default function TableFishermanTeam(props) {
     onOpen: onOpenDelete,
     onClose: onCloseDelete,
   } = useDisclosure();
+
+  
+  const {
+    isOpen: IsOpenDetail,
+    onOpen: onOpenDetail,
+    onClose: onCloseDetail,
+  } = useDisclosure();
+
+  
 
   const [transactionData, setTransactionData] = React.useState({
     name: "",
@@ -109,7 +120,13 @@ export default function TableFishermanTeam(props) {
 
   return (
     <Tr>
-      <Td>{name}</Td>
+      <Td p={0}>
+        <Flex direction="column" justifyContent="flex-start" alignItems="start">
+          <Button variant="link" size="lg" >
+            {name} <ExternalLinkIcon mx="2px" />
+          </Button>
+        </Flex>
+      </Td>
       <Td>{phone}</Td>
       <Td>{yearFormed}</Td>
       <Td>
@@ -281,7 +298,7 @@ export default function TableFishermanTeam(props) {
             </AlertDialogHeader>
 
             <AlertDialogBody>
-            Are you sure you want to delete Fisherman Team?
+              Are you sure you want to delete Fisherman Team?
             </AlertDialogBody>
 
             <AlertDialogFooter>

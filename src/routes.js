@@ -15,6 +15,7 @@ import {
   RocketIcon,
   SupportIcon,
 } from "components/Icons/Icons";
+import { FaFish } from "react-icons/fa";
 import TransactionPage from "views/Dashboard/Transaction";
 import FinanceReport from "views/Dashboard/FinanceReport";
 import TimNelayan from "views/Dashboard/TimNelayan";
@@ -49,17 +50,19 @@ var dashRoutes = [
       {
         path: "/nelayan",
         name: "Nelayan",
-        icon: <StatsIcon color="inherit" />,
+        icon: <FaFish color="inherit" />,
         component: Nelayan,
         layout: "/admin",
       },
-      // {
-      //   path: "/tim-nelayan",
-      //   name: "Tim Nelayan",
-      //   icon: <StatsIcon color="inherit" />,
-      //   component: TimNelayan,
-      //   layout: "/admin",
-      // },
+     
+      {
+        path: "/detail-fisherman/:id",
+        name: "Detail Fisherman",
+        icon: <FaFish color="inherit" />,
+        component: TimNelayan,
+        layout: "/admin",
+        // hidden: true
+      },
      
     ],
   },
