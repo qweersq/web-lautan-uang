@@ -5,6 +5,7 @@ import Card from "components/Card/Card.js";
 import CardBody from "components/Card/CardBody.js";
 import CardHeader from "components/Card/CardHeader.js";
 import BillingRow from "components/Tables/BillingRow";
+import TableFishermanCatch from "components/Tables/TableFishermanCatch";
 import React from "react";
 
 const BillingInformation = ({ title, data }) => {
@@ -21,11 +22,17 @@ const BillingInformation = ({ title, data }) => {
           <Flex direction='column' w='100%'>
             {data.map((row) => {
               return (
-                <BillingRow
-                  name={row.name}
-                  company={row.company}
-                  email={row.email}
-                  number={row.number}
+                <TableFishermanCatch
+                    // key={`${row.name}`}
+                    captions = {[
+                      "Name",
+                      "Animal-type",
+                      "Price",
+                    ]}
+                  // fishing_cath_id = {}
+                    name={row.name}
+                    weight = {row.weight}
+                    key={row.id}
                 />
               );
             })}

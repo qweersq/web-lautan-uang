@@ -31,6 +31,9 @@ import Header from "./components/Header";
 import headerBg from "./components/headerBg.png";
 import avatar4 from "assets/img/avatars/avatar4.png";
 import ProfileBgImage from "assets/img/ProfileBackground.png";
+import { fishermanTeamCatchData } from "variables/general";
+import { fishermanTeamCatchDetail } from "variables/general";
+import FishermanCatch from "../FinanceReport/components/FishermanCatch";
 // import { fishermanTableData } from "variables/general";
 function TimNelayan() {
   const bgProfile = useColorModeValue(
@@ -56,6 +59,7 @@ function TimNelayan() {
             }}
             templateRows={{ sm: "auto auto auto", md: "1fr auto", xl: "1fr" }}
             gap="26px"
+            mb={4}
           >
             <PaymentStatistics
               icon={<Icon h={"24px"} w={"24px"} color="white" as={FaWallet} />}
@@ -77,22 +81,24 @@ function TimNelayan() {
               description={"Freelance Payment"}
               amount={4550}
             />
+            
           </Grid>
+          <FishermanCatch
+          title={"Fisherman Catch Table"}
+          textColor={"blue"}
+          captions={["Fisherman Team Name", "Weight", "Actions"]}
+          data={fishermanTeamCatchData}
+          fishcatchDetail={fishermanTeamCatchDetail}
+        />
         </Box>
         <MemberTim title={"Member"} data={fishermanTableData} />
       </Grid>
-      <Grid templateColumns={{ sm: "1fr", lg: "1.6fr 1.2fr" }}>
-        <BillingInformation
-          title={"History Fisherman Catch"}
-          data={billingData}
-        />
         <Transactions
           title={"Fisherman Team Transactions"}
           date={"23 - 30 March"}
           newestTransactions={newestTransactions}
           olderTransactions={olderTransactions}
         />
-      </Grid>
     </Flex>
   );
 }

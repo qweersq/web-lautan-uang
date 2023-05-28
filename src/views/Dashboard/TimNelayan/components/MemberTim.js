@@ -1,5 +1,15 @@
 // Chakra imports
 import {
+  AtSignIcon,
+  PhoneIcon,
+  SearchIcon,
+  UnlockIcon,
+  ViewIcon,
+  ViewOffIcon,
+  EditIcon,
+  InfoOutlineIcon,
+} from "@chakra-ui/icons";
+import {
   Button,
   Flex,
   Text,
@@ -9,16 +19,38 @@ import {
   Table,
   Avatar,
   Box,
+  InputGroup,
+  InputLeftElement,
+  Input,
 } from "@chakra-ui/react";
+
+import { useState } from "react";
 // Custom components
 import Card from "components/Card/Card.js";
 import CardBody from "components/Card/CardBody.js";
 import CardHeader from "components/Card/CardHeader.js";
+import Pagination from "components/Pagination/Pagination";
 import InvoicesRow from "components/Tables/InvoicesRow";
 import React from "react";
 
 const MemberTim = ({ title, data }) => {
   const textColor = useColorModeValue("gray.700", "white");
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5;
+
+  // Menghitung index data pertama dan terakhir yang akan ditampilkan
+  const lastIndex = currentPage * itemsPerPage;
+  const firstIndex = lastIndex - itemsPerPage;
+  const currentData = data.slice(firstIndex, lastIndex);
+
+  // Menghitung jumlah total halaman yang tersedia
+  const totalPages = Math.ceil(data.length / itemsPerPage);
+
+  // Fungsi yang akan dipanggil ketika currentPage berubah
+  const handleCurrentPageChange = (page) => {
+    setCurrentPage(page);
+  };
 
   return (
     <Card
@@ -31,18 +63,16 @@ const MemberTim = ({ title, data }) => {
           <Text fontSize="lg" color={textColor} fontWeight="bold">
             {title}
           </Text>
-          <Button
-            colorScheme="blue"
-            borderColor="blue.300"
-            color="blue.300"
-            variant="outline"
-            fontSize="xs"
-            p="8px 32px"
-          >
-            VIEW ALL
-          </Button>
         </Flex>
       </CardHeader>
+
+      <InputGroup width="100%">
+        <InputLeftElement
+          pointerEvents="none"
+          children={<SearchIcon color="blue.300" />}
+        />
+        <Input placeholder="Find Member" borderRadius="md" />
+      </InputGroup>
       <CardBody>
         <Table>
           {data.map((row) => {
@@ -57,13 +87,11 @@ const MemberTim = ({ title, data }) => {
                       me="18px"
                     />
 
-                    <Box  color="gray.400" fontWeight="bold">
-                    <Text fontSize="lg">
-                      {row.name}
-                    </Text>
-                    <Text fontSize="md" m="2px">
-                      {row.email}
-                    </Text>
+                    <Box color="gray.400" fontWeight="bold">
+                      <Text fontSize="lg">{row.name}</Text>
+                      <Text fontSize="md" m="2px">
+                        {row.email}
+                      </Text>
                     </Box>
                   </Flex>
                 </Td>
@@ -72,6 +100,11 @@ const MemberTim = ({ title, data }) => {
           })}
         </Table>
       </CardBody>
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onCurrentPageChange={handleCurrentPageChange}
+      />
     </Card>
   );
 };
