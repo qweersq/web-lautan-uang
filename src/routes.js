@@ -19,6 +19,7 @@ import { FaFish } from "react-icons/fa";
 import TransactionPage from "views/Dashboard/Transaction";
 import FinanceReport from "views/Dashboard/FinanceReport";
 import TimNelayan from "views/Dashboard/TimNelayan";
+import Investor from "views/Dashboard/Investor";
 
 var dashRoutes = [
   {
@@ -74,31 +75,30 @@ var dashRoutes = [
     component: FinanceReport,
     layout: "/admin",
   },
-  
-  
+
   {
     name: "Investor",
     category: "account",
     views: [
       {
-        path: "/profile",
+        path: "/investor",
         name: "Investor",
         icon: <PersonIcon color="inherit" />,
-        secondaryNavbar: true,
-        component: Profile,
+        // secondaryNavbar: true,
+        component: Investor,
         layout: "/admin",
       },
     ],
   },
-  {
-    path: "/profile",
-    name: "Profile",
-    icon: <PersonIcon color="inherit" />,
-    secondaryNavbar: true,
-    component: Profile,
-    layout: "/admin",
-    hidden: true,
-  },
+  // {
+  //   path: "/profile",
+  //   name: "Profile",
+  //   icon: <PersonIcon color="inherit" />,
+  //   secondaryNavbar: true,
+  //   component: Profile,
+  //   layout: "/admin",
+  //   hidden: true,
+  // },
   {
     path: "/signin",
     name: "Sign In",

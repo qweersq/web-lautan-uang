@@ -20,7 +20,7 @@ function Profile() {
   );
 
   return (
-    <Flex direction='column'>
+    <Flex flexDirection="column" pt={{ base: "120px", md: "75px" }}>
       {/* <Header
         backgroundHeader={ProfileBgImage}
         backgroundProfile={bgProfile}
@@ -42,7 +42,7 @@ function Profile() {
           },
         ]}
       /> */}
-      <Grid templateColumns={{ sm: "1fr", xl: "repeat(3, 1fr)" }} gap='22px'>
+      <Grid templateColumns={{ sm: "1fr", xl: "repeat(3, 1fr)" }} gap="22px">
         <PlatformSettings
           title={"Platform Settings"}
           subtitle1={"ACCOUNT"}

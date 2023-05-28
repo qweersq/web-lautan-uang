@@ -32,7 +32,7 @@ function SignIn() {
 
     try {
 
-      await axios.post("http://localhost:8000/api/auth/login", {
+      await axios.post("http://103.150.93.188:82", {
         email,
         password,
       }).then((response) => {

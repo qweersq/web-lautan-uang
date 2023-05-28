@@ -103,7 +103,76 @@ export const fishermanTeamTableData = [
   },
 ];
 
-
+export const investorData = [
+  {
+    id: 0,
+    name: "Ass",
+    phone: "081234131",
+    email: "budy@mail.com",
+    password: "12345",
+    birth_date: "01-02-2001",
+    address: "Jl Pelabuhan No 10",
+    gender: "male",
+    location_id: 2,
+    nik: "123123123",
+    npwp: "NULL",
+    identity_photo: avatar1,
+    bank_id: 1,
+    register_date: "01-02-2001",
+    balance: "NULL",
+  },
+  {
+    id: 1,
+    name: "Anjay",
+    phone: "081234131",
+    email: "budy@mail.com",
+    password: "12345",
+    birth_date: "01-02-2001",
+    address: "Jl Pelabuhan No 10",
+    gender: "male",
+    location_id: 2,
+    nik: "123123123",
+    npwp: "NULL",
+    identity_photo: avatar1,
+    bank_id: 1,
+    register_date: "01-02-2001",
+    balance: "NULL",
+  },
+  {
+    id: 2,
+    name: "TEry",
+    phone: "081234131",
+    email: "budy@mail.com",
+    password: "12345",
+    birth_date: "01-02-2001",
+    address: "Jl Pelabuhan No 10",
+    gender: "male",
+    location_id: 2,
+    nik: "123123123",
+    npwp: "NULL",
+    identity_photo: avatar1,
+    bank_id: 1,
+    register_date: "01-02-2001",
+    balance: "NULL",
+  },
+  {
+    id: 3,
+    name: "ADo",
+    phone: "081234131",
+    email: "budy@mail.com",
+    address: "Jl Pelabuhan No 10",
+    password: "12345",
+    birth_date: "01-02-2001",
+    gender: "female",
+    location_id: 2,
+    nik: "123123123",
+    npwp: "NULL",
+    identity_photo: avatar1,
+    bank_id: 1,
+    register_date: "01-02-2001",
+    balance: "NULL",
+  },
+];
 
 export const fishermanTeamCatchData = fishermanTeamTableData.map((team) => {
   return {
@@ -117,19 +186,22 @@ export const animalTypeData = [
   {
     id: 0,
     animal_type: "Ikan Bersisik",
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua"
+    description:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua",
   },
   {
     id: 1,
     animal_type: "Ikan Duyung",
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua"
+    description:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua",
   },
   {
     id: 2,
     animal_type: "Ikan Ikanan",
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod  "
+    description:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod  ",
   },
-]
+];
 
 export const fishermanTeamCatchDetail = [
   {
@@ -137,21 +209,21 @@ export const fishermanTeamCatchDetail = [
     name: "Ikan Tongkol",
     animal_type: "Ikan bersisik",
     fishing_catch_id: 1,
-    price: 14.000,
+    price: 14.0,
   },
   {
     id: 1,
     name: "Ikan Sayap Merah",
     animal_type: "Ikan bersisik",
     fishing_catch_id: 2,
-    price: 10.0000,
+    price: 10.0,
   },
   {
     id: 2,
     name: "Ikan Ekor Kuning",
     animal_type: "Ikan bersisik",
     fishing_catch_id: 3,
-    price: 12.0000,
+    price: 12.0,
   },
 ];
 
