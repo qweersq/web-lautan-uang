@@ -14,6 +14,7 @@ import {
 } from "@chakra-ui/react";
 
 import axios from "axios";
+import { URL_API } from "constant/data";
 
 function SignIn() {
 
@@ -27,23 +28,18 @@ function SignIn() {
 
 
   const handleSubmit = async (e) => {
-    //go to dashboard
     e.preventDefault();
-
-    try {
-
-      await axios.post("http://103.150.93.188:82", {
-        email,
-        password,
-      }).then((response) => {
-        console.log(response);
-        localStorage.setItem("token", response.data.access_token);
-      });
+    await axios.post(`${URL_API}/api/auth/login`, {
+      email,
+      password,
+    }).then((response) => {
+      console.log(response);
+      localStorage.setItem("token", response.data.access_token);
       navigate.push("/admin/dashboard");
-    } catch (error) {
-      console.log(error.response.data.error);
-      setError(error.response.data.error);
-    }
+    }).catch((error) => {
+      console.log(error);
+      setError("Email or password is incorrect");
+    });
 
   };
 
@@ -54,14 +50,14 @@ function SignIn() {
         <Box className="login__logo" sx={{ display: "flex", justifyContent: "center" }}>
           <img src="https://s2-recruiting.cdn.greenhouse.io/external_greenhouse_job_boards/logos/400/918/500/original/sea_money_logo_h.png?1598495961" alt="logo" style={{ width: "300px" }} />
         </Box>
-        <Box sx={{ display: "flex", justifyContent: "center", margin:"20px 0 20px 0", bg:"red.700" }}>
+        <Box sx={{ display: "flex", justifyContent: "center", margin: "20px 0 20px 0", bg: "red.700" }}>
           {/* Massage error */}
           <Text fontSize="sm" color="white" fontWeight="bold" >
             {error}
           </Text>
         </Box>
 
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={(e) => handleSubmit(e)}>
           <FormControl>
             <FormLabel ms='4px' fontSize='sm' fontWeight='normal' color="black">
               Email

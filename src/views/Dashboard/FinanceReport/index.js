@@ -38,9 +38,10 @@ import InvestorDecline from "./components/InvestorDecline";
 import FishermanCatch from "./components/FishermanCatch";
 import FishermanCatchOrder from "./components/FishermanCatchOrder";
 
-import {} from "variables/general";
+import { } from "variables/general";
 import AnimalType from "./components/AnimalType";
 import { animalTypeData } from "variables/general";
+import { URL_API } from "constant/data";
 
 export const authError = createContext();
 
@@ -52,15 +53,18 @@ export default function FinanceReport() {
   const [error, setError] = React.useState("");
 
   useEffect(() => {
-    refreshToken();
+    // refreshToken();
   }, []);
 
   const refreshToken = async () => {
     try {
       await axios
-        .post("http://localhost:8000/api/auth/refresh", {
+        .post(`${URL_API}/api/auth/refresh`, {
           token: localStorage.getItem("token"),
-          accept: "application/json",
+          header: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
         })
         .then((response) => {
           console.log(response);
@@ -68,8 +72,8 @@ export default function FinanceReport() {
           setToken(response.data.access_token);
         });
     } catch (error) {
-      console.log(error.response.data.message);
-      setError(error.response.data.message);
+      // console.log(error.response.data.message);
+      // setError(error.response.data.message);
       navigate.push("/auth/signin");
     }
   };
@@ -113,7 +117,7 @@ export default function FinanceReport() {
             textColor={"blue"}
             captions={["Name", "Description", "Actions"]}
             data={animalTypeData}
-            // fishcatchDetail={fishermanTeamCatchDetail}
+          // fishcatchDetail={fishermanTeamCatchDetail}
           />
         </Flex>
       </Box>

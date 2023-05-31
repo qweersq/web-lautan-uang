@@ -31,6 +31,7 @@ import Transaction from "./components/Transaction";
 import GraphTransaction from "./components/GraphTransaction";
 import InvestorDecline from "./components/InvestorDecline";
 import TopInvestor from "../Dashboard/components/TopInvestor";
+import { URL_API } from "constant/data";
 
 export const authError = createContext();
 
@@ -42,15 +43,18 @@ export default function TransactionPage() {
   const [error, setError] = React.useState("");
 
   useEffect(() => {
-    refreshToken();
+    // refreshToken();
   }, []);
 
   const refreshToken = async () => {
     try {
       await axios
-        .post("http://localhost:8000/api/auth/refresh", {
+        .post(`${URL_API}/api/auth/refresh`, {
           token: localStorage.getItem("token"),
-          accept: "application/json",
+          header: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
         })
         .then((response) => {
           console.log(response);
@@ -58,8 +62,8 @@ export default function TransactionPage() {
           setToken(response.data.access_token);
         });
     } catch (error) {
-      console.log(error.response.data.message);
-      setError(error.response.data.message);
+      // console.log(error.response.message);
+      // setError(error.response.message);
       navigate.push("/auth/signin");
     }
   };
@@ -90,7 +94,7 @@ export default function TransactionPage() {
       </SimpleGrid>
 
       <Grid templateColumns='repeat(3, 4fr)' sx={{ mt: "30px" }} gap={10}>
-        <GridItem colSpan={2}  w='100%' h='100%'>
+        <GridItem colSpan={2} w='100%' h='100%'>
           <GraphTransaction
             title={"Transaction Graph"}
             list={[1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998]}
@@ -104,9 +108,9 @@ export default function TransactionPage() {
             data={tablesTableData}
           /> */}
           <TopInvestor
-           title={"Top Investor"}
-           captions={["Name/Email"]}
-           data={tablesTableData}
+            title={"Top Investor"}
+            captions={["Name/Email"]}
+            data={tablesTableData}
           />
         </GridItem>
 

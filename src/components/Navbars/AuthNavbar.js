@@ -17,6 +17,7 @@ import {
   RocketIcon,
 } from "components/Icons/Icons";
 import SidebarResponsive from "components/Sidebar/SidebarResponsive";
+import { URL_API } from "constant/data";
 import PropTypes from "prop-types";
 import React from "react";
 import { NavLink, useHistory } from "react-router-dom";
@@ -36,9 +37,9 @@ export default function AuthNavbar(props) {
 
   const navigate = useHistory();
 
-  const handleLogout = async() => {
-    await axios.delete("http://localhost:8000/api/auth/logout", {
-      token: localStorage.getItem("token"),
+  const handleLogout = async () => {
+    await axios.delete(`${URL_API}/api/auth/logout`, {
+      token: localStorage.getItem("token")
     }).then((response) => {
       console.log(response);
       localStorage.removeItem("token");

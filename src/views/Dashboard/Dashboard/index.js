@@ -31,6 +31,7 @@ import Transaction from "./components/Transaction";
 import GraphTransaction from "./components/GraphTransaction";
 import InvestorDecline from "./components/InvestorDecline";
 import TopInvestor from "./components/TopInvestor";
+import { URL_API } from "constant/data";
 
 export const authError = createContext();
 
@@ -42,15 +43,18 @@ export default function Dashboard() {
   const [error, setError] = React.useState("");
 
   useEffect(() => {
-    refreshToken();
+    // refreshToken();
   }, []);
 
   const refreshToken = async () => {
     try {
       await axios
-        .post("http://localhost:8000/api/auth/refresh", {
+        .post(`${URL_API}/api/auth/refresh`, {
           token: localStorage.getItem("token"),
-          accept: "application/json",
+          header: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
         })
         .then((response) => {
           console.log(response);
@@ -58,8 +62,6 @@ export default function Dashboard() {
           setToken(response.data.access_token);
         });
     } catch (error) {
-      console.log(error.response.data.message);
-      setError(error.response.data.message);
       navigate.push("/auth/signin");
     }
   };
@@ -120,10 +122,10 @@ export default function Dashboard() {
             ]}
             data={tablesTableData}
           />
-          
+
         </GridItem>
         <GridItem colSpan={0.1} w="100%" h="100%">
-        <TopInvestor
+          <TopInvestor
             title={"Top Investor"}
             captions={["Name/Email"]}
             data={tablesTableData}

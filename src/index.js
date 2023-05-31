@@ -7,7 +7,7 @@ import axios from "axios";
 import AuthLayout from "layouts/Auth.js";
 import AdminLayout from "layouts/Admin.js";
 
-axios.defaults.withCredentials = true;
+axios.defaults.withCredentials = false;
 
 ReactDOM.render(
   <BrowserRouter>

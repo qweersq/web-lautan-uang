@@ -30,6 +30,7 @@ import React from "react";
 import { NavLink, useHistory } from "react-router-dom";
 import routes from "routes.js";
 import axios from "axios";
+import { URL_API } from "constant/data";
 
 export default function HeaderLinks(props) {
   const { variant, children, fixed, secondary, onOpen, ...rest } = props;
@@ -51,12 +52,14 @@ export default function HeaderLinks(props) {
 
   const navigate = useHistory();
 
-  const handleLogout = async() => {
-    await axios.post("http://localhost:8000/api/auth/logout", {
+  const handleLogout = async () => {
+    await axios.post(`${URL_API}/api/auth/logout`, {
       token: localStorage.getItem("token"),
     }).then((response) => {
       console.log(response);
       localStorage.removeItem("token");
+    }).catch((error) => {
+      console.log(error);
     });
 
     navigate.push("/auth/signin");
