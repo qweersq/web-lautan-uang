@@ -20,7 +20,8 @@ import {
   FormControl,
   FormLabel,
   Input,
-  InputGroup
+  InputGroup,
+  TableContainer,
 } from "@chakra-ui/react";
 import CardHeader from "components/Card/CardHeader.js";
 import LocationRow from "components/Tables/LocationRow";
@@ -36,9 +37,11 @@ const Location = ({ title, captions, data }) => {
       <CardHeader>
         <Heading size="md">{title}</Heading>
         <Spacer />
-        <Button w={20} onClick={onOpen}>Add</Button>
+        <Button w={20} onClick={onOpen}>
+          Add
+        </Button>
       </CardHeader>
-      
+
       {/* Add Modal Button */}
       <Modal
         initialFocusRef={initialRef}
@@ -87,36 +90,41 @@ const Location = ({ title, captions, data }) => {
         </ModalContent>
       </Modal>
       {/* Add Modal Button */}
-
-      <CardBody>
-        <Table>
-          <Thead>
-            <Tr>
-              {captions.map((caption, idx) => {
+      <TableContainer>
+        <CardBody>
+          <Table>
+            <Thead>
+              <Tr>
+                {captions.map((caption, idx) => {
+                  return (
+                    <Th
+                      color="gray.400"
+                      key={idx}
+                      ps={idx === 0 ? "0px" : null}
+                    >
+                      {caption}
+                    </Th>
+                  );
+                })}
+              </Tr>
+            </Thead>
+            <Tbody>
+              {data.map((row) => {
                 return (
-                  <Th color="gray.400" key={idx} ps={idx === 0 ? "0px" : null}>
-                    {caption}
-                  </Th>
+                  <LocationRow
+                    country_name={row.country_name}
+                    province_name={row.province_name}
+                    kota_kab_name={row.kota_kab_name}
+                    kecamatan_name={row.kecamatan_name}
+                    kelurahan_des_name={row.kelurahan_des_name}
+                    postal_code={row.postal_code}
+                  />
                 );
               })}
-            </Tr>
-          </Thead>
-          <Tbody>
-            {data.map((row) => {
-              return (
-                <LocationRow
-                  country_name={row.country_name}
-                  province_name={row.province_name}
-                  kota_kab_name={row.kota_kab_name}
-                  kecamatan_name={row.kecamatan_name}
-                  kelurahan_des_name={row.kelurahan_des_name}
-                  postal_code={row.postal_code}
-                />
-              );
-            })}
-          </Tbody>
-        </Table>
-      </CardBody>
+            </Tbody>
+          </Table>
+        </CardBody>
+      </TableContainer>
     </Card>
   );
 };

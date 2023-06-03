@@ -78,9 +78,9 @@ function Nelayan() {
       </Flex>
 
       <Grid sx={{ mt: "30px" }} gap={10}>
-        <GridItem>
+        {/* <GridItem>
           <NelayanTeamAPI />
-        </GridItem>
+        </GridItem> */}
         <GridItem>
           <Fisherman
             title={"Fisherman Table"}

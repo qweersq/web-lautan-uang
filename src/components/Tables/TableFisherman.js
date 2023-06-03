@@ -53,6 +53,9 @@ import {
   MenuItem,
 } from "@chakra-ui/react";
 import React from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { URL_API } from "constant/data";
 
 function TableFisherman(props) {
   const {
@@ -86,6 +89,8 @@ function TableFisherman(props) {
   const cancelRef = React.useRef();
   const initialRef = React.useRef(null);
   const finalRef = React.useRef(null);
+
+  
 
   const [transactionData, editTransactionData] = React.useState({
     fisherman_team: "",
@@ -166,7 +171,13 @@ function TableFisherman(props) {
         >
           {tim_id}
         </Badge>
-        <Text fontSize="sm"  bg="gray.300" p="3px 10px"  borderRadius="8px" fontWeight="bold">
+        <Text
+          fontSize="sm"
+          bg="gray.300"
+          p="3px 10px"
+          borderRadius="8px"
+          fontWeight="bold"
+        >
           {location_id}
         </Text>
         {/* </Flex> */}
@@ -174,6 +185,12 @@ function TableFisherman(props) {
 
       <Td>
         {/* <Flex direction="column"> */}
+        {address == null ? (
+          // <p>Hello</p>
+          <Text>
+            ----
+          </Text>
+        ) : (
         <Badge
           bg={"blue.400"}
           color={"white"}
@@ -184,7 +201,15 @@ function TableFisherman(props) {
         >
           {address}
         </Badge>
-        <Text fontSize="sm" bg="gray.300" p="3px 10px"  borderRadius="8px" fontWeight="bold" >
+        )
+        }
+        <Text
+          fontSize="sm"
+          bg="gray.300"
+          p="3px 10px"
+          borderRadius="8px"
+          fontWeight="bold"
+        >
           {phone}
         </Text>
         {/* </Flex> */}
@@ -202,8 +227,8 @@ function TableFisherman(props) {
       </Td>
       <Td>
         <Badge
-          bg={status === "Active" ? "green.400" : bgStatus}
-          color={status === "Active" ? "white" : colorStatus}
+          bg={status === "aktif" ? "green.400" : bgStatus}
+          color={status === "aktif" ? "white" : colorStatus}
           fontSize="16px"
           p="3px 10px"
           borderRadius="8px"

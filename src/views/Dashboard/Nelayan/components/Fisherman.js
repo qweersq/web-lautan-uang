@@ -7,7 +7,7 @@ import {
   ViewIcon,
   ViewOffIcon,
   EditIcon,
-  InfoOutlineIcon
+  InfoOutlineIcon,
 } from "@chakra-ui/icons";
 import {
   AddIcon,
@@ -49,11 +49,10 @@ import Card from "components/Card/Card.js";
 import CardBody from "components/Card/CardBody.js";
 import CardHeader from "components/Card/CardHeader.js";
 import TableFisherman from "components/Tables/TableFisherman";
-import TableFishermanTeam from "components/Tables/TableFishermanTeam";
-import TablesTableRow from "components/Tables/TablesTableRow";
-import TableTransactionRow from "components/Tables/TableTransactionRow";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { ChevronDownIcon } from "@chakra-ui/icons";
+import axios from "axios";
+import { URL_API } from "constant/data";
 
 const Fisherman = ({ title, captions, data }) => {
   const textColor = useColorModeValue("gray.700", "white");
@@ -61,6 +60,30 @@ const Fisherman = ({ title, captions, data }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const initialRef = React.useRef(null);
   const finalRef = React.useRef(null);
+
+  const [fishermanData, setFishermanData] = useState(null);
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  async function fetchData() {
+    try {
+      const token = localStorage.getItem("token");
+      const headers = {
+        Authorization: `Bearer ${token}`,
+      };
+
+      const response = await axios.get(`${URL_API}/api/fisherman`, { headers });
+      setFishermanData(response.data.data);
+      console.log(response.data);
+      console.log(response.data.data);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  // const 
 
   const [transactionData, setTransactionData] = React.useState({
     name: "",
@@ -106,8 +129,6 @@ const Fisherman = ({ title, captions, data }) => {
   const handleTogglePassword = () => {
     setShowPassword((prevShowPassword) => !prevShowPassword);
   };
-
-  
 
   return (
     <Card overflowX={{ sm: "scroll", xl: "hidden" }}>
@@ -255,48 +276,50 @@ const Fisherman = ({ title, captions, data }) => {
                     placeholder="Input Detail Address"
                   />
                 </FormControl>
-                  <FormControl mt={4}>
-                    <FormLabel>Role</FormLabel>
-                    <Menu size="sm">
-                      <MenuButton
-                        isActive={selectedRole !== ""}
-                        as={Button}
-                        rightIcon={<ChevronDownIcon />}
+                <FormControl mt={4}>
+                  <FormLabel>Role</FormLabel>
+                  <Menu size="sm">
+                    <MenuButton
+                      isActive={selectedRole !== ""}
+                      as={Button}
+                      rightIcon={<ChevronDownIcon />}
+                    >
+                      {selectedRole || "Select Role"}
+                    </MenuButton>
+                    <MenuList>
+                      {/* Map Location */}
+                      <MenuItem onClick={() => handleRoleSelect("Leader")}>
+                        Leader
+                      </MenuItem>
+                      <MenuItem onClick={() => handleRoleSelect("Member")}>
+                        Member
+                      </MenuItem>
+                    </MenuList>
+                  </Menu>
+                </FormControl>
+                <FormControl mt={4}>
+                  <FormLabel>Status</FormLabel>
+                  <Menu size="sm">
+                    <MenuButton
+                      isActive={selectedStatus !== ""}
+                      as={Button}
+                      rightIcon={<ChevronDownIcon />}
+                    >
+                      {selectedStatus || "Select Status"}
+                    </MenuButton>
+                    <MenuList>
+                      {/* Map Location */}
+                      <MenuItem onClick={() => handleStatusSelect("Aktif")}>
+                        Aktif
+                      </MenuItem>
+                      <MenuItem
+                        onClick={() => handleStatusSelect("Non Active")}
                       >
-                        {selectedRole || "Select Role"}
-                      </MenuButton>
-                      <MenuList>
-                        {/* Map Location */}
-                        <MenuItem onClick={() => handleRoleSelect("Leader")}>
-                          Leader
-                        </MenuItem>
-                        <MenuItem onClick={() => handleRoleSelect("Member")}>
-                          Member
-                        </MenuItem>
-                      </MenuList>
-                    </Menu>
-                  </FormControl>
-                  <FormControl mt={4}>
-                    <FormLabel>Status</FormLabel>
-                    <Menu size="sm">
-                      <MenuButton
-                        isActive={selectedStatus !== ""}
-                        as={Button}
-                        rightIcon={<ChevronDownIcon />}
-                      >
-                        {selectedStatus || "Select Status"}
-                      </MenuButton>
-                      <MenuList>
-                        {/* Map Location */}
-                        <MenuItem onClick={() => handleStatusSelect("Aktif")}>
-                          Aktif
-                        </MenuItem>
-                        <MenuItem onClick={() => handleStatusSelect("Non Active")}>
-                          Non Active
-                        </MenuItem>
-                      </MenuList>
-                    </Menu>
-                  </FormControl>
+                        Non Active
+                      </MenuItem>
+                    </MenuList>
+                  </Menu>
+                </FormControl>
                 <FormControl>
                   <FormLabel>Experience</FormLabel>
                   <InputGroup>
@@ -371,26 +394,29 @@ const Fisherman = ({ title, captions, data }) => {
             </Tr>
           </Thead>
           <Tbody>
-            {data.map((row) => {
-              return (
+            {fishermanData ? (
+              fishermanData.map((fisherman) => (
                 <TableFisherman
-                  key={`${row.email}-${row.name}`}
-                  name = {row.name}
-                  location_id = {row.location_id}
-                  address = {row.address}
-                  gender = {row.gender}
-                  phone = {row.phone}
-                  role = {row.role}
-                  tim_id={row.tim_id}
-                  logo={row.logo}
-                  email={row.email}
-                  subdomain={row.subdomain}
-                  domain={row.domain}
-                  status={row.status}
-                  date={row.date}
+                  key={fisherman.id}
+                  tim_id={fisherman.tim_id}
+                  name={fisherman.name}
+                  phone={fisherman.phone}
+                  email={fisherman.email}
+                  location_id={fisherman.location_id}
+                  address={fisherman.address}
+                  gender={fisherman.gender}
+                  role={fisherman.role}
+                  logo={fisherman.logo}
+                  photo={fisherman.identity_photo}
+                  // subdomain={row.subdomain}
+                  domain={fisherman.domain}
+                  status={fisherman.status}
+                  // date={row.date}
                 />
-              );
-            })}
+              ))
+            ) : (
+              <p>Loading...</p>
+            )}
           </Tbody>
         </Table>
       </CardBody>
