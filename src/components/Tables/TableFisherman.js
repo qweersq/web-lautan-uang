@@ -56,9 +56,11 @@ import React from "react";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { URL_API } from "constant/data";
+import { token } from "stylis";
 
 function TableFisherman(props) {
   const {
+    id,
     tim_id,
     name,
     phone,
@@ -90,28 +92,101 @@ function TableFisherman(props) {
   const initialRef = React.useRef(null);
   const finalRef = React.useRef(null);
 
-  
-
-  const [transactionData, editTransactionData] = React.useState({
-    fisherman_team: "",
-    investor: "",
-    quantity: "",
-    status: "",
+  const [fishermanData, setFishermanData] = useState({
+    tim_id: props.tim_id,
+    name: props.name,
+    phone: props.phone,
+    email: props.email,
+    password: props.password,
+    gender: props.gender,
+    birth_date: props.birth_date,
+    address: props.address,
+    role: props.role,
+    location_id: props.location_id,
+    status: props.status,
+    experience: props.experience ,
+    nik: props.nik,
+    photo: props.photo,
+    identity_photo: props.identity_photo,
   });
 
-  const handleChange = (e) => {
+  const handleInputChange = (e) => {
     const { name, value } = e.target;
-    editTransactionData((prevState) => ({
-      ...prevState,
+    setFishermanData((prevData) => ({
+      ...prevData,
       [name]: value,
     }));
+    console.log(fishermanData);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(transactionData); // contoh, untuk sementara hanya menampilkan data pada console
-    onClose();
+  const handleDeleteFisherman = async (id) => {
+    console.log(id);
+    try {
+      const token = localStorage.getItem("token");
+      const headers = {
+        Authorization: `Bearer ${token}`,
+      };
+
+      const response = await axios.delete(`${URL_API}/api/fisherman/${id}`, {
+        headers,
+      });
+      console.log(response.data);
+
+      window.location.reload();
+      onCloseDelete();
+    } catch (error) {
+      console.error(error);
+    }
   };
+
+  const handleEditFisherman = async (id) => {
+    try {
+      const token = localStorage.getItem("token");
+      const headers = {
+        Authorization: `Bearer ${token}`,
+        Status: `OK`,
+        Code: 200,
+        Accept: `application/json`,
+      };
+
+      const response = await axios.put(
+        `${URL_API}/api/fisherman`,
+        // { ...newFisherman },
+        {
+          name: fishermanData.name,
+          tim_id: fishermanData.tim_id,
+          phone: fishermanData.phone,
+          email: fishermanData.email,
+          password: fishermanData.password,
+          gender: fishermanData.gender,
+          birth_date: newFisherman.birth_date,
+          location_id: fishermanData.location_id,
+          status: fishermanData.status,
+          experience: parseInt(fishermanData.experience),
+          nik: fishermanData.nik,
+          image: fishermanData.image,
+          identity_photo: fishermanData.identity_photo,
+        },
+        { headers }
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // const handleChange = (e) => {
+  //   const { name, value } = e.target;
+  //   editTransactionData((prevState) => ({
+  //     ...prevState,
+  //     [name]: value,
+  //   }));
+  // };
+
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   console.log(transactionData); // contoh, untuk sementara hanya menampilkan data pada console
+  //   onClose();
+  // };
 
   const [selectedGender, setSelectedGender] = React.useState("");
   const handleGenderSelect = (gender) => {
@@ -140,7 +215,7 @@ function TableFisherman(props) {
 
   return (
     <Tr>
-      <Td minWidth={{ sm: "250px" }} pl="0px">
+      <Td pl="0px">
         <Flex align="center" py=".8rem" minWidth="100%" flexWrap="nowrap">
           <Avatar src={photo} w="50px" borderRadius="12px" me="18px" />
           <Flex direction="column">
@@ -187,22 +262,19 @@ function TableFisherman(props) {
         {/* <Flex direction="column"> */}
         {address == null ? (
           // <p>Hello</p>
-          <Text>
-            ----
-          </Text>
+          <Text>----</Text>
         ) : (
-        <Badge
-          bg={"blue.400"}
-          color={"white"}
-          fontSize="15px"
-          p="3px 10px"
-          borderRadius="8px"
-          m={1}
-        >
-          {address}
-        </Badge>
-        )
-        }
+          <Badge
+            bg={"blue.400"}
+            color={"white"}
+            fontSize="15px"
+            p="3px 10px"
+            borderRadius="8px"
+            m={1}
+          >
+            {address}
+          </Badge>
+        )}
         <Text
           fontSize="sm"
           bg="gray.300"
@@ -276,16 +348,27 @@ function TableFisherman(props) {
         <ModalContent>
           <ModalHeader>Edit Fisherman</ModalHeader>
           <ModalCloseButton />
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={() => handleEditFisherman(id)}>
             <ModalBody pb={6}>
               <Flex gap={5}>
                 <FormControl>
                   <FormLabel>Fisherman Team</FormLabel>
-                  <Input name="team-name" placeholder="Input Fisherman Team" />
+                  <Input
+                    name="tim_id"
+                    type="number"
+                    value={fishermanData.tim_id}
+                    placeholder="Input Fisherman Team"
+                    onChange={handleInputChange}
+                  />
                 </FormControl>
                 <FormControl>
                   <FormLabel>Fisherman Name</FormLabel>
-                  <Input name="name" placeholder="Input Fisherman Name" />
+                  <Input
+                    name="name"
+                    value={fishermanData.name}
+                    onChange={handleInputChange}
+                    placeholder="Input Fisherman Name"
+                  />
                 </FormControl>
               </Flex>
 
@@ -295,11 +378,14 @@ function TableFisherman(props) {
                   <InputLeftElement
                     pointerEvents="none"
                     children={<PhoneIcon color="gray.300" />}
+                    // value={phone}
                   />
                   <Input
                     type="tel"
                     name="phone"
-                    // value={transactionData.amount}
+                    // value={phone}
+                    value={fishermanData.phone}
+                    onChange={handleInputChange}
                     // onChange={handleChange}
                     placeholder="Enter phone number"
                   />
@@ -310,12 +396,22 @@ function TableFisherman(props) {
                 <FormLabel>Account</FormLabel>
                 <InputGroup>
                   <InputLeftAddon children={<AtSignIcon color="gray.300" />} />
-                  <Input name="email" type="email" placeholder="Enter Email" />
+                  <Input
+                    name="email"
+                    // value={email}
+                    value={fishermanData.email}
+                    onChange={handleInputChange}
+                    type="email"
+                    placeholder="Enter Email"
+                  />
                 </InputGroup>
                 <InputGroup mt={2}>
                   <InputLeftAddon children={<UnlockIcon color="gray.300" />} />
                   <Input
                     name="password"
+                    // value={password}
+                    value={fishermanData.password}
+                    onChange={handleInputChange}
                     type={showPassword ? "text" : "password"}
                     placeholder="Enter password"
                   />
@@ -338,14 +434,17 @@ function TableFisherman(props) {
                     isActive={selectedGender !== ""}
                     as={Button}
                     rightIcon={<ChevronDownIcon />}
+                    // value={gender}
+                    value={fishermanData.gender}
+                    onChange={handleInputChange}
                   >
                     {selectedGender || "Select gender"}
                   </MenuButton>
                   <MenuList>
-                    <MenuItem onClick={() => handleGenderSelect("Male")}>
+                    <MenuItem onClick={() => handleGenderSelect("male")}>
                       Male
                     </MenuItem>
-                    <MenuItem onClick={() => handleGenderSelect("Female")}>
+                    <MenuItem onClick={() => handleGenderSelect("female")}>
                       Female
                     </MenuItem>
                   </MenuList>
@@ -356,9 +455,9 @@ function TableFisherman(props) {
                 <FormLabel>Birt-Date</FormLabel>
                 <Input
                   name="date"
+                  value={fishermanData.birth_date}
+                  onChange={handleInputChange}
                   type="datetime-local"
-                  value={transactionData.date}
-                  onChange={handleChange}
                   placeholder="Enter Date"
                 />
               </FormControl>
@@ -374,10 +473,10 @@ function TableFisherman(props) {
                   </MenuButton>
                   <MenuList>
                     {/* Map Location */}
-                    <MenuItem onClick={() => handleLocSelect("Loc 1")}>
+                    <MenuItem onClick={() => handleLocSelect(1)}>
                       Loc 1
                     </MenuItem>
-                    <MenuItem onClick={() => handleLocSelect("Loc 2")}>
+                    <MenuItem onClick={() => handleLocSelect(2)}>
                       Loc 2
                     </MenuItem>
                   </MenuList>
@@ -396,6 +495,9 @@ function TableFisherman(props) {
                     isActive={selectedRole !== ""}
                     as={Button}
                     rightIcon={<ChevronDownIcon />}
+                    // value={role}
+                    value={fishermanData.role}
+                    onChange={handleInputChange}
                   >
                     {selectedRole || "Select Role"}
                   </MenuButton>
@@ -417,6 +519,8 @@ function TableFisherman(props) {
                     isActive={selectedStatus !== ""}
                     as={Button}
                     rightIcon={<ChevronDownIcon />}
+                    value={fishermanData.status}
+                    onChange={handleInputChange}
                   >
                     {selectedStatus || "Select Status"}
                   </MenuButton>
@@ -435,19 +539,31 @@ function TableFisherman(props) {
                 <FormLabel>Experience</FormLabel>
                 <InputGroup>
                   <InputLeftAddon children={<EditIcon color="gray.300" />} />
-                  <Input name="experience" type="number" />
+                  <Input
+                    name="experience"
+                    // value={experience}
+                    value={fishermanData.experience}
+                    onChange={handleInputChange}
+                    type="number"
+                  />
                 </InputGroup>
               </FormControl>
               <Flex gap={4}>
                 <FormControl mt="4">
                   <FormLabel>Photo</FormLabel>
-                  <Input type="file" name="photo" isFullWidth size="md" />
+                  <Input type="file" 
+                  name="image" 
+                  value = {fishermanData.image}
+                  onChange={handleInputChange}
+                  isFullWidth size="md" />
                 </FormControl>
                 <FormControl mt="4">
                   <FormLabel>Identify Photo</FormLabel>
                   <Input
                     type="file"
-                    name="identify-photo"
+                    name="identity-photo"
+                    value={fishermanData.identity_photo}
+                    onChange={handleInputChange}
                     isFullWidth
                     size="md"
                   />
@@ -457,14 +573,14 @@ function TableFisherman(props) {
                 <FormLabel>NIK</FormLabel>
                 <InputGroup>
                   <InputLeftElement
-                    pointerEvents="none"
+                    // pointerEvents="none"
                     children={<InfoOutlineIcon color="gray.300" />}
                   />
                   <Input
                     type="number"
                     name="nik"
-                    value={transactionData.amount}
-                    onChange={handleChange}
+                    value={fishermanData.nik}
+                    onChange={handleInputChange}
                     placeholder="Enter NIK"
                   />
                 </InputGroup>
@@ -505,7 +621,11 @@ function TableFisherman(props) {
               <Button ref={cancelRef} onClick={onCloseDelete}>
                 Cancel
               </Button>
-              <Button colorScheme="red" onClick={onCloseDelete} ml={3}>
+              <Button
+                colorScheme="red"
+                onClick={() => handleDeleteFisherman(id)}
+                ml={3}
+              >
                 Delete
               </Button>
             </AlertDialogFooter>
