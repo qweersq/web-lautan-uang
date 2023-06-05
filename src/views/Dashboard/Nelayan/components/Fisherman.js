@@ -56,18 +56,26 @@ import axios from "axios";
 import { URL_API } from "constant/data";
 
 const Fisherman = ({ title, captions, data }) => {
+  // ColorMode
   const textColor = useColorModeValue("gray.700", "white");
 
+  // helpModal
   const { isOpen, onOpen, onClose } = useDisclosure();
   const initialRef = React.useRef(null);
   const finalRef = React.useRef(null);
 
+  // State
   const [fishermanData, setFishermanData] = useState(null);
+  const [locationData, setLocationData] = useState(null);
 
+  // Hook
   useEffect(() => {
     fetchData();
+    fetchLocation();
+    console.log(fishermanData);
   }, []);
 
+  // Request Api
   async function fetchData() {
     try {
       const token = localStorage.getItem("token");
@@ -83,6 +91,22 @@ const Fisherman = ({ title, captions, data }) => {
       console.error(error);
     }
   }
+
+  const fetchLocation = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const headers = {
+        Authorization: `Bearer ${token}`,
+      };
+
+      const response = await axios.get(`${URL_API}/api/location`, { headers });
+      // console.log(response.data.data);
+      setLocationData(response.data.data);
+      // console.log(locationData);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const handleAddFisherman = async () => {
     try {
@@ -116,7 +140,7 @@ const Fisherman = ({ title, captions, data }) => {
         { headers }
       );
       console.log(response.data);
-      await new Promise((resolve) => setTimeout(resolve, 2000));
+      // await new Promise((resolve) => setTimeout(resolve, 1000));
 
       // Refresh halaman
       window.location.reload();
@@ -356,21 +380,19 @@ const Fisherman = ({ title, captions, data }) => {
                     </MenuButton>
                     <MenuList>
                       {/* Map Location */}
-                      <MenuItem onClick={() => handleLocSelect(1)}>
-                        Loc 1
-                      </MenuItem>
-                      <MenuItem onClick={() => handleLocSelect(2)}>
-                        Loc 2
-                      </MenuItem>
+                      {locationData ? (
+                        locationData.map((loc) => {
+                          return (
+                            <MenuItem onClick={() => handleLocSelect(loc.id)}>
+                              {loc.kecamatan_name}
+                            </MenuItem>
+                          );
+                        })
+                      ) : (
+                        <p>Loading...</p>
+                      )}
                     </MenuList>
                   </Menu>
-                  <Textarea
-                    mt={2}
-                    name="address"
-                    placeholder="Input Detail Address"
-                    // value = {newFisherman.add}
-                    // onChange={handleChange}
-                  />
                 </FormControl>
                 <FormControl mt={4}>
                   <FormLabel>Role</FormLabel>
@@ -386,9 +408,9 @@ const Fisherman = ({ title, captions, data }) => {
                       {selectedRole || "Select Role"}
                     </MenuButton>
                     <MenuList>
-                      <MenuItem onClick={() => handleRoleSelect("Leader")}>
+                      {/* <MenuItem onClick={() => handleRoleSelect("Leader")}>
                         Leader
-                      </MenuItem>
+                      </MenuItem> */}
                       <MenuItem onClick={() => handleRoleSelect("Member")}>
                         Member
                       </MenuItem>
@@ -418,7 +440,7 @@ const Fisherman = ({ title, captions, data }) => {
                     </MenuList>
                   </Menu>
                 </FormControl>
-                <FormControl>
+                <FormControl mt={4}>
                   <FormLabel>Experience</FormLabel>
                   <InputGroup>
                     <InputLeftAddon children={<EditIcon color="gray.300" />} />
@@ -500,7 +522,7 @@ const Fisherman = ({ title, captions, data }) => {
         <CardBody>
           <Table variant="simple" color={textColor}>
             <Thead>
-              <Tr my=".8rem" pl="0px" color="gray.400">
+              <Tr my="0.8rem" pl="0px" color="gray.400">
                 {captions.map((caption, idx) => {
                   return (
                     <Th
@@ -514,32 +536,52 @@ const Fisherman = ({ title, captions, data }) => {
                 })}
               </Tr>
             </Thead>
-            <Tbody>
+            <Tbody my="0">
               {fishermanData ? (
-                fishermanData.map((fisherman) => (
-                  <TableFisherman
-                    key={fisherman.id}
-                    id = {fisherman.id}
-                    tim_id={fisherman.tim_id}
-                    name={fisherman.name}
-                    phone={fisherman.phone}
-                    email={fisherman.email}
-                    location_id={fisherman.location_id}
-                    address={fisherman.address}
-                    gender={fisherman.gender}
-                    role={fisherman.role}
-                    logo={fisherman.logo}
-                    photo={fisherman.identity_photo}
-                    password={fisherman.password}
-                    nik = {fisherman.nik}
-                    birth_date = {fisherman.birth_date}
-                    status={fisherman.status}
-                    // date={row.date}
-                  />
-                ))
+                fishermanData.map((row) => {
+                  return (
+                    <TableFisherman
+                    image = {row.image}
+                    name = {row.name}
+                    email={row.email}
+                    team_name = {row.team_name}
+                    city = {row.city}
+                    location = {row.location}
+                    phone = {row.phone}
+                    gender = {row.gender}
+                    status = {row.status}
+                    />
+                  );
+                })
+              ) : (
+                <p>Loading</p>
+              )}
+              {/* {fishermanData ? (
+                fishermanData.map((fisherman) => {
+                    <TableFisherman
+                      key={fisherman.id}
+                      id={fisherman.id}
+                      name={fisherman.name}
+                      // phone={fisherman.phone}
+                      // email={fisherman.email}
+                      // tim_id={fisherman.tim_id}
+                      // team_name = {fisherman.team_name}
+                      // location_id={updatedLocationId}
+                      // location_id = {fisherman.location_id}
+                      // address={fisherman.address}
+                      // gender={fisherman.gender}
+                      // role={fisherman.role}
+                      // logo={fisherman.logo}
+                      // photo={fisherman.identity_photo}
+                      // password={fisherman.password}
+                      // nik={fisherman.nik}
+                      // birth_date={fisherman.birth_date}
+                      // status={fisherman.status}
+                    />
+                })
               ) : (
                 <p>Loading...</p>
-              )}
+              )} */}
             </Tbody>
           </Table>
         </CardBody>

@@ -28,7 +28,9 @@ import CardBody from "components/Card/CardBody.js";
 import CardHeader from "components/Card/CardHeader.js";
 import TablesTableRow from "components/Tables/TablesTableRow";
 import TableTransactionRow from "components/Tables/TableTransactionRow";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { URL_API } from "constant/data";
+import axios from "axios";
 
 const Authors = ({ title, captions, data }) => {
   const textColor = useColorModeValue("gray.700", "white");
@@ -37,25 +39,36 @@ const Authors = ({ title, captions, data }) => {
   const initialRef = React.useRef(null);
   const finalRef = React.useRef(null);
 
-  const [transactionData, setTransactionData] = React.useState({
-    name: "",
-    amount: "",
-    date: "",
-  });
+  const [transactionData, setTransactionData] = React.useState(null);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setTransactionData((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
-  };
+  // const handleChange = (e) => {
+  //   const { name, value } = e.target;
+  //   setTransactionData((prevState) => ({
+  //     ...prevState,
+  //     [name]: value,
+  //   }));
+  // };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(transactionData); // contoh, untuk sementara hanya menampilkan data pada console
-    onClose();
-  };
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   console.log(transactionData); // contoh, untuk sementara hanya menampilkan data pada console
+  //   onClose();
+  // };
+
+  async function fetchData() {
+    try {
+      const token = localStorage.getItem("token");
+      const headers = {
+        Authorization: `Bearer ${token}`,
+      };
+      const response = await axios.get(`${URL_API}/api/location`, { headers });
+      setLocationData(response.data.data);
+      // console.log(response.data);
+      // console.log(response.data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   return (
     <Card overflowX={{ sm: "scroll", xl: "hidden" }}>
@@ -80,15 +93,15 @@ const Authors = ({ title, captions, data }) => {
           <ModalContent>
             <ModalHeader>Add Transaction</ModalHeader>
             <ModalCloseButton />
-            <form onSubmit={handleSubmit}>
+            <form>
               <ModalBody pb={6}>
                 <FormControl>
                   <FormLabel>Fisherman Team</FormLabel>
                   <Input
                     name="name"
                     ref={initialRef}
-                    value={transactionData.name}
-                    onChange={handleChange}
+                    // value={transactionData.name}
+                    // onChange={handleChange}
                     placeholder="Enter transaction fisherman team name"
                   />
                 </FormControl>
@@ -97,8 +110,8 @@ const Authors = ({ title, captions, data }) => {
                   <FormLabel>Amount</FormLabel>
                   <Input
                     name="amount"
-                    value={transactionData.amount}
-                    onChange={handleChange}
+                    // value={transactionData.amount}
+                    // onChange={handleChange}
                     placeholder="Enter transaction amount"
                   />
                 </FormControl>
@@ -107,8 +120,8 @@ const Authors = ({ title, captions, data }) => {
                   <FormLabel>Date</FormLabel>
                   <Input
                     name="date"
-                    value={transactionData.date}
-                    onChange={handleChange}
+                    // value={transactionData.date}
+                    // onChange={handleChange}
                     placeholder="Enter transaction date"
                   />
                 </FormControl>
@@ -126,7 +139,7 @@ const Authors = ({ title, captions, data }) => {
           </ModalContent>
         </Modal>
 
-      {/* Card Table */}
+        {/* Card Table */}
       </CardHeader>
       <CardBody>
         <Table variant="simple" color={textColor}>

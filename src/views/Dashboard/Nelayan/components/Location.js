@@ -11,7 +11,7 @@ import {
   Spacer,
   useDisclosure,
   Modal,
-  ModalBody,
+  ModalBody,  
   ModalCloseButton,
   ModalContent,
   ModalFooter,
@@ -22,15 +22,39 @@ import {
   Input,
   InputGroup,
   TableContainer,
+  Text,
 } from "@chakra-ui/react";
 import CardHeader from "components/Card/CardHeader.js";
 import LocationRow from "components/Tables/LocationRow";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { URL_API } from "constant/data";
+import axios from "axios";
 
 const Location = ({ title, captions, data }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const initialRef = React.useRef(null);
   const finalRef = React.useRef(null);
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const [locationData, setLocationData] = useState(null);
+
+  async function fetchData() {
+    try {
+      const token = localStorage.getItem("token");
+      const headers = {
+        Authorization: `Bearer ${token}`,
+      };
+      const response = await axios.get(`${URL_API}/api/location`, { headers });
+      setLocationData(response.data.data);
+      // console.log(response.data);
+      // console.log(response.data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   return (
     <Card ml="2" p="5">
@@ -109,18 +133,20 @@ const Location = ({ title, captions, data }) => {
               </Tr>
             </Thead>
             <Tbody>
-              {data.map((row) => {
-                return (
+              {locationData ? (
+                locationData.map((location) => (
                   <LocationRow
-                    country_name={row.country_name}
-                    province_name={row.province_name}
-                    kota_kab_name={row.kota_kab_name}
-                    kecamatan_name={row.kecamatan_name}
-                    kelurahan_des_name={row.kelurahan_des_name}
-                    postal_code={row.postal_code}
+                    country_name={location.country_name}
+                    province_name={location.province_name}
+                    kota_kab_name={location.kota_kab_name}
+                    kecamatan_name={location.kecamatan_name}
+                    kelurahan_des_name={location.kelurahan_des_name}
+                    postal_code={location.postal_code}
                   />
-                );
-              })}
+                ))
+              ) : (
+                <p>Loading...</p>
+              )}
             </Tbody>
           </Table>
         </CardBody>

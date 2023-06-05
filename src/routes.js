@@ -62,7 +62,7 @@ var dashRoutes = [
         icon: <FaFish color="inherit" />,
         component: TimNelayan,
         layout: "/admin",
-        // hidden: true
+        hidden: true
       },
      
     ],

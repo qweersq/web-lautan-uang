@@ -90,7 +90,7 @@ function Nelayan() {
               "Fisherman Team",
               "Address & Phone",
               "Gender",
-              "Role",
+              // "Role",
               "Status",
               "Actions",
             ]}

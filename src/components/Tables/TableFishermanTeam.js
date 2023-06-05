@@ -54,6 +54,7 @@ import {
   MenuItem,
 } from "@chakra-ui/react";
 import React from "react";
+import { Link } from "react-router-dom";
 
 export default function TableFishermanTeam(props) {
   const {
@@ -67,7 +68,7 @@ export default function TableFishermanTeam(props) {
     quantity,
     totalAssets,
     dividentYield,
-    debt_to_equity_ration,
+    debt_to_equity_ratio,
     marketCap,
   } = props;
 
@@ -84,7 +85,6 @@ export default function TableFishermanTeam(props) {
     onClose: onCloseDelete,
   } = useDisclosure();
 
-  
   const {
     isOpen: IsOpenDetail,
     onOpen: onOpenDetail,
@@ -93,38 +93,22 @@ export default function TableFishermanTeam(props) {
 
   
 
-  const [transactionData, setTransactionData] = React.useState({
-    name: "",
-    amount: "",
-    date: "",
-  });
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setTransactionData((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(transactionData); // contoh, untuk sementara hanya menampilkan data pada console
-    onClose();
-  };
-
   const [selectedLoc, setSelectedLoc] = React.useState("");
   const handleLocSelect = (location) => {
     setSelectedLoc(location);
   };
 
+const linkToDetail = `/detail-fisherman/${id}`;
+
   return (
     <Tr>
       <Td p={0}>
         <Flex direction="column" justifyContent="flex-start" alignItems="start">
-          <Button variant="link" size="lg" >
-            {name} <ExternalLinkIcon mx="2px" />
-          </Button>
+          <Link to={linkToDetail}>
+            <Button variant="link" size="lg">
+              {name} <ExternalLinkIcon mx="2px" />
+            </Button>
+          </Link>
         </Flex>
       </Td>
       <Td>{phone}</Td>
@@ -137,7 +121,7 @@ export default function TableFishermanTeam(props) {
       <Td>{quantity}</Td>
       <Td>{totalAssets}</Td>
       <Td>{dividentYield}</Td>
-      <Td>{debt_to_equity_ration}</Td>
+      <Td>{debt_to_equity_ratio}</Td>
       <Td>{marketCap}</Td>
       <Td>
         <Button
@@ -176,15 +160,15 @@ export default function TableFishermanTeam(props) {
         <ModalContent>
           <ModalHeader>Edit Fisherman Team</ModalHeader>
           <ModalCloseButton />
-          <form onSubmit={handleSubmit}>
+          <form>
             <ModalBody pb={6}>
               <FormControl>
                 <FormLabel>Fisherman Team Name</FormLabel>
                 <Input
                   name="name"
                   ref={initialRef}
-                  value={transactionData.name}
-                  onChange={handleChange}
+                  // value={transactionData.name}
+                  // onChange={handleChange}
                   placeholder="Enter New Fisherman Team Name"
                 />
               </FormControl>

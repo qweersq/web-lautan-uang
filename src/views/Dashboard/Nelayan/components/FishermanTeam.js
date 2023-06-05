@@ -39,7 +39,9 @@ import CardHeader from "components/Card/CardHeader.js";
 import TableFishermanTeam from "components/Tables/TableFishermanTeam";
 import TablesTableRow from "components/Tables/TablesTableRow";
 import TableTransactionRow from "components/Tables/TableTransactionRow";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { URL_API } from "constant/data";
+import axios from "axios";
 
 const FishermanTeam = ({ title, captions, data }) => {
   const textColor = useColorModeValue("gray.700", "white");
@@ -48,25 +50,46 @@ const FishermanTeam = ({ title, captions, data }) => {
   const initialRef = React.useRef(null);
   const finalRef = React.useRef(null);
 
-  const [transactionData, setTransactionData] = React.useState({
-    name: "",
-    amount: "",
-    date: "",
-  });
+  // const [transactionData, setTransactionData] = React.useState({
+  //   name: "",
+  //   amount: "",
+  //   date: "",
+  // });
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setTransactionData((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
-  };
+  useEffect(() => {
+    fetchData();
+  }, []);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(transactionData); // contoh, untuk sementara hanya menampilkan data pada console
-    onClose();
-  };
+  const [fishermanTeamData, setFishermanData] = useState(null);
+
+  async function fetchData() {
+    try {
+      const token = localStorage.getItem("token");
+      const headers = {
+        Authorization: `Bearer ${token}`,
+      };
+      const response = await axios.get(`${URL_API}/api/fisherman-tim`, { headers });
+      setFishermanData(response.data.data);
+      // console.log(response.data);
+      // console.log(response.data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  // const handleChange = (e) => {
+  //   const { name, value } = e.target;
+  //   setTransactionData((prevState) => ({
+  //     ...prevState,
+  //     [name]: value,
+  //   }));
+  // };
+
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   console.log(transactionData); // contoh, untuk sementara hanya menampilkan data pada console
+  //   onClose();
+  // };
 
   const [selectedLoc, setSelectedLoc] = React.useState("");
   const handleLocSelect = (location) => {
@@ -95,15 +118,15 @@ const FishermanTeam = ({ title, captions, data }) => {
           <ModalContent>
             <ModalHeader>Add New Fisherman Team</ModalHeader>
             <ModalCloseButton />
-            <form onSubmit={handleSubmit}>
+            <form>
               <ModalBody pb={6}>
                 <FormControl>
                   <FormLabel>Fisherman Team Name</FormLabel>
                   <Input
                     name="name"
                     ref={initialRef}
-                    value={transactionData.name}
-                    onChange={handleChange}
+                    // value={transactionData.name}
+                    // onChange={handleChange}
                     placeholder="Enter New Fisherman Team Name"
                   />
                 </FormControl>
@@ -230,7 +253,26 @@ const FishermanTeam = ({ title, captions, data }) => {
             </Tr>
           </Thead>
           <Tbody>
-            {data.map((row) => {
+          {fishermanTeamData ? (
+                fishermanTeamData.map((row) => (
+                  <TableFishermanTeam
+                  name={row.name}
+                  phone={row.phone}
+                  yearFormed={row.year_formed}
+                  address={row.address}
+                  location={row.location_id}
+                  balance={row.balance}
+                  quantity={row.quantity}
+                  totalAssets={row.total_assets}
+                  dividentYield={row.divident_yield}
+                  debt_to_equity_ratio={row.debt_to_equity_ratio}
+                  marketCap={row.market_cap}
+                />
+                ))
+              ) : (
+                <p>Loading...</p>
+              )}
+            {/* {data.map((row) => {
               return (
                 <TableFishermanTeam
                   name={row.name}
@@ -246,7 +288,7 @@ const FishermanTeam = ({ title, captions, data }) => {
                   marketCap={row.market_cap}
                 />
               );
-            })}
+            })} */}
           </Tbody>
         </Table>
       </CardBody>

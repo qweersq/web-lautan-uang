@@ -61,25 +61,32 @@ import { token } from "stylis";
 function TableFisherman(props) {
   const {
     id,
-    tim_id,
     name,
     phone,
     email,
-    password,
+    tim_id,
+    team_name,
+    location,
+    city,
+    kecamatan,
+    kelurahan,
+    province,
     gender,
     birth_date,
+    status,
+    password,
+    experience,
+    nik,
+    image,
+    identity_photo,
     address,
     role,
     location_id,
-    status,
-    experience,
-    nik,
     photo,
-    identity_photo,
   } = props;
   const textColor = useColorModeValue("gray.700", "white");
-  const bgStatus = useColorModeValue("gray.400", "#1a202c");
-  const colorStatus = useColorModeValue("white", "gray.400");
+  const bgStatus = useColorModeValue("blue.600", "white");
+  const colorStatus = useColorModeValue("gray.700", "white");
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const {
@@ -106,7 +113,7 @@ function TableFisherman(props) {
     status: props.status,
     experience: props.experience ,
     nik: props.nik,
-    photo: props.photo,
+    // photo: props.photo,
     identity_photo: props.identity_photo,
   });
 
@@ -217,7 +224,7 @@ function TableFisherman(props) {
     <Tr>
       <Td pl="0px">
         <Flex align="center" py=".8rem" minWidth="100%" flexWrap="nowrap">
-          <Avatar src={photo} w="50px" borderRadius="12px" me="18px" />
+          <Avatar src={image} w="50px" borderRadius="12px" me="18px" />
           <Flex direction="column">
             <Text
               fontSize="md"
@@ -237,70 +244,69 @@ function TableFisherman(props) {
       <Td>
         {/* <Flex direction="column"> */}
         <Badge
-          bg={"blue.400"}
-          color={"white"}
+          color={bgStatus}
           fontSize="15px"
           p="3px 10px"
           borderRadius="8px"
-          m={1}
+          my={2}
         >
-          {tim_id}
+          {team_name}
         </Badge>
         <Text
+          color={textColor}
           fontSize="sm"
-          bg="gray.300"
           p="3px 10px"
           borderRadius="8px"
           fontWeight="bold"
         >
-          {location_id}
+          {city}
         </Text>
         {/* </Flex> */}
       </Td>
 
       <Td>
         {/* <Flex direction="column"> */}
-        {address == null ? (
+        {location == null ? (
           // <p>Hello</p>
-          <Text>----</Text>
+          <Text>None</Text>
         ) : (
           <Badge
-            bg={"blue.400"}
-            color={"white"}
+            color={bgStatus}
             fontSize="15px"
             p="3px 10px"
             borderRadius="8px"
-            m={1}
+            my={1}
           >
-            {address}
+            {location}
           </Badge>
         )}
         <Text
           fontSize="sm"
-          bg="gray.300"
+          // bg="gray.300"
           p="3px 10px"
           borderRadius="8px"
           fontWeight="bold"
         >
-          {phone}
+          Phone : {phone}
         </Text>
         {/* </Flex> */}
       </Td>
       <Td>
-        <Text fontSize="md" color={textColor} fontWeight="bold" pb=".5rem">
+        <Badge fontSize="md" color={bgStatus} fontWeight="bold" p="3px 10px">
           {gender}
-        </Text>
+        </Badge>
       </Td>
 
-      <Td>
+      {/* <Td>
         <Text fontSize="md" color={textColor} fontWeight="bold" pb=".5rem">
           {role}
         </Text>
-      </Td>
+      </Td> */}
       <Td>
         <Badge
-          bg={status === "aktif" ? "green.400" : bgStatus}
-          color={status === "aktif" ? "white" : colorStatus}
+          bg={status === "aktif" ? "green.400" : "white"}
+          color={status === "aktif" ? "white" : "black"}
+          // color = {"white"}
           fontSize="16px"
           p="3px 10px"
           borderRadius="8px"
