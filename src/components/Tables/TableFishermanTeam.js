@@ -55,6 +55,7 @@ import {
 } from "@chakra-ui/react";
 import React from "react";
 import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 export default function TableFishermanTeam(props) {
   const {
@@ -78,6 +79,7 @@ export default function TableFishermanTeam(props) {
   const initialRef = React.useRef(null);
   const finalRef = React.useRef(null);
   const cancelRef = React.useRef();
+  const navigate = useHistory();
 
   const {
     isOpen: IsOpenDelete,
@@ -91,24 +93,27 @@ export default function TableFishermanTeam(props) {
     onClose: onCloseDetail,
   } = useDisclosure();
 
-  
+
 
   const [selectedLoc, setSelectedLoc] = React.useState("");
   const handleLocSelect = (location) => {
     setSelectedLoc(location);
   };
 
-const linkToDetail = `/detail-fisherman/${id}`;
+
+  const handleDetailFishermanTeam = () => {
+    // const linkToDetail = `/admin/detail-fisherman/1`;
+    navigate.push("/admin/detail-fisherman/1");
+  };
+
 
   return (
     <Tr>
       <Td p={0}>
         <Flex direction="column" justifyContent="flex-start" alignItems="start">
-          <Link to={linkToDetail}>
-            <Button variant="link" size="lg">
-              {name} <ExternalLinkIcon mx="2px" />
-            </Button>
-          </Link>
+          <Button variant="link" size="lg" onClick={() => handleDetailFishermanTeam()}>
+            {name} <ExternalLinkIcon mx="2px" />
+          </Button>
         </Flex>
       </Td>
       <Td>{phone}</Td>

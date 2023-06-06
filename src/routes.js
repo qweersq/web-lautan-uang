@@ -1,8 +1,6 @@
 // import
 import Dashboard from "views/Dashboard/Dashboard";
 import Nelayan from "views/Dashboard/Nelayan";
-import NelayanTim from "views/Dashboard/TimNelayan";
-import Profile from "views/Dashboard/Profile";
 import SignIn from "views/Auth/SignIn.js";
 import SignUp from "views/Auth/SignUp.js";
 
@@ -115,8 +113,7 @@ var dashRoutes = [
     secondaryNavbar: true,
     component: SignUp,
     layout: "/auth",
-    hidden: true,
-
+    hidden: true, 
   },
  
 ];

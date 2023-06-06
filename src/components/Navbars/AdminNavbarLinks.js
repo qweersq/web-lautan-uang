@@ -61,7 +61,7 @@ export default function HeaderLinks(props) {
     }).catch((error) => {
       console.log(error);
     });
-
+    localStorage.removeItem("token");
     navigate.push("/auth/signin");
   };
 

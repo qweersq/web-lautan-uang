@@ -35,6 +35,7 @@ import { fishermanTeamCatchData } from "variables/general";
 import { fishermanTeamCatchDetail } from "variables/general";
 import FishermanCatch from "../FinanceReport/components/FishermanCatch";
 // import { fishermanTableData } from "variables/general";
+
 function TimNelayan() {
   const bgProfile = useColorModeValue(
     "hsla(0,0%,100%,.8)",

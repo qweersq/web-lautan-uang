@@ -23,6 +23,8 @@ export default function Dashboard(props) {
 	// states and functions
 	const [sidebarVariant, setSidebarVariant] = useState('transparent');
 	const [fixed, setFixed] = useState(false);
+	const token = localStorage.getItem('token');
+
 	// functions for changing the states from components
 	const getRoute = () => {
 		return window.location.pathname !== '/admin/full-screen-maps';
@@ -76,11 +78,14 @@ export default function Dashboard(props) {
 				return getRoutes(prop.views);
 			}
 			if (prop.layout === '/admin') {
-				return <Route path={prop.layout + prop.path} component={prop.component} key={key} />;
-			} else {
-				return null;
+				if (token !== null) {
+					return <Route path={prop.layout + prop.path} component={prop.component} key={key} />;
+				} else {
+					return <Redirect from='/admin' to='/auth/signin' />;
+				}
 			}
-		});
+
+		})
 	};
 	const { isOpen, onOpen, onClose } = useDisclosure();
 	document.documentElement.dir = 'ltr';
