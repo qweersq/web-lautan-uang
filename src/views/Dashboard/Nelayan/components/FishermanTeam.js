@@ -31,6 +31,7 @@ import {
   MenuList,
   MenuItem,
   Textarea,
+  TableContainer,
 } from "@chakra-ui/react";
 // Custom components
 import Card from "components/Card/Card.js";
@@ -68,7 +69,9 @@ const FishermanTeam = ({ title, captions, data }) => {
       const headers = {
         Authorization: `Bearer ${token}`,
       };
-      const response = await axios.get(`${URL_API}/api/fisherman-tim`, { headers });
+      const response = await axios.get(`${URL_API}/api/fisherman-tim`, {
+        headers,
+      });
       setFishermanData(response.data.data);
       // console.log(response.data);
       // console.log(response.data.data);
@@ -239,40 +242,45 @@ const FishermanTeam = ({ title, captions, data }) => {
         <Input placeholder="Find fisherman team" />
       </InputGroup>
 
-      <CardBody>
-        <Table variant="simple" color={textColor}>
-          <Thead>
-            <Tr my=".8rem" pl="0px" color="gray.400">
-              {captions.map((caption, idx) => {
-                return (
-                  <Th color="gray.400" key={idx} ps={idx === 0 ? "0px" : null}>
-                    {caption}
-                  </Th>
-                );
-              })}
-            </Tr>
-          </Thead>
-          <Tbody>
-          {fishermanTeamData ? (
+      <TableContainer>
+        <CardBody>
+          <Table variant="simple" color={textColor}>
+            <Thead>
+              <Tr my=".8rem" pl="0px" color="gray.400">
+                {captions.map((caption, idx) => {
+                  return (
+                    <Th
+                      color="gray.400"
+                      key={idx}
+                      ps={idx === 0 ? "0px" : null}
+                    >
+                      {caption}
+                    </Th>
+                  );
+                })}
+              </Tr>
+            </Thead>
+            <Tbody>
+              {fishermanTeamData ? (
                 fishermanTeamData.map((row) => (
                   <TableFishermanTeam
-                  name={row.name}
-                  phone={row.phone}
-                  yearFormed={row.year_formed}
-                  address={row.address}
-                  location={row.location_id}
-                  balance={row.balance}
-                  quantity={row.quantity}
-                  totalAssets={row.total_assets}
-                  dividentYield={row.divident_yield}
-                  debt_to_equity_ratio={row.debt_to_equity_ratio}
-                  marketCap={row.market_cap}
-                />
+                    name={row.name}
+                    phone={row.phone}
+                    yearFormed={row.year_formed}
+                    address={row.address}
+                    location={row.location_id}
+                    balance={row.balance}
+                    quantity={row.quantity}
+                    totalAssets={row.total_assets}
+                    dividentYield={row.divident_yield}
+                    debt_to_equity_ratio={row.debt_to_equity_ratio}
+                    marketCap={row.market_cap}
+                  />
                 ))
               ) : (
                 <p>Loading...</p>
               )}
-            {/* {data.map((row) => {
+              {/* {data.map((row) => {
               return (
                 <TableFishermanTeam
                   name={row.name}
@@ -289,9 +297,10 @@ const FishermanTeam = ({ title, captions, data }) => {
                 />
               );
             })} */}
-          </Tbody>
-        </Table>
-      </CardBody>
+            </Tbody>
+          </Table>
+        </CardBody>
+      </TableContainer>
     </Card>
   );
 };

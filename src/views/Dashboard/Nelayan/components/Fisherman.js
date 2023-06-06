@@ -43,7 +43,13 @@ import {
   Textarea,
   Box,
   Image,
+  Select,
   TableContainer,
+  NumberInput,
+  NumberInputField,
+  NumberInputStepper,
+  NumberIncrementStepper,
+  NumberDecrementStepper,
 } from "@chakra-ui/react";
 // Custom components
 import Card from "components/Card/Card.js";
@@ -54,6 +60,7 @@ import React, { useEffect, useState } from "react";
 import { ChevronDownIcon } from "@chakra-ui/icons";
 import axios from "axios";
 import { URL_API } from "constant/data";
+import Swal from "sweetalert2";
 
 const Fisherman = ({ title, captions, data }) => {
   // ColorMode
@@ -67,12 +74,30 @@ const Fisherman = ({ title, captions, data }) => {
   // State
   const [fishermanData, setFishermanData] = useState(null);
   const [locationData, setLocationData] = useState(null);
+  const [newFisherman, setNewFisherman] = useState({
+    name: "",
+    tim_id: 0,
+    tim_name: "",
+    phone: "",
+    email: "",
+    password: "",
+    gender: "",
+    birth_date: "",
+    location_id: 0,
+    location_name: "",
+    status: "",
+    experience: 0,
+    nik: "",
+    image: "",
+    identity_photo: "",
+    role: "",
+  });
 
   // Hook
   useEffect(() => {
     fetchData();
     fetchLocation();
-    console.log(fishermanData);
+    fetchFishermanTeam();
   }, []);
 
   // Request Api
@@ -85,13 +110,10 @@ const Fisherman = ({ title, captions, data }) => {
 
       const response = await axios.get(`${URL_API}/api/fisherman`, { headers });
       setFishermanData(response.data.data);
-      // console.log(response.data);
-      // console.log(response.data.data);
     } catch (error) {
       console.error(error);
     }
   }
-
   const fetchLocation = async () => {
     try {
       const token = localStorage.getItem("token");
@@ -108,16 +130,33 @@ const Fisherman = ({ title, captions, data }) => {
     }
   };
 
+  const fetchFishermanTeam = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const headers = {
+        Authorization: `Bearer ${token}`,
+      };
+
+      const response = await axios.get(`${URL_API}/api/fisherman-tim`, {
+        headers,
+      });
+      setFishermanTeamData(response.data.data);
+      // console.log(fishermanTeamData)
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  //! HANDLEERR
   const handleAddFisherman = async () => {
     try {
       const token = localStorage.getItem("token");
       const headers = {
         Authorization: `Bearer ${token}`,
-        Status: `OK`,
-        Code: 200,
-        Accept: `application/json`,
+        // Status: `OK`,
+        // Code: 200,
+        // Accept: `application/json`,
       };
-      console.log(newFisherman);
 
       const response = await axios.post(
         `${URL_API}/api/fisherman`,
@@ -139,34 +178,42 @@ const Fisherman = ({ title, captions, data }) => {
         },
         { headers }
       );
-      console.log(response.data);
-      // await new Promise((resolve) => setTimeout(resolve, 1000));
+      onClose();
+      Swal.fire({
+        title: "Good Job!",
+        text: `Success Add Fisherman`,
+        icon: "success",
+        confirmButtonText: "Ok",
+      });
 
-      // Refresh halaman
+      await new Promise((r) => setTimeout(r, 500));
       window.location.reload();
-
-      // fetchData();
     } catch (error) {
-      console.error(error);
+      if (error.response) {
+        onClose();
+        const errMes = JSON.stringify(error.response.data.message);
+        Swal.fire({
+          position: "top-end",
+          title: `Oopss..`,
+          text: `${errMes}`,
+          icon: "error",
+          confirmButtonText: "OK",
+        });
+        // console.log(error.request)
+      } else {
+        // console.error(error.response);
+        // console.error(error);
+        Swal.fire({
+          position: "top-end",
+          title: "Error!",
+          text: `${error}`,
+          icon: "error",
+          confirmButtonText: "Ok",
+        });
+        // onClose();
+      }
     }
   };
-
-  const [newFisherman, setNewFisherman] = useState({
-    name: "",
-    tim_id: 0,
-    phone: "",
-    email: "",
-    password: "",
-    gender: "",
-    birth_date: "",
-    location_id: 0,
-    status: "",
-    experience: 0,
-    nik: "",
-    image: "",
-    identity_photo: "",
-    role: "",
-  });
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -185,10 +232,17 @@ const Fisherman = ({ title, captions, data }) => {
     }
     console.log(newFisherman);
   };
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   onClose();
-  // };
+
+  const [fishermanTeamData, setFishermanTeamData] = useState(null);
+  const handleTimSelect = (id, name) => {
+    setNewFisherman((prevState) => ({
+      ...prevState,
+      tim_id: id,
+      tim_name: name,
+    }));
+    // console.log(tim);
+    // setSelectedGender(gender);
+  };
 
   const [selectedGender, setSelectedGender] = React.useState("");
   const handleGenderSelect = (gender) => {
@@ -200,10 +254,11 @@ const Fisherman = ({ title, captions, data }) => {
   };
 
   const [selectedLoc, setSelectedLoc] = React.useState("");
-  const handleLocSelect = (location) => {
+  const handleLocSelect = (id, kecName) => {
     setNewFisherman((prevState) => ({
       ...prevState,
-      location_id: location,
+      location_id: id,
+      location_name: kecName,
     }));
     setSelectedLoc(location);
   };
@@ -257,33 +312,52 @@ const Fisherman = ({ title, captions, data }) => {
             <form onSubmit={(e) => handleAddFisherman(e)}>
               <ModalBody pb={10}>
                 <Flex gap={5}>
-                  <FormControl>
+                  <FormControl isRequired>
                     <FormLabel>Fisherman Team</FormLabel>
-                    <Input
-                      name="tim_id"
-                      placeholder="Input Fisherman Team"
-                      type="number"
-                      value={newFisherman.tim_id}
-                      onChange={handleChange}
-                    />
+                    <Menu size="sm">
+                      <MenuButton
+                        // isActive={selectedLoc !== ""}
+                        as={Button}
+                        rightIcon={<ChevronDownIcon />}
+                        name="tim_id"
+                        value={newFisherman.location_id}
+                        onChange={handleChange}
+                      >
+                        {newFisherman.tim_name || "Select Fisherman Team"}
+                      </MenuButton>
+                      <MenuList>
+                        {fishermanTeamData ? (
+                          fishermanTeamData.map((e) => {
+                            return (
+                              <MenuItem
+                                onClick={() => handleTimSelect(e.id, e.name)}
+                              >
+                                {e.name}
+                              </MenuItem>
+                            );
+                          })
+                        ) : (
+                          <p>Loading...</p>
+                        )}
+                      </MenuList>
+                    </Menu>
                   </FormControl>
-                  <FormControl>
+                  <FormControl isRequired>
                     <FormLabel>Fisherman Name</FormLabel>
                     <Input
                       name="name"
                       placeholder="Input Fisherman Name"
                       value={newFisherman.name}
                       onChange={handleChange}
+                      required
                     />
                   </FormControl>
                 </Flex>
 
-                <FormControl mt={4}>
+                <FormControl mt={4} isRequired>
                   <FormLabel>Phone</FormLabel>
                   <InputGroup>
-                    <InputLeftElement
-                      children={<PhoneIcon color="gray.300" />}
-                    />
+                    <InputLeftAddon children={<PhoneIcon color="gray.300" />} />
                     <Input
                       type="tel"
                       name="phone"
@@ -294,7 +368,7 @@ const Fisherman = ({ title, captions, data }) => {
                   </InputGroup>
                 </FormControl>
 
-                <FormControl mt={4}>
+                <FormControl mt={4} isRequired>
                   <FormLabel>Account</FormLabel>
                   <InputGroup>
                     <InputLeftAddon
@@ -331,7 +405,7 @@ const Fisherman = ({ title, captions, data }) => {
                   </InputGroup>
                 </FormControl>
 
-                <FormControl mt={4}>
+                <FormControl mt={4} isRequired>
                   <FormLabel>Gender</FormLabel>
                   <Menu size="sm">
                     <MenuButton
@@ -355,18 +429,19 @@ const Fisherman = ({ title, captions, data }) => {
                   </Menu>
                 </FormControl>
 
-                <FormControl mt={4}>
+                <FormControl mt={4} isRequired>
                   <FormLabel>Birt-Date</FormLabel>
                   <Input
                     name="birth_date"
-                    type="datetime-local"
+                    type="date"
                     value={newFisherman.birth_date}
                     onChange={handleChange}
                     placeholder="Enter Date"
+                    isRequired
                   />
                 </FormControl>
                 <FormControl mt={4}>
-                  <FormLabel>Address</FormLabel>
+                  <FormLabel>Address / Location</FormLabel>
                   <Menu size="sm">
                     <MenuButton
                       isActive={selectedLoc !== ""}
@@ -376,14 +451,17 @@ const Fisherman = ({ title, captions, data }) => {
                       value={newFisherman.location_id}
                       onChange={handleChange}
                     >
-                      {selectedLoc || "Select Location"}
+                      {newFisherman.location_name || "Select Location"}
                     </MenuButton>
                     <MenuList>
-                      {/* Map Location */}
                       {locationData ? (
                         locationData.map((loc) => {
                           return (
-                            <MenuItem onClick={() => handleLocSelect(loc.id)}>
+                            <MenuItem
+                              onClick={() =>
+                                handleLocSelect(loc.id, loc.kecamatan_name)
+                              }
+                            >
                               {loc.kecamatan_name}
                             </MenuItem>
                           );
@@ -394,30 +472,7 @@ const Fisherman = ({ title, captions, data }) => {
                     </MenuList>
                   </Menu>
                 </FormControl>
-                <FormControl mt={4}>
-                  <FormLabel>Role</FormLabel>
-                  <Menu size="sm">
-                    <MenuButton
-                      isActive={selectedRole !== ""}
-                      as={Button}
-                      rightIcon={<ChevronDownIcon />}
-                      name="role"
-                      value={newFisherman.role}
-                      onChange={handleChange}
-                    >
-                      {selectedRole || "Select Role"}
-                    </MenuButton>
-                    <MenuList>
-                      {/* <MenuItem onClick={() => handleRoleSelect("Leader")}>
-                        Leader
-                      </MenuItem> */}
-                      <MenuItem onClick={() => handleRoleSelect("Member")}>
-                        Member
-                      </MenuItem>
-                    </MenuList>
-                  </Menu>
-                </FormControl>
-                <FormControl mt={4}>
+                <FormControl mt={4} isRequired>
                   <FormLabel>Status</FormLabel>
                   <Menu size="sm">
                     <MenuButton
@@ -434,38 +489,40 @@ const Fisherman = ({ title, captions, data }) => {
                       <MenuItem onClick={() => handleStatusSelect("aktif")}>
                         Aktif
                       </MenuItem>
-                      <MenuItem onClick={() => handleStatusSelect("Non Aktif")}>
+                      <MenuItem onClick={() => handleStatusSelect("non-aktif")}>
                         Non Aktif
                       </MenuItem>
                     </MenuList>
                   </Menu>
                 </FormControl>
-                <FormControl mt={4}>
+                <FormControl mt={4} isRequired>
                   <FormLabel>Experience</FormLabel>
                   <InputGroup>
                     <InputLeftAddon children={<EditIcon color="gray.300" />} />
                     <Input
                       name="experience"
                       type="number"
-                      value={newFisherman.experience}
+                      defaultValue={newFisherman.experience}
+                      // value={newFisherman.experience}
                       onChange={handleChange}
                     />
                   </InputGroup>
                 </FormControl>
                 <Flex gap={4}>
-                  <FormControl mt="4">
-                    <FormLabel>Photo</FormLabel>
+                  <FormControl mt="4" isRequired>
+                    <FormLabel>Image</FormLabel>
                     <Input
                       type="file"
                       name="image"
+                      accept="image/jpeg, image/png, image/png"
                       value={newFisherman.image}
                       onChange={handleChange}
                       isFullWidth
                       size="md"
                     />
                   </FormControl>
-                  <FormControl mt="4">
-                    <FormLabel>Identify Photo</FormLabel>
+                  <FormControl mt="4" isRequired>
+                    <FormLabel>Identity Photo</FormLabel>
                     <Input
                       type="file"
                       name="identity_photo"
@@ -476,7 +533,7 @@ const Fisherman = ({ title, captions, data }) => {
                     />
                   </FormControl>
                 </Flex>
-                <FormControl mt={4}>
+                <FormControl mt={4} isRequired>
                   <FormLabel>NIK</FormLabel>
                   <InputGroup>
                     <InputLeftElement
@@ -510,15 +567,15 @@ const Fisherman = ({ title, captions, data }) => {
         </Modal>
       </CardHeader>
 
-      <TableContainer>
-        <InputGroup width="50%">
-          <InputLeftElement
-            pointerEvents="none"
-            children={<SearchIcon color="blue.300" />}
-          />
-          <Input placeholder="Find fisherman" />
-        </InputGroup>
+      <InputGroup width="50%">
+        <InputLeftElement
+          pointerEvents="none"
+          children={<SearchIcon color="blue.300" />}
+        />
+        <Input placeholder="Find fisherman" />
+      </InputGroup>
 
+      <TableContainer>
         <CardBody>
           <Table variant="simple" color={textColor}>
             <Thead>
@@ -536,52 +593,28 @@ const Fisherman = ({ title, captions, data }) => {
                 })}
               </Tr>
             </Thead>
-            <Tbody my="0">
+            <Tbody>
               {fishermanData ? (
                 fishermanData.map((row) => {
                   return (
                     <TableFisherman
-                    image = {row.image}
-                    name = {row.name}
-                    email={row.email}
-                    team_name = {row.team_name}
-                    city = {row.city}
-                    location = {row.location}
-                    phone = {row.phone}
-                    gender = {row.gender}
-                    status = {row.status}
+                      key={row.id}
+                      id={row.id}
+                      image={row.image}
+                      name={row.name}
+                      email={row.email}
+                      team_name={row.team_name}
+                      city={row.city}
+                      location={row.location}
+                      phone={row.phone}
+                      gender={row.gender}
+                      status={row.status}
                     />
                   );
                 })
               ) : (
                 <p>Loading</p>
               )}
-              {/* {fishermanData ? (
-                fishermanData.map((fisherman) => {
-                    <TableFisherman
-                      key={fisherman.id}
-                      id={fisherman.id}
-                      name={fisherman.name}
-                      // phone={fisherman.phone}
-                      // email={fisherman.email}
-                      // tim_id={fisherman.tim_id}
-                      // team_name = {fisherman.team_name}
-                      // location_id={updatedLocationId}
-                      // location_id = {fisherman.location_id}
-                      // address={fisherman.address}
-                      // gender={fisherman.gender}
-                      // role={fisherman.role}
-                      // logo={fisherman.logo}
-                      // photo={fisherman.identity_photo}
-                      // password={fisherman.password}
-                      // nik={fisherman.nik}
-                      // birth_date={fisherman.birth_date}
-                      // status={fisherman.status}
-                    />
-                })
-              ) : (
-                <p>Loading...</p>
-              )} */}
             </Tbody>
           </Table>
         </CardBody>

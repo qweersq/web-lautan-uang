@@ -14,7 +14,7 @@ import {
   dashboardTableData,
   LocationData,
   fishermanTableData,
-  fishermanTeamTableData
+  fishermanTeamTableData,
 } from "variables/general";
 // import MiniStatistics from "../../../components/MiniStatistic/MiniStatistics";
 import {
@@ -56,7 +56,7 @@ function Nelayan() {
         />
       </SimpleGrid>
 
-      <Flex mt="5">
+      <Flex my="5" gap="3">
         <TopFisherman
           title={"Top 5 Most Invest Fisherman"}
           captions={["Name/Email"]}
@@ -77,27 +77,20 @@ function Nelayan() {
         />
       </Flex>
 
-      <Grid sx={{ mt: "30px" }} gap={10}>
-        {/* <GridItem>
-          <NelayanTeamAPI />
-        </GridItem> */}
-        <GridItem>
-          <Fisherman
-            title={"Fisherman Table"}
-            textColor={"blue"}
-            captions={[
-              "Name",
-              "Fisherman Team",
-              "Address & Phone",
-              "Gender",
-              // "Role",
-              "Status",
-              "Actions",
-            ]}
-            data={fishermanTableData}
-          />
-        </GridItem>
-      </Grid>
+      <Fisherman
+        title={"Fisherman Table"}
+        textColor={"blue"}
+        captions={[
+          "Name",
+          "Fisherman Team",
+          "Address & Phone",
+          "Gender",
+          // "Role",
+          "Status",
+          "Actions",
+        ]}
+        data={fishermanTableData}
+      />
       <FishermanTeam
         title={"Fisherman Team Table"}
         captions={[
@@ -108,10 +101,10 @@ function Nelayan() {
           "Balance",
           "Quantity",
           "Total Assets",
-          "Divident Yield", 
-          "Debt To Equit Ratio", 
+          "Divident Yield",
+          "Debt To Equit Ratio",
           "Market Cap",
-          "Actions" 
+          "Actions",
         ]}
         data={fishermanTeamTableData}
       />

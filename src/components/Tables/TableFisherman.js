@@ -51,12 +51,14 @@ import {
   Textarea,
   MenuList,
   MenuItem,
+  TableContainer,
 } from "@chakra-ui/react";
 import React from "react";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { URL_API } from "constant/data";
 import { token } from "stylis";
+import Swal from "sweetalert2";
 
 function TableFisherman(props) {
   const {
@@ -111,7 +113,7 @@ function TableFisherman(props) {
     role: props.role,
     location_id: props.location_id,
     status: props.status,
-    experience: props.experience ,
+    experience: props.experience,
     nik: props.nik,
     // photo: props.photo,
     identity_photo: props.identity_photo,
@@ -137,11 +139,27 @@ function TableFisherman(props) {
       const response = await axios.delete(`${URL_API}/api/fisherman/${id}`, {
         headers,
       });
-      console.log(response.data);
+      // console.log(response.data);
 
-      window.location.reload();
       onCloseDelete();
+      Swal.fire({
+        title: "Delete!",
+        text: `Success Delete Fisherman`,
+        icon: "success",
+        confirmButtonText: "Ok",
+      });
+
+      await new Promise((r) => setTimeout(r, 500));
+      window.location.reload();
     } catch (error) {
+      const errMes = JSON.stringify(error.response.data.message);
+      Swal.fire({
+        position: "top-end",
+        title: `Oopss..`,
+        text: `${errMes}`,
+        icon: "error",
+        confirmButtonText: "OK",
+      });
       console.error(error);
     }
   };
@@ -493,7 +511,7 @@ function TableFisherman(props) {
                   placeholder="Input Detail Address"
                 />
               </FormControl>
-
+              {/* 
               <FormControl mt={4}>
                 <FormLabel>Role</FormLabel>
                 <Menu size="sm">
@@ -508,7 +526,6 @@ function TableFisherman(props) {
                     {selectedRole || "Select Role"}
                   </MenuButton>
                   <MenuList>
-                    {/* Map Location */}
                     <MenuItem onClick={() => handleRoleSelect("Leader")}>
                       Leader
                     </MenuItem>
@@ -517,7 +534,8 @@ function TableFisherman(props) {
                     </MenuItem>
                   </MenuList>
                 </Menu>
-              </FormControl>
+              </FormControl> */}
+
               <FormControl mt={4}>
                 <FormLabel>Status</FormLabel>
                 <Menu size="sm">
@@ -557,11 +575,14 @@ function TableFisherman(props) {
               <Flex gap={4}>
                 <FormControl mt="4">
                   <FormLabel>Photo</FormLabel>
-                  <Input type="file" 
-                  name="image" 
-                  value = {fishermanData.image}
-                  onChange={handleInputChange}
-                  isFullWidth size="md" />
+                  <Input
+                    type="file"
+                    name="image"
+                    value={fishermanData.image}
+                    onChange={handleInputChange}
+                    isFullWidth
+                    size="md"
+                  />
                 </FormControl>
                 <FormControl mt="4">
                   <FormLabel>Identify Photo</FormLabel>
