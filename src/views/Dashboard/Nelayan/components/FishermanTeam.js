@@ -43,6 +43,7 @@ import TableTransactionRow from "components/Tables/TableTransactionRow";
 import React, { useEffect, useState } from "react";
 import { URL_API } from "constant/data";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 const FishermanTeam = ({ title, captions, data }) => {
   const textColor = useColorModeValue("gray.700", "white");
@@ -51,51 +52,135 @@ const FishermanTeam = ({ title, captions, data }) => {
   const initialRef = React.useRef(null);
   const finalRef = React.useRef(null);
 
-  // const [transactionData, setTransactionData] = React.useState({
-  //   name: "",
-  //   amount: "",
-  //   date: "",
-  // });
+  //! STATE
+  const [fishermanTeamData, setFishermanTeamData] = useState(null);
+  const [locationData, setLocationData] = useState(null);
+  const [newFishermanTeam, setNewFishermanTeam] = useState({
+    name: "",
+    phone: "",
+    year_formed: 2001,
+    address: "",
+    balance: 1000,
+    location_id: 0,
+    location_name: "", // Apa bila dibutuhkan
+    quantity: 0,
+    total_assets: 4000,
+    divident_yield: 0,
+    debt_to_equity_ratio: 0,
+    market_cap: 3000000000,
+  });
 
+  //! HOOK
   useEffect(() => {
     fetchData();
   }, []);
 
-  const [fishermanTeamData, setFishermanData] = useState(null);
-
+  //! FETCH DATA
   async function fetchData() {
     try {
       const token = localStorage.getItem("token");
       const headers = {
         Authorization: `Bearer ${token}`,
       };
-      const response = await axios.get(`${URL_API}/api/fisherman-tim`, {
-        headers,
-      });
-      setFishermanData(response.data.data);
-      // console.log(response.data);
-      // console.log(response.data.data);
+      const [fishermanTeamResponse, locationResponse] = await Promise.all([
+        axios.get(`${URL_API}/api/fisherman-tim`, { headers }),
+        axios.get(`${URL_API}/api/location`, { headers }),
+      ]);
+      setFishermanTeamData(fishermanTeamResponse.data.data);
+      setLocationData(locationResponse.data.data);
     } catch (error) {
       console.log(error);
     }
   }
 
-  // const handleChange = (e) => {
-  //   const { name, value } = e.target;
-  //   setTransactionData((prevState) => ({
-  //     ...prevState,
-  //     [name]: value,
-  //   }));
-  // };
+  // Handler Function
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    e.preventDefault();
 
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   console.log(transactionData); // contoh, untuk sementara hanya menampilkan data pada console
-  //   onClose();
-  // };
+    if (
+      name === "year_formed" ||
+      name === "balance" ||
+      name === "location_id" ||
+      name === "quantity" ||
+      name === "total_assets" ||
+      name === "divident_yield" ||
+      name === "market_cap"
+    ) {
+      setNewFishermanTeam((prevFisherman) => ({
+        ...prevFisherman,
+        [name]: parseInt(value),
+      }));
+    } else {
+      setNewFishermanTeam((prevFisherman) => ({
+        ...prevFisherman,
+        [name]: value,
+      }));
+    }
+  };
+  const handleSubmit = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const headers = {
+        Authorization: `Bearer ${token}`,
+        Status: `OK`,
+        Code: 200,
+        Accept: `application/json`,
+      };
+
+      const { location_name, ...newFishermanTeamWithoutLocationName } = newFishermanTeam;
+      const response = await axios.post(
+        `${URL_API}/api/fisherman-tim`,
+        { ...newFishermanTeamWithoutLocationName },
+        { headers }
+      );
+      onClose();
+      Swal.fire({
+        title: "Good Job!",
+        text: `Success Add Fisherman Team`,
+        icon: "success",
+        confirmButtonText: "Ok",
+      });
+
+      await new Promise((r) => setTimeout(r, 500));
+      window.location.reload();
+    } catch (error) {
+      if (error.response) {
+        onClose();
+        const errMes = JSON.stringify(error.response.data.message);
+        Swal.fire({
+          // position: "top-end",
+          title: `Oopss..`,
+          text: `${errMes}`,
+          icon: "error",
+          confirmButtonText: "OK",
+        });
+        // window.location.reload();
+        // console.log(error.request)
+      } else {
+        // console.error(error.response);
+        // console.error(error);
+        onClose();
+        Swal.fire({
+          position: "top-end",
+          title: "Error!",
+          text: `${error}`,
+          icon: "error",
+          confirmButtonText: "Ok",
+        });
+        // window.location.reload();
+        // onClose();
+      }
+    }
+  };
 
   const [selectedLoc, setSelectedLoc] = React.useState("");
-  const handleLocSelect = (location) => {
+  const handleLocSelect = (id, kecName) => {
+    setNewFishermanTeam((prevState) => ({
+      ...prevState,
+      location_id: id,
+      location_name: kecName,
+    }));
     setSelectedLoc(location);
   };
   return (
@@ -121,15 +206,15 @@ const FishermanTeam = ({ title, captions, data }) => {
           <ModalContent>
             <ModalHeader>Add New Fisherman Team</ModalHeader>
             <ModalCloseButton />
-            <form>
+            <form onSubmit={(e) => handleSubmit(e)}>
               <ModalBody pb={6}>
                 <FormControl>
                   <FormLabel>Fisherman Team Name</FormLabel>
                   <Input
                     name="name"
                     ref={initialRef}
-                    // value={transactionData.name}
-                    // onChange={handleChange}
+                    value={newFishermanTeam.name}
+                    onChange={handleChange}
                     placeholder="Enter New Fisherman Team Name"
                   />
                 </FormControl>
@@ -144,6 +229,8 @@ const FishermanTeam = ({ title, captions, data }) => {
                     <Input
                       type="tel"
                       name="phone"
+                      value={newFishermanTeam.phone}
+                      onChange={handleChange}
                       placeholder="Enter phone number"
                     />
                   </InputGroup>
@@ -152,36 +239,51 @@ const FishermanTeam = ({ title, captions, data }) => {
                 <FormControl mt={4}>
                   <FormLabel>Year Formed</FormLabel>
                   <Input
-                    name="yearformed"
+                    name="year_formed"
                     type="number"
                     placeholder="Enter Year Formed"
+                    value={newFishermanTeam.year_formed}
+                    onChange={handleChange}
                   />
                 </FormControl>
 
                 <FormControl mt={4}>
-                  <FormLabel>Address</FormLabel>
-                  <Menu size="sm">
+                  <FormLabel>Address/Location</FormLabel>
+                   <Menu size="sm">
                     <MenuButton
                       isActive={selectedLoc !== ""}
                       as={Button}
                       rightIcon={<ChevronDownIcon />}
+                      name = "location_id"
+                      value = {newFishermanTeam.location_id}
+                      onChange= {handleChange}
                     >
-                      {selectedLoc || "Select Location"}
+                      {newFishermanTeam.location_name || "Select Location"}
                     </MenuButton>
                     <MenuList>
-                      {/* Map Location */}
-                      <MenuItem onClick={() => handleLocSelect("Loc 1")}>
-                        Loc 1
-                      </MenuItem>
-                      <MenuItem onClick={() => handleLocSelect("Loc 2")}>
-                        Loc 2
-                      </MenuItem>
+                      {locationData ? (
+                        locationData.map((loc) => {
+                          return (
+                            <MenuItem
+                              onClick={() =>
+                                handleLocSelect(loc.id, loc.kecamatan_name)
+                              }
+                            >
+                              {loc.kecamatan_name}
+                            </MenuItem>
+                          );
+                        })
+                      ) : ( 
+                        <p>Loading...</p>
+                      )}
                     </MenuList>
                   </Menu>
                   <Textarea
                     mt={2}
                     name="address"
                     placeholder="Input Detail Address"
+                    onChange={handleChange}
+                    value={newFishermanTeam.address}
                   />
                 </FormControl>
 
@@ -191,30 +293,38 @@ const FishermanTeam = ({ title, captions, data }) => {
                     name="balance"
                     type="number"
                     placeholder="Enter Balance"
+                    onChange={handleChange}
+                    value={newFishermanTeam.balance}
                   />
                 </FormControl>
                 <FormControl mt={4}>
                   <FormLabel>Divident Yield</FormLabel>
                   <Input
-                    name="dividentyield"
+                    name="divident_yield"
                     type="number"
                     placeholder="Enter Divident Yield"
+                    onChange={handleChange}
+                    value={newFishermanTeam.divident_yield}
                   />
                 </FormControl>
                 <FormControl mt={4}>
                   <FormLabel>Debt To Equity Ratio</FormLabel>
                   <Input
-                    name="debequityratio"
+                    name="debt_to_equity_ratio"
                     type="number"
                     placeholder="Enter Debt To Equity Ratio"
+                    onChange={handleChange}
+                    value={newFishermanTeam.debt_to_equity_ratio}
                   />
                 </FormControl>
                 <FormControl mt={4}>
                   <FormLabel>Market Cap</FormLabel>
                   <Input
-                    name="marketcap"
+                    name="market_cap"
                     type="number"
                     placeholder="Enter Market Cap"
+                    onChange={handleChange}
+                    value={newFishermanTeam.market_cap}
                   />
                 </FormControl>
               </ModalBody>
@@ -223,7 +333,7 @@ const FishermanTeam = ({ title, captions, data }) => {
                 <Button variant="ghost" mr={3} onClick={onClose}>
                   Cancel
                 </Button>
-                <Button colorScheme="blue" type="submit">
+                <Button colorScheme="blue" type="button" onClick={handleSubmit}>
                   Add
                 </Button>
               </ModalFooter>
@@ -264,6 +374,8 @@ const FishermanTeam = ({ title, captions, data }) => {
               {fishermanTeamData ? (
                 fishermanTeamData.map((row) => (
                   <TableFishermanTeam
+                    key = {row.id}
+                    id = {row.id}
                     name={row.name}
                     phone={row.phone}
                     yearFormed={row.year_formed}

@@ -56,6 +56,11 @@ import {
 import React from "react";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { URL_API } from "constant/data";
+import { token } from "stylis";
+import Swal from "sweetalert2";
 
 export default function TableFishermanTeam(props) {
   const {
@@ -93,6 +98,40 @@ export default function TableFishermanTeam(props) {
     onClose: onCloseDetail,
   } = useDisclosure();
 
+  const handleDelete = async (id) => {
+    try {
+      const token = localStorage.getItem("token");
+      const headers = {
+        Authorization: `Bearer ${token}`,
+      };
+
+      const response = await axios.delete(`${URL_API}/api/fisherman-tim/${id}`, {
+        headers,
+      });
+      // console.log(response.data);
+
+      onCloseDelete();
+      Swal.fire({
+        title: "Delete!",
+        text: `Success Delete Fisherman Team`,
+        icon: "success",
+        confirmButtonText: "Ok",
+      });
+
+      await new Promise((r) => setTimeout(r, 500));
+      window.location.reload();
+    } catch (error) {
+      const errMes = JSON.stringify(error.response.data.message);
+      Swal.fire({
+        position: "top-end",
+        title: `Oopss..`,
+        text: `${errMes}`,
+        icon: "error",
+        confirmButtonText: "OK",
+      });
+      console.error(error);
+    }
+  }
 
 
   const [selectedLoc, setSelectedLoc] = React.useState("");
@@ -294,7 +333,7 @@ export default function TableFishermanTeam(props) {
               <Button ref={cancelRef} onClick={onCloseDelete}>
                 Cancel
               </Button>
-              <Button colorScheme="red" onClick={onCloseDelete} ml={3}>
+              <Button colorScheme="red" onClick={() => handleDelete(id)} ml={3}>
                 Delete
               </Button>
             </AlertDialogFooter>

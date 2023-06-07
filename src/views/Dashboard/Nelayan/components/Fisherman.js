@@ -193,16 +193,18 @@ const Fisherman = ({ title, captions, data }) => {
         onClose();
         const errMes = JSON.stringify(error.response.data.message);
         Swal.fire({
-          position: "top-end",
+          // position: "top-end",
           title: `Oopss..`,
           text: `${errMes}`,
           icon: "error",
           confirmButtonText: "OK",
         });
+        window.location.reload();
         // console.log(error.request)
       } else {
         // console.error(error.response);
         // console.error(error);
+        onClose();
         Swal.fire({
           position: "top-end",
           title: "Error!",
@@ -210,6 +212,7 @@ const Fisherman = ({ title, captions, data }) => {
           icon: "error",
           confirmButtonText: "Ok",
         });
+        // window.location.reload();
         // onClose();
       }
     }
@@ -526,6 +529,7 @@ const Fisherman = ({ title, captions, data }) => {
                     <Input
                       type="file"
                       name="identity_photo"
+                      accept="image/jpeg, image/png, image/png"
                       isFullWidth
                       value={newFisherman.identity_photo}
                       onChange={handleChange}
