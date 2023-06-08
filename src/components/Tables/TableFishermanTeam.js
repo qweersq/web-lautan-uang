@@ -59,7 +59,7 @@ import { useHistory } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { URL_API } from "constant/data";
-import { token } from "stylis";
+// import { token } from "stylis";
 import Swal from "sweetalert2";
 
 export default function TableFishermanTeam(props) {
@@ -67,15 +67,18 @@ export default function TableFishermanTeam(props) {
     id,
     name,
     phone,
-    yearFormed,
+    year_formed,
     address,
     location,
+    location_id,
     balance,
     quantity,
-    totalAssets,
-    dividentYield,
+    total_assets,
+    divident_yield,
     debt_to_equity_ratio,
-    marketCap,
+    market_cap,
+    location_data,
+    fisherman_total,
   } = props;
 
   const textColor = useColorModeValue("gray.700", "white");
@@ -98,6 +101,95 @@ export default function TableFishermanTeam(props) {
     onClose: onCloseDetail,
   } = useDisclosure();
 
+  useEffect(() => {
+    // fetchLocation();
+  }),
+    [];
+
+  const [newFishermanTeam, setNewFishermanTeam] = useState({
+    name: props.name,
+    phone: props.phone,
+    year_formed: props.year_formed,
+    address: props.address,
+    location_id: props.location_id,
+    location_name: "",
+    balance: props.balance, // Add the missing property if necessary
+    quantity: props.quantity,
+    total_assets: props.total_assets,
+    divident_yield: props.divident_yield,
+    debt_to_equity_ratio: props.debt_to_equity_ratio,
+    market_cap: props.market_cap,
+  });
+  const [locationData, setLocationData] = useState(null);
+
+  // const fetchLocation = async () => {
+  //   try {
+  //     const token = localStorage.getItem("token");
+  //     const headers = {
+  //       Authorization: `Bearer ${token}`,
+  //     };
+
+  //     const response = await axios.get(`${URL_API}/api/location`, { headers });
+  //     // console.log(response.data.data);
+  //     setLocationData(response.data.data);
+  //     // console.log(locationData);
+  //     e.preventDefault();
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+
+  const handleEdit = async (id) => {
+    try {
+      // e.preventDefault();
+      const token = localStorage.getItem("token");
+      const headers = {
+        Authorization: `Bearer ${token}`,
+      };
+
+      const response = await axios.put(
+        `${URL_API}/api/fisherman-tim/${id}`,
+        {
+          name: newFishermanTeam.name,
+          phone: newFishermanTeam.phone,
+          year_formed: newFishermanTeam.year_formed,
+          address: newFishermanTeam.address,
+          balance: newFishermanTeam.balance,
+          location_id: newFishermanTeam.location_id,
+          quantity: newFishermanTeam.quantity,
+          total_assets: newFishermanTeam.total_assets,
+          divident_yield: newFishermanTeam.divident_yield,
+          debt_to_equity_ratio: newFishermanTeam.debt_to_equity_ratio,
+          market_cap: newFishermanTeam.market_cap,
+        },
+        { headers }
+      );
+      onClose();
+      Swal.fire({
+        title: "Good Job!",
+        text: `Success Edit Fisherman`,
+        icon: "success",
+        confirmButtonText: "Ok",
+      });
+
+      setTimeout(() => {
+        window.location.reload();
+      }, 5000);
+      // window.location.reload();
+    } catch (error) {
+      const errMes = JSON.stringify(error.response.data.message);
+      onClose();
+      Swal.fire({
+        // position: "top-end",
+        title: `Oopss..`,
+        text: `${errMes}`,
+        icon: "error",
+        confirmButtonText: "OK",
+      });
+      console.error(error);
+    }
+  };
+
   const handleDelete = async (id) => {
     try {
       const token = localStorage.getItem("token");
@@ -105,10 +197,10 @@ export default function TableFishermanTeam(props) {
         Authorization: `Bearer ${token}`,
       };
 
-      const response = await axios.delete(`${URL_API}/api/fisherman-tim/${id}`, {
-        headers,
-      });
-      // console.log(response.data);
+      const response = await axios.delete(
+        `${URL_API}/api/fisherman-tim/${id}`,
+        { headers }
+      );
 
       onCloseDelete();
       Swal.fire({
@@ -122,8 +214,9 @@ export default function TableFishermanTeam(props) {
       window.location.reload();
     } catch (error) {
       const errMes = JSON.stringify(error.response.data.message);
+      onCloseDelete();
       Swal.fire({
-        position: "top-end",
+        // position: "top-end",
         title: `Oopss..`,
         text: `${errMes}`,
         icon: "error",
@@ -131,42 +224,100 @@ export default function TableFishermanTeam(props) {
       });
       console.error(error);
     }
-  }
-
-
-  const [selectedLoc, setSelectedLoc] = React.useState("");
-  const handleLocSelect = (location) => {
-    setSelectedLoc(location);
   };
 
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    event.preventDefault();
+
+    setNewFishermanTeam((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+    console.log(newFishermanTeam);
+  };
+
+  const [selectedLoc, setSelectedLoc] = React.useState("");
+  const handleLocSelect = (id, kecName) => {
+    setNewFishermanTeam((prevState) => ({
+      ...prevState,
+      location_id: id,
+      location_name: kecName,
+    }));
+    // setSelectedLoc(location);
+  };
 
   const handleDetailFishermanTeam = () => {
     // const linkToDetail = `/admin/detail-fisherman/1`;
     navigate.push("/admin/detail-fisherman/1");
   };
 
-
   return (
     <Tr>
       <Td p={0}>
         <Flex direction="column" justifyContent="flex-start" alignItems="start">
-          <Button variant="link" size="lg" onClick={() => handleDetailFishermanTeam()}>
+          <Button
+            variant="link"
+            size="lg"
+            onClick={() => handleDetailFishermanTeam()}
+          >
             {name} <ExternalLinkIcon mx="2px" />
           </Button>
+          {/* <Text color="gray.300" fontSize="17px"> */}
+          <Badge
+            colorScheme="blue"
+            fontSize="17px"
+            my="3px"
+            p="5px"
+            borderRadius="8px"
+          >
+            Total Anggota : {fisherman_total}
+          </Badge>
+          {/* </Text> */}
         </Flex>
       </Td>
-      <Td>{phone}</Td>
-      <Td>{yearFormed}</Td>
       <Td>
-        <Text>{address}</Text>
-        <Text>{location}</Text>
+        <Badge colorScheme="blue" fontSize="20px" p="5px" borderRadius="8px">{year_formed}</Badge>
       </Td>
-      <Td>{balance}</Td>
-      <Td>{quantity}</Td>
-      <Td>{totalAssets}</Td>
-      <Td>{dividentYield}</Td>
+      <Td>{phone}</Td>
+      <Td>
+        <Text as="b">{location}</Text>
+        <Text>{address}</Text>
+      </Td>
+      <Td>
+        <Flex flexDirection="column" gap={2}>
+          <Tr>
+            <Text>
+              Balance : <Badge>{balance}</Badge>
+            </Text>
+          </Tr>
+          <Tr>
+            <Text>
+              Quantity : <Badge>{quantity}</Badge>
+            </Text>
+          </Tr>
+          <Tr>
+            <Text>
+              Divident : <Badge>{divident_yield}</Badge>
+            </Text>
+          </Tr>
+          <Tr>
+            <Text>
+              Debt Equity Ratio : <Badge>{debt_to_equity_ratio}</Badge>
+            </Text>
+          </Tr>
+          <Tr>
+            <Text>
+              Market Cap : <Badge>{market_cap}</Badge>
+            </Text>
+          </Tr>
+        </Flex>
+      </Td>
+      {/* <Td>{quantity}</Td>
+      <Td>{total_assets}</Td>
+      <Td>{divident_yield}</Td>
       <Td>{debt_to_equity_ratio}</Td>
-      <Td>{marketCap}</Td>
+      <Td>{market_cap}</Td> */}
       <Td>
         <Button
           p="0px"
@@ -174,7 +325,7 @@ export default function TableFishermanTeam(props) {
           size="md"
           bg="yellow.300"
           variant="ghost"
-          onClick={onOpen}
+          onClick={() => onOpen(id)}
           m={1}
         >
           Edit
@@ -204,15 +355,15 @@ export default function TableFishermanTeam(props) {
         <ModalContent>
           <ModalHeader>Edit Fisherman Team</ModalHeader>
           <ModalCloseButton />
-          <form>
+          <form onSubmit={(e) => handleEdit(e)}>
             <ModalBody pb={6}>
               <FormControl>
                 <FormLabel>Fisherman Team Name</FormLabel>
                 <Input
                   name="name"
                   ref={initialRef}
-                  // value={transactionData.name}
-                  // onChange={handleChange}
+                  value={newFishermanTeam.name}
+                  onChange={handleChange}
                   placeholder="Enter New Fisherman Team Name"
                 />
               </FormControl>
@@ -227,7 +378,9 @@ export default function TableFishermanTeam(props) {
                   <Input
                     type="tel"
                     name="phone"
-                    placeholder="Enter phone number"
+                    placeholder="Enter New Phone Number"
+                    value={newFishermanTeam.phone}
+                    onChange={handleChange}
                   />
                 </InputGroup>
               </FormControl>
@@ -235,9 +388,11 @@ export default function TableFishermanTeam(props) {
               <FormControl mt={4}>
                 <FormLabel>Year Formed</FormLabel>
                 <Input
-                  name="yearformed"
+                  name="year_formed"
                   type="number"
                   placeholder="Enter Year Formed"
+                  value={newFishermanTeam.year_formed}
+                  onChange={handleChange}
                 />
               </FormControl>
 
@@ -248,23 +403,36 @@ export default function TableFishermanTeam(props) {
                     isActive={selectedLoc !== ""}
                     as={Button}
                     rightIcon={<ChevronDownIcon />}
+                    name="location_id"
+                    value={newFishermanTeam.location_id}
+                    onChange={handleChange}
                   >
-                    {selectedLoc || "Select Location"}
+                    {newFishermanTeam.location_name || "Select Location"}
                   </MenuButton>
                   <MenuList>
-                    {/* Map Location */}
-                    <MenuItem onClick={() => handleLocSelect("Loc 1")}>
-                      Loc 1
-                    </MenuItem>
-                    <MenuItem onClick={() => handleLocSelect("Loc 2")}>
-                      Loc 2
-                    </MenuItem>
+                    {location_data ? (
+                      location_data.map((loc) => {
+                        return (
+                          <MenuItem
+                            onClick={() =>
+                              handleLocSelect(loc.id, loc.kecamatan_name)
+                            }
+                          >
+                            {loc.kecamatan_name}
+                          </MenuItem>
+                        );
+                      })
+                    ) : (
+                      <p>Loading...</p>
+                    )}
                   </MenuList>
                 </Menu>
                 <Textarea
                   mt={2}
                   name="address"
                   placeholder="Input Detail Address"
+                  value={newFishermanTeam.address}
+                  onChange={handleChange}
                 />
               </FormControl>
 
@@ -274,30 +442,38 @@ export default function TableFishermanTeam(props) {
                   name="balance"
                   type="number"
                   placeholder="Enter Balance"
+                  value={newFishermanTeam.balance}
+                  onChange={handleChange}
                 />
               </FormControl>
               <FormControl mt={4}>
                 <FormLabel>Divident Yield</FormLabel>
                 <Input
-                  name="dividentyield"
+                  name="divident_yield"
                   type="number"
                   placeholder="Enter Divident Yield"
+                  value={newFishermanTeam.divident_yield}
+                  onChange={handleChange}
                 />
               </FormControl>
               <FormControl mt={4}>
                 <FormLabel>Debt To Equity Ratio</FormLabel>
                 <Input
-                  name="debequityratio"
+                  name="debt_to_equity_ratio"
                   type="number"
                   placeholder="Enter Debt To Equity Ratio"
+                  value={newFishermanTeam.debt_to_equity_ratio}
+                  onChange={handleChange}
                 />
               </FormControl>
               <FormControl mt={4}>
                 <FormLabel>Market Cap</FormLabel>
                 <Input
-                  name="marketcap"
+                  name="market_cap"
                   type="number"
                   placeholder="Enter Market Cap"
+                  value={newFishermanTeam.market_cap}
+                  onChange={handleChange}
                 />
               </FormControl>
             </ModalBody>
@@ -306,8 +482,12 @@ export default function TableFishermanTeam(props) {
               <Button variant="ghost" mr={3} onClick={onClose}>
                 Cancel
               </Button>
-              <Button colorScheme="blue" type="submit">
-                Save
+              <Button
+                colorScheme="blue"
+                type="submit"
+                onClick={() => handleEdit(id)} // Tambahkan baris ini
+              >
+                Edit
               </Button>
             </ModalFooter>
           </form>

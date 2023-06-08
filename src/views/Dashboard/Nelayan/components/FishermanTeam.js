@@ -32,6 +32,7 @@ import {
   MenuItem,
   Textarea,
   TableContainer,
+  CircularProgress 
 } from "@chakra-ui/react";
 // Custom components
 import Card from "components/Card/Card.js";
@@ -44,6 +45,7 @@ import React, { useEffect, useState } from "react";
 import { URL_API } from "constant/data";
 import axios from "axios";
 import Swal from "sweetalert2";
+
 
 const FishermanTeam = ({ title, captions, data }) => {
   const textColor = useColorModeValue("gray.700", "white");
@@ -142,7 +144,7 @@ const FishermanTeam = ({ title, captions, data }) => {
         confirmButtonText: "Ok",
       });
 
-      await new Promise((r) => setTimeout(r, 500));
+      await new Promise((r) => setTimeout(r, 1500));
       window.location.reload();
     } catch (error) {
       if (error.response) {
@@ -378,37 +380,23 @@ const FishermanTeam = ({ title, captions, data }) => {
                     id = {row.id}
                     name={row.name}
                     phone={row.phone}
-                    yearFormed={row.year_formed}
+                    year_formed={row.year_formed}
+                    fisherman_total = {row.fisherman_total}
                     address={row.address}
-                    location={row.location_id}
+                    location={row.location}
                     balance={row.balance}
                     quantity={row.quantity}
-                    totalAssets={row.total_assets}
-                    dividentYield={row.divident_yield}
+                    total_assets={row.total_assets}
+                    divident_yield={row.divident_yield}
                     debt_to_equity_ratio={row.debt_to_equity_ratio}
-                    marketCap={row.market_cap}
+                    market_cap={row.market_cap}
+                    location_id = {row.location_id}
+                    location_data = {locationData}
                   />
                 ))
               ) : (
-                <p>Loading...</p>
+                <CircularProgress isIndeterminate color='blue.300' />
               )}
-              {/* {data.map((row) => {
-              return (
-                <TableFishermanTeam
-                  name={row.name}
-                  phone={row.phone}
-                  yearFormed={row.year_formed}
-                  address={row.address}
-                  location={row.location_id}
-                  balance={row.balance}
-                  quantity={row.quantity}
-                  totalAssets={row.total_assets}
-                  dividentYield={row.divident_yield}
-                  debt_to_equity_ration={row.debt_to_equity_ration}
-                  marketCap={row.market_cap}
-                />
-              );
-            })} */}
             </Tbody>
           </Table>
         </CardBody>

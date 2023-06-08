@@ -95,8 +95,8 @@ function Nelayan() {
         title={"Fisherman Team Table"}
         captions={[
           "Name",
-          "Phone",
           "Year-Formed",
+          "Phone",
           "Address/Location",
           "Balance",
           "Quantity",

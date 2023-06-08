@@ -23,6 +23,7 @@ import {
   InputGroup,
   TableContainer,
   Text,
+  CircularProgress
 } from "@chakra-ui/react";
 import CardHeader from "components/Card/CardHeader.js";
 import LocationRow from "components/Tables/LocationRow";
@@ -145,7 +146,7 @@ const Location = ({ title, captions, data }) => {
                   />
                 ))
               ) : (
-                <p>Loading...</p>
+                <CircularProgress isIndeterminate color='blue.300' />
               )}
             </Tbody>
           </Table>

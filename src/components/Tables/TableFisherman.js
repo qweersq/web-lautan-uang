@@ -115,7 +115,7 @@ function TableFisherman(props) {
     status: props.status,
     experience: props.experience,
     nik: props.nik,
-    // photo: props.photo,
+    image: props.image,
     identity_photo: props.identity_photo,
   });
 
@@ -175,7 +175,7 @@ function TableFisherman(props) {
       };
 
       const response = await axios.put(
-        `${URL_API}/api/fisherman`,
+        `${URL_API}/api/fisherman/${id}`,
         // { ...newFisherman },
         {
           name: fishermanData.name,
@@ -341,7 +341,7 @@ function TableFisherman(props) {
           size="md"
           bg="yellow.300"
           variant="ghost"
-          onClick={onOpen}
+          onClick={onOpenDelete}
           m={1}
         >
           Edit
@@ -618,7 +618,7 @@ function TableFisherman(props) {
               <Button variant="ghost" mr={3} onClick={onClose}>
                 Cancel
               </Button>
-              <Button colorScheme="blue" type="submit">
+              <Button colorScheme="blue" type="button">
                 Edit
               </Button>
             </ModalFooter>
