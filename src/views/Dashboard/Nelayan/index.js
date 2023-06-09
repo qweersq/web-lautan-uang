@@ -98,12 +98,7 @@ function Nelayan() {
           "Year-Formed",
           "Phone",
           "Address/Location",
-          "Balance",
-          "Quantity",
-          "Total Assets",
-          "Divident Yield",
-          "Debt To Equit Ratio",
-          "Market Cap",
+          "Detail",
           "Actions",
         ]}
         data={fishermanTeamTableData}
