@@ -174,6 +174,7 @@ export const investorData = [
   },
 ];
 
+
 export const fishermanTeamCatchData = fishermanTeamTableData.map((team) => {
   return {
     ...team,
@@ -181,6 +182,31 @@ export const fishermanTeamCatchData = fishermanTeamTableData.map((team) => {
     weight: `${team.name.length}`,
   };
 });
+
+export const fishermanTeamCatch = [
+  {
+    id : 1,
+    date : "25/02/2023",
+    weight : "90 kg"
+  },
+  {
+    id : 2,
+    date : "28/02/2023",
+    weight : "90 kg"
+  },
+  {
+    id : 3,
+    date : "11/03/2019",
+    weight : "90 kg"
+  },
+  {
+    id : 3,
+    date : "11/03/2019",
+    weight : "90 kg"
+  },
+]
+
+
 
 export const animalTypeData = [
   {
@@ -501,8 +527,8 @@ export const rtlTimelineData = [
 export const tablesTableData = [
   {
     logo: avatar1,
-    name: "Esthera Jackson",
-    email: "alexa@simmmple.com",
+    name: "Joko",
+    email: "joko@simmmple.com",
     subdomain: "Manager",
     domain: "Organization",
     status: "Success",
@@ -510,8 +536,8 @@ export const tablesTableData = [
   },
   {
     logo: avatar2,
-    name: "Alexa Liras",
-    email: "laurent@simmmple.com",
+    name: "Susilo susanto",
+    email: "susilo@simmmple.com",
     subdomain: "Programmer",
     domain: "Developer",
     status: "Failed",
@@ -519,8 +545,8 @@ export const tablesTableData = [
   },
   {
     logo: avatar3,
-    name: "Laurent Michael",
-    email: "laurent@simmmple.com",
+    name: "Megawati S",
+    email: "megawati@simmmple.com",
     subdomain: "Executive",
     domain: "Projects",
     status: "Success",
@@ -528,8 +554,8 @@ export const tablesTableData = [
   },
   {
     logo: avatar4,
-    name: "Freduardo Hill",
-    email: "freduardo@simmmple.com",
+    name: "Prabowo",
+    email: "prabowo@simmmple.com",
     subdomain: "Manager",
     domain: "Organization",
     status: "Success",
@@ -537,8 +563,8 @@ export const tablesTableData = [
   },
   {
     logo: avatar5,
-    name: "Daniel Thomas",
-    email: "daniel@simmmple.com",
+    name: "Baswedan",
+    email: "anies@simmmple.com",
     subdomain: "Programmer",
     domain: "Developer",
     status: "Failed",
@@ -654,42 +680,36 @@ export const billingData = [
 
 export const newestTransactions = [
   {
-    name: "Netflix",
+    name: "Tara Basro",
     date: "27 March 2021, at 12:30 PM",
-    price: "- $2,500",
-    logo: FaArrowDown,
+    price: "+ Rp500.000",
+    logo: FaArrowUp,
   },
   {
-    name: "Apple",
+    name: "Joko",
     date: "27 March 2021, at 12:30 PM",
-    price: "+ $2,500",
+    price: "+ Rp300.000",
     logo: FaArrowUp,
   },
 ];
 
 export const olderTransactions = [
   {
-    name: "Stripe",
+    name: "Andre Kalusta",
     date: "26 March 2021, at 13:45 PM",
-    price: "+ $800",
+    price: "+ Rp50.000",
     logo: FaArrowUp,
   },
   {
-    name: "HubSpot",
+    name: "Benny",
     date: "26 March 2021, at 12:30 PM",
-    price: "+ $1,700",
+    price: "+ Rp150.000",
     logo: FaArrowUp,
   },
   {
-    name: "Webflow",
-    date: "26 March 2021, at 05:00 PM",
-    price: "Pending",
-    logo: AiOutlineExclamation,
-  },
-  {
-    name: "Microsoft",
-    date: "25 March 2021, at 16:30 PM",
-    price: "- $987",
-    logo: FaArrowDown,
+    name: "Saka",
+    date: "26 March 2021, at 12:30 PM",
+    price: "+ Rp500.000",
+    logo: FaArrowUp,
   },
 ];

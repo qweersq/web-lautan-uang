@@ -161,6 +161,7 @@ const FishermanCatch = ({ title, captions, data }) => {
                       "Price",
                     ]}
                   // fishing_cath_id = {}
+                  date= {row.date}
                     name={row.name}
                     weight = {row.weight}
                     key={row.id}

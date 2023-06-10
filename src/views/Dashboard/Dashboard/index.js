@@ -73,20 +73,20 @@ export default function Dashboard() {
       <SimpleGrid columns={3} spacing="24px">
         <MiniStatistics
           title={"Total Transaksi"}
-          amount={"$53,000"}
-          percentage={55}
+          amount={"Rp3.200.000"}
+          percentage={20}
           icon={<WalletIcon h={"24px"} w={"24px"} color={iconBoxInside} />}
         />
         <MiniStatistics
           title={"Jumlah Investor"}
-          amount={"2,300"}
+          amount={"120"}
           percentage={5}
           icon={<GlobeIcon h={"24px"} w={"24px"} color={iconBoxInside} />}
         />
         <MiniStatistics
           title={"Jumlah Nelayan"}
-          amount={"+3,020"}
-          percentage={-14}
+          amount={"30"}
+          percentage={+ 2}
           icon={<DocumentIcon h={"24px"} w={"24px"} color={iconBoxInside} />}
         />
       </SimpleGrid>
@@ -114,9 +114,9 @@ export default function Dashboard() {
             title={"Transaction Table"}
             textColor={"blue"}
             captions={[
-              "Fisherman Team",
               "Investor Name",
-              "Quantity",
+              "Detail Profile",
+              "Date",
               "Status",
               "Actions",
             ]}

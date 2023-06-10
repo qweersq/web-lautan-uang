@@ -28,11 +28,57 @@ import MiniStatistics from "./components/MiniStatistics";
 import FishermanTeam from "./components/FishermanTeam";
 import Fisherman from "./components/Fisherman";
 import Location from "./components/Location";
+import { ChevronDownIcon } from "@chakra-ui/icons";
+import axios from "axios";
+import { URL_API } from "constant/data";
 
 import NelayanTeamAPI from "api/NelayanTeamAPI";
+import { useState } from "react";
+import { useEffect } from "react";
 
 function Nelayan() {
   const iconBoxInside = useColorModeValue("white", "white");
+
+  // const [totalFisherman, setTotalFisherman] = useState(null);
+  // const [totalFishermanTeam, setTotalFishermanTeam] = useState(null);
+  // const [totalFishermanActive, setTotalFishermanActive] = useState(null);
+
+  // const [fishermanData, setFishermanData] = useState(null);
+  // const [fishermanTeamData, setFishermanTeamData] = useState(null);
+
+  // useEffect(() => {
+  //   fetchData();
+
+  //   let totalFisherman = 0;
+  //   let totalFishermanTeam = 0;
+  //   fishermanData.forEach((fisherman) => {
+  //     totalFisherman++;
+  //   });
+  //   fishermanTeamData.forEach((fisherman) => {
+  //     totalFishermanTeam++;
+  //   });
+  // }, []);
+  // async function fetchData() {
+  //   try {
+  //     const token = localStorage.getItem("token");
+  //     const headers = {
+  //       Authorization: `Bearer ${token}`,
+  //       Accept: `application/json`,
+  //     };
+
+  //     const [fishermanResponse, fishermanTeamResponse] = await Promise.all([
+  //       axios.get(`${URL_API}/api/fisherman`, { headers }),
+  //       axios.get(`${URL_API}/api/fisherman-tim`, { headers }),
+  //     ]);
+  //     setFishermanData(fishermanResponse.data.data);
+  //     setFishermanTeamData(fishermanTeamResponse.data.data);
+  //     console.log(fishermanResponse.data.data);
+  //     console.log(fishermanTeamResponse.data.data);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // }
+
   return (
     <Flex direction="column" pt={{ base: "120px", md: "75px" }}>
       <SimpleGrid columns={3} spacing="24px">
@@ -70,7 +116,7 @@ function Nelayan() {
             "Kota/Kab",
             "Kecamatan",
             "Kelurahan",
-            "Postal-Code",
+            // "Postal-Code",
             "Actions",
           ]}
           data={LocationData}

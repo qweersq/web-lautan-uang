@@ -75,33 +75,33 @@ export default function TransactionPage() {
       <SimpleGrid columns={3} spacing="24px">
         <MiniStatistics
           title={"Total Transaksi"}
-          amount={"$53,000"}
-          percentage={55}
+          amount={"Rp3.200.000"}
+          percentage={20}
           icon={<WalletIcon h={"24px"} w={"24px"} color={iconBoxInside} />}
         />
         <MiniStatistics
           title={"Transaksi Sukses"}
-          amount={"2,300"}
+          amount={"30"}
           percentage={5}
           icon={<GlobeIcon h={"24px"} w={"24px"} color={iconBoxInside} />}
         />
         <MiniStatistics
           title={"Transaksi Cancel"}
-          amount={"+3,020"}
+          amount={"5"}
           percentage={-14}
           icon={<DocumentIcon h={"24px"} w={"24px"} color={iconBoxInside} />}
         />
       </SimpleGrid>
 
-      <Grid templateColumns='repeat(3, 4fr)' sx={{ mt: "30px" }} gap={10}>
-        <GridItem colSpan={2} w='100%' h='100%'>
+      <Grid templateColumns="repeat(3, 4fr)" sx={{ mt: "30px" }} gap={10}>
+        <GridItem colSpan={2} w="100%" h="100%">
           <GraphTransaction
             title={"Transaction Graph"}
             list={[1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998]}
             data={[30, 40, 45, 50, 49, 60, 70, 91]}
           />
         </GridItem>
-        <GridItem colSpan={1} w='100%' h='100%'>
+        <GridItem colSpan={1} w="100%" h="100%">
           {/* <InvestorDecline
             title={"Investor Decline"}
             captions={["Name/Email"]}
@@ -113,7 +113,6 @@ export default function TransactionPage() {
             data={tablesTableData}
           />
         </GridItem>
-
       </Grid>
 
       <Box sx={{ mt: "30px" }}>
@@ -121,12 +120,12 @@ export default function TransactionPage() {
           title={"Transaction Table"}
           textColor={"blue"}
           captions={[
-            "Fisherman Team",
-            "Investor Name",
-            "Quantity",
-            "Status",
-            "Actions",
-          ]}
+              "Investor Name",
+              "Detail Profile",
+              "Date",
+              "Status",
+              "Actions",
+            ]}
           data={tablesTableData}
         />
       </Box>

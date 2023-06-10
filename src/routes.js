@@ -53,7 +53,6 @@ var dashRoutes = [
         component: Nelayan,
         layout: "/admin",
       },
-     
       {
         path: "/detail-fisherman/:id",
         name: "Detail Fisherman",
@@ -61,7 +60,7 @@ var dashRoutes = [
         component: TimNelayan,
         layout: "/admin",
         hidden: true
-      },
+      }
      
     ],
   },

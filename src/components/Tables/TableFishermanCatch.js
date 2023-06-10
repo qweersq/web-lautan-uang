@@ -40,7 +40,7 @@ import React from "react";
 import { fishermanTeamCatchDetail } from "variables/general";
 
 function TableFishermanCatch(props) {
-  const { logo, name, weight, dataFishCatch, captions } = props;
+  const { logo, name, weight, dataFishCatch, captions, date } = props;
   const textColor = useColorModeValue("gray.700", "white");
   const bgStatus = useColorModeValue("gray.400", "#1a202c");
   const colorStatus = useColorModeValue("white", "gray.400");
@@ -90,7 +90,7 @@ function TableFishermanCatch(props) {
           <Avatar src={logo} w="50px" borderRadius="12px" me="18px" />
           <Flex direction="column">
             <Button variant="link" size="lg" onClick={onOpenDetail}>
-              {name} <ExternalLinkIcon mx="2px" />
+              {date} <ExternalLinkIcon mx="2px" />
             </Button>
           </Flex>
         </Flex>
@@ -106,15 +106,15 @@ function TableFishermanCatch(props) {
       >
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Fisherman Catch - {name}</ModalHeader>
+          <ModalHeader>Fisherman Catch Detail</ModalHeader>
           <ModalCloseButton />
           <ModalBody pb={6}>
-            <FormControl>
+            {/* <FormControl>
               <FormLabel fontWeight="bold">Fisherman Team</FormLabel>
               <Input name="name" value={name} variant="filled" />
-            </FormControl>
+            </FormControl> */}
 
-            <FormControl my={4}>
+            <FormControl my={2}>
               <FormLabel fontWeight="bold">Weight</FormLabel>
               <InputGroup>
                 <Input name="weight" variant="filled" value={weight} />

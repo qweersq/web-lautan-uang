@@ -85,33 +85,33 @@ export default function FinanceReport() {
       <SimpleGrid columns={3} spacing="24px">
         <MiniStatistics
           title={"Total Laporan"}
-          amount={"$53,000"}
+          amount={"10"}
           percentage={55}
           icon={<WalletIcon h={"24px"} w={"24px"} color={iconBoxInside} />}
         />
         <MiniStatistics
           title={"Total Telah Membuat Report"}
-          amount={"2,300"}
+          amount={"15"}
           percentage={5}
           icon={<GlobeIcon h={"24px"} w={"24px"} color={iconBoxInside} />}
         />
         <MiniStatistics
           title={"Total Yang Belum Report"}
-          amount={"+3,020"}
-          percentage={-14}
+          amount={"20"}
+          percentage={-2}
           icon={<DocumentIcon h={"24px"} w={"24px"} color={iconBoxInside} />}
         />
       </SimpleGrid>
 
       <Box sx={{ mt: "30px" }}>
         <Flex gap={2}>
-          <FishermanCatch
+          {/* <FishermanCatch
             title={"Fisherman Catch Table"}
             textColor={"blue"}
             captions={["Fisherman Team Name", "Weight", "Actions"]}
             data={fishermanTeamCatchData}
             fishcatchDetail={fishermanTeamCatchDetail}
-          />
+          /> */}
           <AnimalType
             title={"Animal Type"}
             textColor={"blue"}
@@ -125,11 +125,6 @@ export default function FinanceReport() {
       <Flex gap={4} my={5}>
         <FishermanCatchOrder
           title="Most Animal Type Catch"
-          captions={["Name", "Total"]}
-          data={fishermanTeamCatchDetail}
-        />
-        <FishermanCatchOrder
-          title="Fisherman Team Most Catch"
           captions={["Name", "Total"]}
           data={fishermanTeamCatchDetail}
         />

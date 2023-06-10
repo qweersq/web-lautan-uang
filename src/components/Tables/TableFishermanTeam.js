@@ -259,11 +259,12 @@ export default function TableFishermanTeam(props) {
           <Button
             variant="link"
             size="lg"
-            onClick={() => handleDetailFishermanTeam()}
+            // onClick={() => handleDetailFishermanTeam()}
           >
+            <Link to={`/admin/detail-fisherman/${id}`}>
             {name} <ExternalLinkIcon mx="2px" />
+            </Link>
           </Button>
-          {/* <Text color="gray.300" fontSize="17px"> */}
           <Badge
             colorScheme="blue"
             fontSize="17px"

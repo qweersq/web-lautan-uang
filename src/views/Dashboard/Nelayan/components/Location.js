@@ -41,6 +41,7 @@ const Location = ({ title, captions, data }) => {
   }, []);
 
   const [locationData, setLocationData] = useState(null);
+  const [postalCodeData, setPostalCodeData] = useState(null);
 
   async function fetchData() {
     try {
@@ -49,13 +50,22 @@ const Location = ({ title, captions, data }) => {
         Authorization: `Bearer ${token}`,
       };
       const response = await axios.get(`${URL_API}/api/location`, { headers });
-      setLocationData(response.data.data);
+      // const [locationResponse, postalCodeResponse] = await Promise.all([
+      //   axios.get(`${URL_API}/api/location`, {headers}),
+      //   axios.get(`${URL_API}/api/postal-code`, {headers})
+      // ])
+
+      setLocationData(response.data.data)
+      // setLocationData(locationResponse);
+      // setPostalCodeData(postalCodeResponse);
       // console.log(response.data);
       // console.log(response.data.data);
     } catch (error) {
       console.log(error);
     }
   }
+
+  
 
   return (
     <Card ml="2" p="5">

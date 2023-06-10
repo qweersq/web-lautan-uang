@@ -74,11 +74,11 @@ function LocationRow(props) {
           {kelurahan_des_name}
         </Text>
       </Td>
-      <Td>
+      {/* <Td>
         <Text fontSize="md" fontWeight="bold">
           {postal_code}
         </Text>
-      </Td>
+      </Td> */}
       <Td>
         <Flex flexDirection="column">
           <Button w="20" m="1" bg="yellow.300" onClick={onOpen}>
