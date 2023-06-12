@@ -518,7 +518,7 @@ const Fisherman = ({ title, captions, data }) => {
                     <Input
                       type="file"
                       name="image"
-                      accept="image/jpeg, image/png, image/png"
+                      accept="image/jpeg, image/png, image/jpg"
                       value={newFisherman.image}
                       onChange={handleChange}
                       isFullWidth
