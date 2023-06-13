@@ -11,7 +11,7 @@
 </div>
 
 <div align="center">
-    <img src="./public/src/assets/img/Product.jpg">
+    <img src="./src/assets/img/Product.jpg">
 </div>
 
 
