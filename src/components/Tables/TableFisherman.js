@@ -85,6 +85,7 @@ function TableFisherman(props) {
     role,
     location_id,
     photo,
+    fishermanTeamData,
   } = props;
   const textColor = useColorModeValue("gray.700", "white");
   const bgStatus = useColorModeValue("blue.600", "white");
@@ -238,6 +239,11 @@ function TableFisherman(props) {
     setShowPassword((prevShowPassword) => !prevShowPassword);
   };
 
+  // const avatar = URL.createObjectURL()
+
+  const handleOpenEditModal = () => {
+    onOpen();
+  };
   return (
     <Tr>
       <Td pl="0px">
@@ -341,7 +347,7 @@ function TableFisherman(props) {
           size="md"
           bg="yellow.300"
           variant="ghost"
-          onClick={onOpenDelete}
+          onClick={handleOpenEditModal}
           m={1}
         >
           Edit
@@ -360,267 +366,64 @@ function TableFisherman(props) {
         </Button>
         {/* </Flex> */}
       </Td>
-
       <Modal
         initialFocusRef={initialRef}
         finalFocusRef={finalRef}
         isOpen={isOpen}
         onClose={onClose}
-        size="lg"
       >
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>Edit Fisherman</ModalHeader>
           <ModalCloseButton />
-          <form onSubmit={() => handleEditFisherman(id)}>
+          <form>
             <ModalBody pb={6}>
-              <Flex gap={5}>
-                <FormControl>
-                  <FormLabel>Fisherman Team</FormLabel>
-                  <Input
-                    name="tim_id"
-                    type="number"
-                    value={fishermanData.tim_id}
-                    placeholder="Input Fisherman Team"
-                    onChange={handleInputChange}
-                  />
-                </FormControl>
-                <FormControl>
-                  <FormLabel>Fisherman Name</FormLabel>
-                  <Input
-                    name="name"
-                    value={fishermanData.name}
-                    onChange={handleInputChange}
-                    placeholder="Input Fisherman Name"
-                  />
-                </FormControl>
-              </Flex>
-
-              <FormControl mt={4}>
-                <FormLabel>Phone</FormLabel>
-                <InputGroup>
-                  <InputLeftElement
-                    pointerEvents="none"
-                    children={<PhoneIcon color="gray.300" />}
-                    // value={phone}
-                  />
-                  <Input
-                    type="tel"
-                    name="phone"
-                    // value={phone}
-                    value={fishermanData.phone}
-                    onChange={handleInputChange}
-                    // onChange={handleChange}
-                    placeholder="Enter phone number"
-                  />
-                </InputGroup>
-              </FormControl>
-
-              <FormControl mt={4}>
-                <FormLabel>Account</FormLabel>
-                <InputGroup>
-                  <InputLeftAddon children={<AtSignIcon color="gray.300" />} />
-                  <Input
-                    name="email"
-                    // value={email}
-                    value={fishermanData.email}
-                    onChange={handleInputChange}
-                    type="email"
-                    placeholder="Enter Email"
-                  />
-                </InputGroup>
-                <InputGroup mt={2}>
-                  <InputLeftAddon children={<UnlockIcon color="gray.300" />} />
-                  <Input
-                    name="password"
-                    // value={password}
-                    value={fishermanData.password}
-                    onChange={handleInputChange}
-                    type={showPassword ? "text" : "password"}
-                    placeholder="Enter password"
-                  />
-                  <InputRightElement width="4rem">
-                    <Button h="2rem" size="md" onClick={handleTogglePassword}>
-                      {showPassword ? (
-                        <ViewIcon color="gray.700" />
-                      ) : (
-                        <ViewOffIcon color="gray.700" />
-                      )}
-                    </Button>
-                  </InputRightElement>
-                </InputGroup>
-              </FormControl>
-
-              <FormControl mt={4}>
-                <FormLabel>Gender</FormLabel>
-                <Menu size="sm">
-                  <MenuButton
-                    isActive={selectedGender !== ""}
-                    as={Button}
-                    rightIcon={<ChevronDownIcon />}
-                    // value={gender}
-                    value={fishermanData.gender}
-                    onChange={handleInputChange}
-                  >
-                    {selectedGender || "Select gender"}
-                  </MenuButton>
-                  <MenuList>
-                    <MenuItem onClick={() => handleGenderSelect("male")}>
-                      Male
-                    </MenuItem>
-                    <MenuItem onClick={() => handleGenderSelect("female")}>
-                      Female
-                    </MenuItem>
-                  </MenuList>
-                </Menu>
-              </FormControl>
-
-              <FormControl mt={4}>
-                <FormLabel>Birt-Date</FormLabel>
-                <Input
-                  name="date"
-                  value={fishermanData.birth_date}
-                  onChange={handleInputChange}
-                  type="datetime-local"
-                  placeholder="Enter Date"
-                />
-              </FormControl>
-              <FormControl mt={4}>
-                <FormLabel>Address</FormLabel>
-                <Menu size="sm">
-                  <MenuButton
-                    isActive={selectedLoc !== ""}
-                    as={Button}
-                    rightIcon={<ChevronDownIcon />}
-                  >
-                    {selectedLoc || "Select Location"}
-                  </MenuButton>
-                  <MenuList>
-                    {/* Map Location */}
-                    <MenuItem onClick={() => handleLocSelect(1)}>
-                      Loc 1
-                    </MenuItem>
-                    <MenuItem onClick={() => handleLocSelect(2)}>
-                      Loc 2
-                    </MenuItem>
-                  </MenuList>
-                </Menu>
-                <Textarea
-                  mt={2}
-                  name="address"
-                  placeholder="Input Detail Address"
-                />
-              </FormControl>
-              {/* 
-              <FormControl mt={4}>
-                <FormLabel>Role</FormLabel>
-                <Menu size="sm">
-                  <MenuButton
-                    isActive={selectedRole !== ""}
-                    as={Button}
-                    rightIcon={<ChevronDownIcon />}
-                    // value={role}
-                    value={fishermanData.role}
-                    onChange={handleInputChange}
-                  >
-                    {selectedRole || "Select Role"}
-                  </MenuButton>
-                  <MenuList>
-                    <MenuItem onClick={() => handleRoleSelect("Leader")}>
-                      Leader
-                    </MenuItem>
-                    <MenuItem onClick={() => handleRoleSelect("Member")}>
-                      Member
-                    </MenuItem>
-                  </MenuList>
-                </Menu>
-              </FormControl> */}
-
-              <FormControl mt={4}>
-                <FormLabel>Status</FormLabel>
-                <Menu size="sm">
-                  <MenuButton
-                    isActive={selectedStatus !== ""}
-                    as={Button}
-                    rightIcon={<ChevronDownIcon />}
-                    value={fishermanData.status}
-                    onChange={handleInputChange}
-                  >
-                    {selectedStatus || "Select Status"}
-                  </MenuButton>
-                  <MenuList>
-                    {/* Map Location */}
-                    <MenuItem onClick={() => handleStatusSelect("Aktif")}>
-                      Aktif
-                    </MenuItem>
-                    <MenuItem onClick={() => handleStatusSelect("Non Active")}>
-                      Non Active
-                    </MenuItem>
-                  </MenuList>
-                </Menu>
-              </FormControl>
               <FormControl>
-                <FormLabel>Experience</FormLabel>
-                <InputGroup>
-                  <InputLeftAddon children={<EditIcon color="gray.300" />} />
-                  <Input
-                    name="experience"
-                    // value={experience}
-                    value={fishermanData.experience}
-                    onChange={handleInputChange}
-                    type="number"
-                  />
-                </InputGroup>
+                <FormLabel>First name</FormLabel>
+                <Input ref={initialRef} placeholder="First name" />
               </FormControl>
-              <Flex gap={4}>
-                <FormControl mt="4">
-                  <FormLabel>Photo</FormLabel>
-                  <Input
-                    type="file"
-                    name="image"
-                    value={fishermanData.image}
-                    onChange={handleInputChange}
-                    isFullWidth
-                    size="md"
-                  />
-                </FormControl>
-                <FormControl mt="4">
-                  <FormLabel>Identify Photo</FormLabel>
-                  <Input
-                    type="file"
-                    name="identity-photo"
-                    value={fishermanData.identity_photo}
-                    onChange={handleInputChange}
-                    isFullWidth
-                    size="md"
-                  />
-                </FormControl>
-              </Flex>
+              <FormControl isRequired>
+                    <FormLabel>Fisherman Team</FormLabel>
+                    <Menu size="sm">
+                      <MenuButton
+                        // isActive={selectedLoc !== ""}
+                        as={Button}
+                        rightIcon={<ChevronDownIcon />}
+                        name="tim_id"
+                        // value={newFisherman.location_id}
+                        // onChange={handleChange}
+                      >
+                        {'Hello' || "Select Fisherman Team"}
+                      </MenuButton>
+                      <MenuList>
+                        {fishermanTeamData ? (
+                          fishermanTeamData.map((e) => {
+                            return (
+                              <MenuItem
+                                onClick={() => handleTimSelect(e.id, e.name)}
+                              >
+                                {e.name}
+                              </MenuItem>
+                            );
+                          })
+                        ) : (
+                          <p>Loading...</p>
+                        )}
+                      </MenuList>
+                    </Menu>
+                  </FormControl>
+
               <FormControl mt={4}>
-                <FormLabel>NIK</FormLabel>
-                <InputGroup>
-                  <InputLeftElement
-                    // pointerEvents="none"
-                    children={<InfoOutlineIcon color="gray.300" />}
-                  />
-                  <Input
-                    type="number"
-                    name="nik"
-                    value={fishermanData.nik}
-                    onChange={handleInputChange}
-                    placeholder="Enter NIK"
-                  />
-                </InputGroup>
+                <FormLabel>Last name</FormLabel>
+                <Input placeholder="Last name" />
               </FormControl>
             </ModalBody>
 
             <ModalFooter>
-              <Button variant="ghost" mr={3} onClick={onClose}>
-                Cancel
+              <Button colorScheme="blue" mr={3}>
+                Save
               </Button>
-              <Button colorScheme="blue" type="button">
-                Edit
-              </Button>
+              <Button onClick={onClose}>Cancel</Button>
             </ModalFooter>
           </form>
         </ModalContent>

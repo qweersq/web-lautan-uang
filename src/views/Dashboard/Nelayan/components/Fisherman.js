@@ -50,7 +50,7 @@ import {
   NumberInputStepper,
   NumberIncrementStepper,
   NumberDecrementStepper,
-  CircularProgress
+  CircularProgress,
 } from "@chakra-ui/react";
 // Custom components
 import Card from "components/Card/Card.js";
@@ -89,8 +89,8 @@ const Fisherman = ({ title, captions, data }) => {
     status: "",
     experience: 0,
     nik: "",
-    image: "",
-    identity_photo: "",
+    image: null,
+    identity_photo: null,
     role: "",
   });
 
@@ -154,31 +154,26 @@ const Fisherman = ({ title, captions, data }) => {
       const token = localStorage.getItem("token");
       const headers = {
         Authorization: `Bearer ${token}`,
-        // Status: `OK`,
-        // Code: 200,
-        // Accept: `application/json`,
       };
 
-      const response = await axios.post(
-        `${URL_API}/api/fisherman`,
-        // { ...newFisherman },
-        {
-          name: newFisherman.name,
-          tim_id: newFisherman.tim_id,
-          phone: newFisherman.phone,
-          email: newFisherman.email,
-          password: newFisherman.password,
-          gender: newFisherman.gender,
-          birth_date: newFisherman.birth_date,
-          location_id: newFisherman.location_id,
-          status: newFisherman.status,
-          experience: newFisherman.experience,
-          nik: newFisherman.nik,
-          image: newFisherman.image,
-          identity_photo: newFisherman.identity_photo,
-        },
-        { headers }
-      );
+      const formData = new FormData();
+      formData.append("name", newFisherman.name);
+      formData.append("tim_id", newFisherman.tim_id);
+      formData.append("phone", newFisherman.phone);
+      formData.append("email", newFisherman.email);
+      formData.append("password", newFisherman.password);
+      formData.append("gender", newFisherman.gender);
+      formData.append("birth_date", newFisherman.birth_date);
+      formData.append("location_id", newFisherman.location_id);
+      formData.append("status", newFisherman.status);
+      formData.append("experience", newFisherman.experience);
+      formData.append("nik", newFisherman.nik);
+      formData.append("identity_photo", newFisherman.identity_photo);
+      formData.append("image", newFisherman.image);
+
+      const response = await axios.post(`${URL_API}/api/fisherman`, formData, {
+        headers ,
+      });
       onClose();
       Swal.fire({
         title: "Good Job!",
@@ -220,7 +215,7 @@ const Fisherman = ({ title, captions, data }) => {
   };
 
   const handleChange = (event) => {
-    const { name, value } = event.target;
+    const { name, value, files } = event.target;
     event.preventDefault();
 
     if (name === "tim_id" || name === "location_id" || name === "experience") {
@@ -228,13 +223,28 @@ const Fisherman = ({ title, captions, data }) => {
         ...prevFisherman,
         [name]: parseInt(value),
       }));
-    } else {
+    } 
+    else {
       setNewFisherman((prevFisherman) => ({
         ...prevFisherman,
         [name]: value,
       }));
     }
     console.log(newFisherman);
+  };
+  const handleImageChange = (event) => {
+    const file = event.target.files[0];
+    setNewFisherman((prevFisherman) => ({
+      ...prevFisherman,
+      image: file,
+    }));
+  };
+  const handleIdentityPhotoChange = (event) => {
+    const file = event.target.files[0];
+    setNewFisherman((prevFisherman) => ({
+      ...prevFisherman,
+      identity_photo: file,
+    }));
   };
 
   const [fishermanTeamData, setFishermanTeamData] = useState(null);
@@ -518,9 +528,9 @@ const Fisherman = ({ title, captions, data }) => {
                     <Input
                       type="file"
                       name="image"
-                      // accept="image/jpeg, image/png, image/jpg"
-                      value={newFisherman.image}
-                      onChange={handleChange}
+                      accept="image/jpeg, image/png, image/jpg"
+                      // value={newFisherman.image}
+                      onChange={handleImageChange}
                       isFullWidth
                       size="md"
                     />
@@ -532,8 +542,8 @@ const Fisherman = ({ title, captions, data }) => {
                       name="identity_photo"
                       accept="image/jpeg, image/png, image/png"
                       isFullWidth
-                      value={newFisherman.identity_photo}
-                      onChange={handleChange}
+                      // value={newFisherman.identity_photo}
+                      onChange={handleIdentityPhotoChange}
                       size="md"
                     />
                   </FormControl>
@@ -614,11 +624,12 @@ const Fisherman = ({ title, captions, data }) => {
                       phone={row.phone}
                       gender={row.gender}
                       status={row.status}
+                      fishermanTeamData={fishermanTeamData}
                     />
                   );
                 })
               ) : (
-                <CircularProgress isIndeterminate color='blue.300' />
+                <CircularProgress isIndeterminate color="blue.300" />
               )}
             </Tbody>
           </Table>

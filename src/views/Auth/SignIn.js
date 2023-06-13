@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { NavLink, useHistory } from "react-router-dom";
 import { authError } from "views/Dashboard/Dashboard/index.js";
+import { Link } from "react-router-dom";
 
 // Chakra imports
 import {
@@ -17,7 +18,6 @@ import axios from "axios";
 import { URL_API } from "constant/data";
 
 function SignIn() {
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -26,40 +26,60 @@ function SignIn() {
 
   const navigate = useHistory();
 
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await axios.post(`${URL_API}/api/auth/login`, {
-      email,
-      password,
-    }).then((response) => {
-      console.log(response);
-      localStorage.setItem("token", response.data.access_token);
-      navigate.push("/admin/dashboard");
-    }).catch((error) => {
-      console.log(error);
-      setError("Email or password is incorrect");
-    });
-
+    await axios
+      .post(`${URL_API}/api/auth/login`, {
+        email,
+        password,
+      })
+      .then((response) => {
+        console.log(response);
+        localStorage.setItem("token", response.data.access_token);
+        navigate.push("/admin/dashboard");
+      })
+      .catch((error) => {
+        console.log(error);
+        setError("Email or password is incorrect");
+      });
   };
 
-
   return (
-    <Flex align="center" justify="center" h="100vh">
-      <Box w="400px" borderWidth="1px" borderRadius="20px" p="6" sx={{ backgroundColor: "white" }}>
-        <Box className="login__logo" sx={{ display: "flex", justifyContent: "center" }}>
-          <img src="https://s2-recruiting.cdn.greenhouse.io/external_greenhouse_job_boards/logos/400/918/500/original/sea_money_logo_h.png?1598495961" alt="logo" style={{ width: "300px" }} />
+    <Flex align="center" justify="center" h="100vh" flexDirection="column">
+      <Box
+        w="400px"
+        borderWidth="1px"
+        borderRadius="20px"
+        p="6"
+        sx={{ backgroundColor: "white" }}
+      >
+        <Box
+          className="login__logo"
+          sx={{ display: "flex", justifyContent: "center" }}
+        >
+          <img
+            src="https://s2-recruiting.cdn.greenhouse.io/external_greenhouse_job_boards/logos/400/918/500/original/sea_money_logo_h.png?1598495961"
+            alt="logo"
+            style={{ width: "300px" }}
+          />
         </Box>
-        <Box sx={{ display: "flex", justifyContent: "center", margin: "20px 0 20px 0", bg: "red.700" }}>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            margin: "20px 0 20px 0",
+            bg: "red.700",
+          }}
+        >
           {/* Massage error */}
-          <Text fontSize="sm" color="white" fontWeight="bold" >
+          <Text fontSize="sm" color="white" fontWeight="bold">
             {error}
           </Text>
         </Box>
 
         <form onSubmit={(e) => handleSubmit(e)}>
           <FormControl>
-            <FormLabel ms='4px' fontSize='sm' fontWeight='normal' color="black">
+            <FormLabel ms="4px" fontSize="sm" fontWeight="normal" color="black">
               Email
             </FormLabel>
             <Input
@@ -67,18 +87,18 @@ function SignIn() {
               placeholder="Email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              borderRadius='15px'
-              mb='24px'
-              fontSize='sm'
-              type='text'
-              size='lg'
+              borderRadius="15px"
+              mb="24px"
+              fontSize="sm"
+              type="text"
+              size="lg"
               colorScheme="blackAlpha"
               color="gray.900"
               variant="outline"
               borderColor="gray.500"
-              _hover={{ color: 'gray.900', borderColor: 'gray.900' }}
+              _hover={{ color: "gray.900", borderColor: "gray.900" }}
             />
-            <FormLabel ms='4px' fontSize='sm' fontWeight='normal' color="black">
+            <FormLabel ms="4px" fontSize="sm" fontWeight="normal" color="black">
               Password
             </FormLabel>
             <Input
@@ -86,29 +106,46 @@ function SignIn() {
               placeholder="Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              borderRadius='15px'
-              mb='24px'
-              fontSize='sm'
-              type='password'
-              size='lg'
+              borderRadius="15px"
+              mb="24px"
+              fontSize="sm"
+              type="password"
+              size="lg"
               colorScheme="blackAlpha"
               color="gray.900"
               variant="outline"
               borderColor="gray.500"
-              _hover={{ color: 'gray.900', borderColor: 'gray.900' }}
+              _hover={{ color: "gray.900", borderColor: "gray.900" }}
             />
-            <Button fontSize='10px' type='submit' bg='blue.500' w='100%' h='45' mb='20px' color='white' mt='20px'
+            <Button
+              fontSize="10px"
+              type="submit"
+              bg="blue.500"
+              w="100%"
+              h="45"
+              mb="20px"
+              color="white"
+              mt="20px"
               _hover={{
                 bg: "blue.600",
               }}
               _active={{
                 bg: "blue.600",
-              }}>
+              }}
+            >
               Sign In
             </Button>
           </FormControl>
         </form>
       </Box>
+      <Text my={5}>
+        Apakah Anda Tidak memiliki Akun Admin ? 
+        <Link to="signup">
+        <Button color="blue.300" mx={3} variant='link'>
+          Sign Up
+        </Button>
+        </Link>
+      </Text>
     </Flex>
   );
 }
