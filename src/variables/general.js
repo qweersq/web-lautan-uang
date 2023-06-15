@@ -174,7 +174,6 @@ export const investorData = [
   },
 ];
 
-
 export const fishermanTeamCatchData = fishermanTeamTableData.map((team) => {
   return {
     ...team,
@@ -185,47 +184,57 @@ export const fishermanTeamCatchData = fishermanTeamTableData.map((team) => {
 
 export const fishermanTeamCatch = [
   {
-    id : 1,
-    date : "25/02/2023",
-    weight : "90 kg"
+    id: 1,
+    date: "25/02/2023",
+    weight: "90 kg",
   },
   {
-    id : 2,
-    date : "28/02/2023",
-    weight : "90 kg"
+    id: 2,
+    date: "28/02/2023",
+    weight: "90 kg",
   },
   {
-    id : 3,
-    date : "11/03/2019",
-    weight : "90 kg"
+    id: 3,
+    date: "11/03/2019",
+    weight: "90 kg",
   },
   {
-    id : 3,
-    date : "11/03/2019",
-    weight : "90 kg"
+    id: 3,
+    date: "11/03/2019",
+    weight: "90 kg",
   },
-]
-
-
+];
 
 export const animalTypeData = [
   {
     id: 0,
-    animal_type: "Ikan Bersisik",
+    animal_type: "Ikan Tongkol",
     description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua",
+      "Ikan tongkol adalah jenis ikan bersisik yang dapat ditemukan di perairan air tawar dan laut. Mereka memiliki tubuh yang ramping dan cepat berenang. Ikan tongkol sering menjadi target para pemancing karena dagingnya yang lezat dan bergizi tinggi.",
   },
   {
     id: 1,
-    animal_type: "Ikan Duyung",
+    animal_type: "Ikan Ekor Kuning",
     description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua",
+      "Ikan ekor kuning adalah jenis ikan laut yang terkenal dengan warna ekornya yang berwarna kuning cerah. Mereka biasanya ditemukan di perairan tropis dan subtropis. Ikan ekor kuning memiliki ukuran yang kecil hingga sedang dan sering menjadi sasaran para pemancing hobi karena pertarungannya yang seru dan keindahan warnanya.",
   },
   {
     id: 2,
-    animal_type: "Ikan Ikanan",
+    animal_type: "Ikan Sayap Merah",
     description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod  ",
+      "Ikan sayap merah adalah kelompok ikan dengan beragam bentuk dan ukuran yang dapat ditemukan di berbagai perairan. Mereka memiliki tubuh yang pipih dan sering dikenal karena warna merah cerah pada sirip dan tubuhnya.",
+  },
+  {
+    id: 3,
+    animal_type: "Sejening Ikan",
+    description:
+      "Sejening ikan adalah jenis ikan yang belum terlalu dikenal secara luas. Mereka memiliki ciri khas yaitu tubuh yang ramping dan panjang dengan sisik yang berkilau. Sejening ikan umumnya ditemukan di perairan tropis dengan suhu yang hangat.",
+  },
+  {
+    id: 4,
+    animal_type: "Kuda Laut",
+    description:
+      "Kuda laut adalah jenis ikan kecil yang memiliki tubuh yang panjang dan ramping dengan kepala yang mirip dengan kepala kuda. Mereka memiliki kemampuan unik untuk berenang secara vertikal dan bersembunyi di antara rumput laut dengan bantuan perlekatan pada ekor mereka. ",
   },
 ];
 
@@ -236,6 +245,7 @@ export const fishermanTeamCatchDetail = [
     animal_type: "Ikan bersisik",
     fishing_catch_id: 1,
     price: 14.0,
+    weight: "25 kg",
   },
   {
     id: 1,
@@ -243,6 +253,7 @@ export const fishermanTeamCatchDetail = [
     animal_type: "Ikan bersisik",
     fishing_catch_id: 2,
     price: 10.0,
+    weight: "14 kg",
   },
   {
     id: 2,
@@ -250,24 +261,27 @@ export const fishermanTeamCatchDetail = [
     animal_type: "Ikan bersisik",
     fishing_catch_id: 3,
     price: 12.0,
+    weight: "11 kg",
   },
 ];
 
-// })[
-//   {
-//     name: "Tim Kerapu Biru",
-//     phone: "0878787878787",
-//     year_formed: "2010",
-//     address: "Jl Pelabuhan No 10",
-//     balance: "0878787878787",
-//     locatin_id: "1",
-//     quantity: "100",
-//     total_assets: "1",
-//     divident_yield: "1",
-//     debt_to_equity_ration: "1",
-//     market_cap: "100000",
-//   },
-// ]
+export const fishermanTeamMostCatch = [
+  {
+    id: 0,
+    name: "Team Kerapu Biru",
+    weight: "50 kg",
+  },
+  {
+    id: 1,
+    name: "Team Nelayan Bontang Kuala Jaya",
+    weight: "43 kg",
+  },
+  {
+    id: 2,
+    name: "Team Kerapu Biru",
+    weight: "39 kg",
+  },
+];
 
 export const fishermanTableData = [
   {

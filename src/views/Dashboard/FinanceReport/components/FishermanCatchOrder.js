@@ -27,8 +27,8 @@ const FishermanCatchOrder = ({ data, captions, title }) => {
             {data.map((row) => {
               return (
                 <Tr>
-                  <Td minWidth={{ sm: "250px" }} pl="0px" >{row.animal_type}</Td>
-                  <Td>15 kg</Td>
+                  <Td minWidth={{ sm: "250px" }} pl="0px" >{row.name}</Td>
+                  <Td>{row.weight}</Td>
                 </Tr>
               );
             })}

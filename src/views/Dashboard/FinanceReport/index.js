@@ -42,6 +42,7 @@ import { } from "variables/general";
 import AnimalType from "./components/AnimalType";
 import { animalTypeData } from "variables/general";
 import { URL_API } from "constant/data";
+import { fishermanTeamMostCatch } from "variables/general";
 
 export const authError = createContext();
 
@@ -86,38 +87,31 @@ export default function FinanceReport() {
         <MiniStatistics
           title={"Total Laporan"}
           amount={"10"}
-          percentage={55}
+          percentage={1}
           icon={<WalletIcon h={"24px"} w={"24px"} color={iconBoxInside} />}
         />
         <MiniStatistics
           title={"Total Telah Membuat Report"}
           amount={"15"}
-          percentage={5}
+          percentage={2}
           icon={<GlobeIcon h={"24px"} w={"24px"} color={iconBoxInside} />}
         />
         <MiniStatistics
           title={"Total Yang Belum Report"}
           amount={"20"}
-          percentage={-2}
+          percentage={4}
           icon={<DocumentIcon h={"24px"} w={"24px"} color={iconBoxInside} />}
         />
       </SimpleGrid>
 
       <Box sx={{ mt: "30px" }}>
         <Flex gap={2}>
-          {/* <FishermanCatch
-            title={"Fisherman Catch Table"}
-            textColor={"blue"}
-            captions={["Fisherman Team Name", "Weight", "Actions"]}
-            data={fishermanTeamCatchData}
-            fishcatchDetail={fishermanTeamCatchDetail}
-          /> */}
+         
           <AnimalType
             title={"Animal Type"}
             textColor={"blue"}
             captions={["Name", "Description", "Actions"]}
             data={animalTypeData}
-          // fishcatchDetail={fishermanTeamCatchDetail}
           />
         </Flex>
       </Box>
@@ -131,7 +125,7 @@ export default function FinanceReport() {
         <FishermanCatchOrder
           title="Fisherman Team Most Catch"
           captions={["Name", "Total"]}
-          data={fishermanTeamCatchDetail}
+          data={fishermanTeamMostCatch}
         />
       </Flex>
     </Flex>
