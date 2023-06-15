@@ -35,16 +35,16 @@ function Investor() {
         <Box>
           <MiniStatistics
             title={"Total Investor"}
-            amount={"$53,000"}
-            percentage={55}
+            amount={"120"}
+            percentage={5}
             icon={<PersonIcon h={"24px"} w={"24px"} color={iconBoxInside} />}
           />
           <Box marginTop="24px">
             {/* Menambahkan margin top untuk memberikan spasi antara MiniStatistics */}
             <MiniStatistics
               title={"Total Investor Data-Belum Aktif"}
-              amount={"$53,000"}
-              percentage={55}
+              amount={"50"}
+              percentage={- 2}
               icon={<PersonIcon h={"24px"} w={"24px"} color={iconBoxInside} />}
             />
           </Box>
